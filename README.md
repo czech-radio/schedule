@@ -31,3 +31,6 @@ Data jsou dostupná mnoho let do historie a cca 14 dnů do budoucnosti.
 - `type` - nedokumentováno
 - `edition` - pokud pro pořad existuje tzv. "webová vizitka", položka obsahuje objekt s příslušnými informacemi (např asset - vizuál pořadu); položka ovšem může být prázdná, vizitky totiž zatím neexistují pro všechny pořady
 - `persons` pole objektů moderátorů pořadu (tzv. osoby), kterých může být 0-N (obsahuje kromě jiného také asset - fotografii moderátora); položka může být prázdná, protože ne každý pořad někdo moderuje a také ne pro všechny osoby máme k dispozici fotografie
+
+## Zdroje
+- https://data.irozhlas.cz/opendata/
