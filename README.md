@@ -3,36 +3,65 @@ Python client for "Program vysílání ČRo"
 
 ## Program vysílání ČRo
 
-### Aktuální den a všechny stanice
-https://api.rozhlas.cz/data/v2/schedule/day.json
+Data jsou dostupná mnoho let do historie a cca 14 dnů do budoucnosti.
 
-### Aktuální den a konkrétní stanici
-https://api.rozhlas.cz/data/v2/schedule/day/[STATION_ID].json
-např. https://api.rozhlas.cz/data/v2/schedule/day/radiowave.json
+### Aktuální den a všechny stanice
 
 ```python
-get_schedule(date = date.now(), station = 'plus')
+get_schedule()
+```
+
+```
+https://api.rozhlas.cz/data/v2/schedule/day.json
 ```
 
 ### Konkrétní den a všechny stanice
-https://api.rozhlas.cz/data/v2/schedule/day/[YYYY]/[MM]/[DD].json
-např. https://api.rozhlas.cz/data/v2/schedule/day/2019/09/01.json
 
 ```python
 get_schedule(date = date.now())
 ```
 
-### Konkrétní den a konkrétní stanici:
-https://api.rozhlas.cz/data/v2/schedule/day/[YYYY]/[MM]/[DD]/[STATION_ID].json
-např. https://api.rozhlas.cz/data/v2/schedule/day/2019/09/01/radiowave.json
+```
+https://api.rozhlas.cz/data/v2/schedule/day/[YYYY]/[MM]/[DD].json
+např. https://api.rozhlas.cz/data/v2/schedule/day/2019/09/01.json
+```
+
+### Aktuální den a konkrétní stanice
+
+```python
+get_schedule(station = 'plus')
+```
+
+```
+https://api.rozhlas.cz/data/v2/schedule/day/[STATION_ID].json
+např. https://api.rozhlas.cz/data/v2/schedule/day/plus.json
+```
+
+### Konkrétní den a konkrétní stanici
 
 ```python
 get_schedule_current(station = 'plus')
 ```
 
-Data jsou dostupná mnoho let do historie a cca 14 dnů do budoucnosti.
+```
+https://api.rozhlas.cz/data/v2/schedule/day/[YYYY]/[MM]/[DD]/[STATION_ID].json
+např. https://api.rozhlas.cz/data/v2/schedule/day/2019/09/01/plus.json
+```
 
-### Popis položek JSON objektu
+### Seznam stanic a jejich zkratek
+
+```python
+get_stations()
+```
+
+```
+https://api.rozhlas.cz/data/v2/meta/stations.json
+```
+
+## Popis položek JSON objektu
+
+
+### Schedule
 
 - `station` textové ID stanice (číselník viz https://api.rozhlas.cz/data/v2/meta/stations.json )
 - `id` NEunikátní identifikátor převzatý z interního systému, ve kterém se plánuje vysílání; položka má vždy nějakou hodnotu
@@ -43,6 +72,11 @@ Data jsou dostupná mnoho let do historie a cca 14 dnů do budoucnosti.
 - `type` - nedokumentováno
 - `edition` - pokud pro pořad existuje tzv. "webová vizitka", položka obsahuje objekt s příslušnými informacemi (např asset - vizuál pořadu); položka ovšem může být prázdná, vizitky totiž zatím neexistují pro všechny pořady
 - `persons` pole objektů moderátorů pořadu (tzv. osoby), kterých může být 0-N (obsahuje kromě jiného také asset - fotografii moderátora); položka může být prázdná, protože ne každý pořad někdo moderuje a také ne pro všechny osoby máme k dispozici fotografie
+
+### Stations
+
+...
+
 
 ## Zdroje
 - https://data.irozhlas.cz/opendata/
