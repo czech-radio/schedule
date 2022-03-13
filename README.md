@@ -1,5 +1,6 @@
-# rozhlas-schedule-client
-Python client for "Program vysílání ČRo"
+# Rozhlas Schedule
+
+_Python client for "Program vysílání ČRo"._
 
 ## Program vysílání ČRo
 
