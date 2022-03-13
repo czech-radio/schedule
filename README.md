@@ -10,13 +10,25 @@ https://api.rozhlas.cz/data/v2/schedule/day.json
 https://api.rozhlas.cz/data/v2/schedule/day/[STATION_ID].json
 např. https://api.rozhlas.cz/data/v2/schedule/day/radiowave.json
 
+```python
+get_schedule(date = date.now(), station = 'plus')
+```
+
 ### Konkrétní den a všechny stanice
 https://api.rozhlas.cz/data/v2/schedule/day/[YYYY]/[MM]/[DD].json
 např. https://api.rozhlas.cz/data/v2/schedule/day/2019/09/01.json
 
+```python
+get_schedule(date = date.now())
+```
+
 ### Konkrétní den a konkrétní stanici:
 https://api.rozhlas.cz/data/v2/schedule/day/[YYYY]/[MM]/[DD]/[STATION_ID].json
 např. https://api.rozhlas.cz/data/v2/schedule/day/2019/09/01/radiowave.json
+
+```python
+get_schedule_current(station = 'plus')
+```
 
 Data jsou dostupná mnoho let do historie a cca 14 dnů do budoucnosti.
 
