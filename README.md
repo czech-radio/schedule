@@ -9,7 +9,8 @@ Data jsou dostupná mnoho let do historie a cca 14 dnů do budoucnosti.
 ### Aktuální den a všechny stanice
 
 ```python
-get_schedule()
+client = Schedule()
+result = client.schedule()
 ```
 
 ```
@@ -19,7 +20,8 @@ https://api.rozhlas.cz/data/v2/schedule/day.json
 ### Konkrétní den a všechny stanice
 
 ```python
-get_schedule(date = date.now())
+client = Schedule()
+result = client.schedule(date = date(2022, 12, 1))
 ```
 
 ```
@@ -30,7 +32,8 @@ např. https://api.rozhlas.cz/data/v2/schedule/day/2019/09/01.json
 ### Aktuální den a konkrétní stanice
 
 ```python
-get_schedule(station = 'plus')
+client = Schedule()
+result = client.schedule(station = 'plus')
 ```
 
 ```
@@ -41,7 +44,8 @@ např. https://api.rozhlas.cz/data/v2/schedule/day/plus.json
 ### Konkrétní den a konkrétní stanici
 
 ```python
-get_schedule_current(station = 'plus')
+client = Schedule()
+result = client.schedule_current(station = 'plus')
 ```
 
 ```
