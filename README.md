@@ -59,7 +59,9 @@ např. https://api.rozhlas.cz/data/v2/schedule/day/2019/09/01/plus.json
 ### Seznam stanic a jejich zkratek
 
 ```python
-get_stations()
+
+client = Schedule()
+result = client.stations()
 ```
 
 ```
