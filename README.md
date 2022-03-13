@@ -44,8 +44,11 @@ např. https://api.rozhlas.cz/data/v2/schedule/day/plus.json
 ### Konkrétní den a konkrétní stanici
 
 ```python
+
+from datetime import date
+
 client = Schedule()
-result = client.schedule_current(station = 'plus')
+result = client.schedule(date = date(2021, 12, 31, station = 'plus')
 ```
 
 ```
