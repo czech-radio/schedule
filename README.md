@@ -6,6 +6,10 @@ _Python client for "Program vysílání ČRo"._
 
 Data jsou dostupná mnoho let do historie a cca 14 dnů do budoucnosti.
 
+```python
+from cro.schedule import Schedule
+```
+
 ### Aktuální den a všechny stanice
 
 ```python
