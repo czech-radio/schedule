@@ -16,7 +16,7 @@ from cro.schedule import Schedule
 client = Schedule()
 result = client.schedule()
 ```
-
+__Endpoint__
 ```
 https://api.rozhlas.cz/data/v2/schedule/day.json
 ```
@@ -27,7 +27,7 @@ https://api.rozhlas.cz/data/v2/schedule/day.json
 client = Schedule()
 result = client.schedule(date = date(2022, 12, 1))
 ```
-
+__Endpoint__
 ```
 https://api.rozhlas.cz/data/v2/schedule/day/[YYYY]/[MM]/[DD].json
 např. https://api.rozhlas.cz/data/v2/schedule/day/2019/09/01.json
@@ -39,7 +39,7 @@ např. https://api.rozhlas.cz/data/v2/schedule/day/2019/09/01.json
 client = Schedule()
 result = client.schedule(station = 'plus')
 ```
-
+__Endpoint__
 ```
 https://api.rozhlas.cz/data/v2/schedule/day/[STATION_ID].json
 např. https://api.rozhlas.cz/data/v2/schedule/day/plus.json
@@ -54,7 +54,7 @@ from datetime import date
 client = Schedule()
 result = client.schedule(date = date(2021, 12, 31, station = 'plus')
 ```
-
+__Endpoint__
 ```
 https://api.rozhlas.cz/data/v2/schedule/day/[YYYY]/[MM]/[DD]/[STATION_ID].json
 např. https://api.rozhlas.cz/data/v2/schedule/day/2019/09/01/plus.json
@@ -67,13 +67,12 @@ např. https://api.rozhlas.cz/data/v2/schedule/day/2019/09/01/plus.json
 client = Schedule()
 result = client.stations()
 ```
-
+__Endpoint__
 ```
 https://api.rozhlas.cz/data/v2/meta/stations.json
 ```
 
 ## Popis položek JSON objektu
-
 
 ### Schedule
 
@@ -90,7 +89,6 @@ https://api.rozhlas.cz/data/v2/meta/stations.json
 ### Stations
 
 ...
-
 
 ## Zdroje
 - https://data.irozhlas.cz/opendata/
