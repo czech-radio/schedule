@@ -1,4 +1,4 @@
-# Rozhlas Schedule 
+# Rozhlas Schedule
 
 _Python domain model and HTTP REST API client for "Program vysílání ČRo"._
 
@@ -50,7 +50,7 @@ https://api.rozhlas.cz/data/v2/schedule/day.json
 
 ```python
 client = Client()
-result = client.schedule(date = date(2022, 12, 1))
+result = client.get_schedule(date = date(2022, 12, 1))
 ```
 __Endpoint__
 ```
@@ -61,8 +61,8 @@ např. https://api.rozhlas.cz/data/v2/schedule/day/2019/09/01.json
 ### Aktuální den a konkrétní stanice
 
 ```python
-client = Client()
-result = client.schedule(station = 'plus')
+client = Client(station='plus')
+result = client.get_schedule()
 ```
 __Endpoint__
 ```
@@ -76,8 +76,8 @@ např. https://api.rozhlas.cz/data/v2/schedule/day/plus.json
 
 from datetime import date
 
-client = Client()
-result = client.schedule(date = date(2021, 12, 31, station = 'plus')
+client = Client('plus')
+result = client.get_schedule(date = date(2021, 12, 31)
 ```
 __Endpoint__
 ```
@@ -89,8 +89,7 @@ např. https://api.rozhlas.cz/data/v2/schedule/day/2019/09/01/plus.json
 
 ```python
 
-client = Client()
-result = client.stations()
+result = Client.get_stations()
 ```
 __Endpoint__
 ```
