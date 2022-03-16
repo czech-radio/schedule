@@ -115,4 +115,6 @@ https://api.rozhlas.cz/data/v2/meta/stations.json
 ...
 
 ## Zdroje
+
 - https://data.irozhlas.cz/opendata/
+- https://cs.wikipedia.org/wiki/%C4%8Cesk%C3%BD_rozhlas
