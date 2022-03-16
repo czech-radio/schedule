@@ -15,6 +15,17 @@ _Python domain model and HTTP REST API client for "Program vysílání ČRo"._
 - [ ] Pořad by měl uchovávvat atributy `from: Date`, `till: Date`, `title: String`, dále moderátor a počet osob?
 - [ ] Vytvoři schéma databáze pro ukládání programu, možnost napojení na přepisy.
 
+Návrh na podobu _flat_ (_tidy_) výstupu programu.
+
+|id|station|date|since|till|title|description|
+|--|-------|----|-----|----|-----|-----------|
+| | | | | | | |
+| | | | | | | |
+| | | | | | | |
+
+TODO ^^^ Doplnit příklady řádků.
+
+
 ## Program vysílání ČRo
 
 Data jsou dostupná mnoho let do historie a cca 14 dnů do budoucnosti.
@@ -87,7 +98,7 @@ https://api.rozhlas.cz/data/v2/meta/stations.json
 
 ## Popis položek JSON objektu
 
-### Client
+### Schedule
 
 - `station` textové ID stanice (číselník viz https://api.rozhlas.cz/data/v2/meta/stations.json )
 - `id` NEunikátní identifikátor převzatý z interního systému, ve kterém se plánuje vysílání; položka má vždy nějakou hodnotu
