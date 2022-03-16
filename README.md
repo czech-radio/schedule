@@ -1,6 +1,6 @@
-# Rozhlas Schedule
+# Rozhlas Schedule 
 
-_Python client for "Program vysílání ČRo"._
+_Python domain model and HTTP REST API client for "Program vysílání ČRo"._
 
 ## Zadání
 
@@ -20,13 +20,13 @@ _Python client for "Program vysílání ČRo"._
 Data jsou dostupná mnoho let do historie a cca 14 dnů do budoucnosti.
 
 ```python
-from cro.schedule import Schedule
+from cro.schedule import Client
 ```
 
 ### Aktuální den a všechny stanice
 
 ```python
-client = Schedule()
+client = Client()
 result = client.schedule()
 ```
 __Endpoint__
@@ -37,7 +37,7 @@ https://api.rozhlas.cz/data/v2/schedule/day.json
 ### Konkrétní den a všechny stanice
 
 ```python
-client = Schedule()
+client = Client()
 result = client.schedule(date = date(2022, 12, 1))
 ```
 __Endpoint__
@@ -49,7 +49,7 @@ např. https://api.rozhlas.cz/data/v2/schedule/day/2019/09/01.json
 ### Aktuální den a konkrétní stanice
 
 ```python
-client = Schedule()
+client = Client()
 result = client.schedule(station = 'plus')
 ```
 __Endpoint__
@@ -64,7 +64,7 @@ např. https://api.rozhlas.cz/data/v2/schedule/day/plus.json
 
 from datetime import date
 
-client = Schedule()
+client = Client()
 result = client.schedule(date = date(2021, 12, 31, station = 'plus')
 ```
 __Endpoint__
@@ -77,7 +77,7 @@ např. https://api.rozhlas.cz/data/v2/schedule/day/2019/09/01/plus.json
 
 ```python
 
-client = Schedule()
+client = Client()
 result = client.stations()
 ```
 __Endpoint__
@@ -87,7 +87,7 @@ https://api.rozhlas.cz/data/v2/meta/stations.json
 
 ## Popis položek JSON objektu
 
-### Schedule
+### Client
 
 - `station` textové ID stanice (číselník viz https://api.rozhlas.cz/data/v2/meta/stations.json )
 - `id` NEunikátní identifikátor převzatý z interního systému, ve kterém se plánuje vysílání; položka má vždy nějakou hodnotu

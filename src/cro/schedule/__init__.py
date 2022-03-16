@@ -62,3 +62,7 @@ if __name__ == "__main__":
 
     result = client.schedule(date(2021, 12, 31))
     print(result)
+# -*- coding: utf-8 -*-
+
+# TODO reexport from client and domain.
+
