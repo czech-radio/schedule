@@ -14,6 +14,7 @@ _Python domain model and HTTP REST API client for "Program vysílání ČRo"._
 - [ ] Program by měl být iterátor, který krokuje po jednotlivých pořadech.
 - [ ] Pořad by měl uchovávvat atributy, `id`, `since Date`, `till: Date`, `title: String`, `description: String`, dále moderátor a počet osob?
 - [ ] Vytvoři schéma databáze pro ukládání programu, možnost napojení na přepisy.
+- [ ] Vytvoř webvou apliakci pro prohlížení uložených programů.
 
 Návrh na podobu _flat_ (_tidy_) výstupu programu.
 
