@@ -64,5 +64,6 @@ if __name__ == "__main__":
     print(result)
 # -*- coding: utf-8 -*-
 
-# TODO reexport from client and domain.
 
+
+from cro.schedule.client import Client
