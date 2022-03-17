@@ -101,9 +101,9 @@ __Volání__
 ```python
     client = Client("plus")
 
-    stations: tuple[Station] = client.get_stations()
+    result: tuple[Station] = client.get_stations()
 
-    for station in stations:
+    for station in result:
         print(station)
 ```
 
