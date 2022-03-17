@@ -4,9 +4,9 @@ _Python domain model and HTTP REST API client for "Program vysílání ČRo"._
 
 ## Zadání
 
-- [ ] Získej program pro daný den a všechny stanice.
-- [ ] Získej program pro daný den a vybranou stanici.
-- [ ] Získej program pro daný den a daný rozhah hodin např.
+- [x] Získej program pro daný den a všechny stanice.
+- [x] Získej program pro daný den a vybranou stanici.
+- [ ] Získej program pro daný den a daný rozsah hodin např.
   - [ ] program od/do 12:00 (PM)
   - [ ] program od 06:00 do 12:00 (PM)
 - [ ] Umožni export do `pandas.DataFrame`
@@ -16,6 +16,7 @@ _Python domain model and HTTP REST API client for "Program vysílání ČRo"._
 - [ ] Vytvoři schéma databáze pro ukládání programu, možnost napojení na přepisy.
 - [ ] Vytvoř webvou apliakci pro prohlížení uložených programů.
 - [ ] Získej konkrétní pořad podle zadaného času.
+- [x] Získej seznam stanic.
 
 Návrh na podobu _flat_ (_tidy_) výstupu programu.
 
