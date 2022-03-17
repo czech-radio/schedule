@@ -44,7 +44,7 @@ https://api.rozhlas.cz/data/v2/schedule/day.json
 
 ```python
 client = Client()
-result = client.schedule()
+result = client.get_schedule()
 ```
 
 ### Konkrétní den a všechny stanice
