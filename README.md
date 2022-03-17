@@ -37,40 +37,49 @@ from cro.schedule import Client
 
 ### Aktuální den a všechny stanice
 
-```python
-client = Client()
-result = client.schedule()
-```
 __Endpoint__
 ```
 https://api.rozhlas.cz/data/v2/schedule/day.json
 ```
 
-### Konkrétní den a všechny stanice
-
 ```python
 client = Client()
-result = client.get_schedule(date = date(2022, 12, 1))
+result = client.schedule()
 ```
+
+### Konkrétní den a všechny stanice
+
 __Endpoint__
 ```
 https://api.rozhlas.cz/data/v2/schedule/day/[YYYY]/[MM]/[DD].json
 např. https://api.rozhlas.cz/data/v2/schedule/day/2019/09/01.json
 ```
 
+```python
+client = Client()
+result = client.get_schedule(date = date(2022, 12, 1))
+```
+
 ### Aktuální den a konkrétní stanice
 
-```python
-client = Client(station='plus')
-result = client.get_schedule()
-```
 __Endpoint__
 ```
 https://api.rozhlas.cz/data/v2/schedule/day/[STATION_ID].json
 např. https://api.rozhlas.cz/data/v2/schedule/day/plus.json
 ```
 
+```python
+client = Client(station='plus')
+result = client.get_schedule()
+```
+
 ### Konkrétní den a konkrétní stanici
+
+__Endpoint__
+```
+https://api.rozhlas.cz/data/v2/schedule/day/[YYYY]/[MM]/[DD]/[STATION_ID].json
+např. https://api.rozhlas.cz/data/v2/schedule/day/2019/09/01/plus.json
+```
 
 ```python
 
@@ -79,22 +88,47 @@ from datetime import date
 client = Client('plus')
 result = client.get_schedule(date = date(2021, 12, 31)
 ```
-__Endpoint__
-```
-https://api.rozhlas.cz/data/v2/schedule/day/[YYYY]/[MM]/[DD]/[STATION_ID].json
-např. https://api.rozhlas.cz/data/v2/schedule/day/2019/09/01/plus.json
-```
 
-### Seznam stanic a jejich zkratek
+### Seznam stanic
 
-```python
-
-result = Client.get_stations()
-```
 __Endpoint__
 ```
 https://api.rozhlas.cz/data/v2/meta/stations.json
 ```
+
+```python
+
+result = Client.get_stations()
+
+Station(id='radiozurnal', name='Radiožurnál', domain='radiozurnal', slogan='Vaše zpravodajství. Vaše rádio.', description='zpravodajství a publicistika')
+Station(id='dvojka', name='Dvojka', domain='dvojka', slogan='Rádio na vlně pohody', description='Rádio, které vás baví')
+Station(id='vltava', name='Vltava', domain='vltava', slogan='Biograf pro Vaše uši', description='zaměřeno na kulturu v širším slova smyslu')
+Station(id='plus', name='Plus', domain='plus', slogan='Pojďte s námi do hloubky!', description='analyticko-publicistická stanice')
+Station(id='radiozurnal-sport', name='Radiožurnál Sport', domain='sport', slogan='Nové digitální rádio pro fanoušky sportu', description='Nové digitální rádio pro fanoušky sportu')
+Station(id='radiowave', name='Radio Wave', domain='wave', slogan='wwwlna, která tě strhne!', description='vysílání pro mladé')
+Station(id='d-dur', name='D-dur', domain='d-dur', slogan='Klasická hudba od renesance až po 21. století v digitální kvalitě 24 hodin denně', description='klasická hudba od renesance až po 21. století')
+Station(id='jazz', name='Jazz', domain='jazz', slogan='', description='vysílání pro náročné jazzové posluchače')
+Station(id='radiojunior', name='Rádio Junior', domain='junior', slogan='', description='Nejlepší pohádky, nejhezčí písničky, zábavné soutěže a veselé povídání pro všechny děti, od rána až do večera.')
+Station(id='pohoda', name='Český rozhlas Pohoda', domain='pohoda', slogan='Písničky a vzpomínky', description='Písničky a vzpomínky')
+Station(id='webik', name='Rádio Junior Písničky', domain='webik', slogan='', description='Rádio Junior Písničky – písničky pro menší děti')
+Station(id='cro7', name='Radio Prague Int.', domain='cro7', slogan='Vysílání Českého rozhlasu do zahraničí', description='vysílání do zahraničí')
+Station(id='brno', name='Brno', domain='brno', slogan='Rozhlas naší Moravy', description='Rozhlas jižní Moravy. Evergreeny, informace, vzdělání, zábava')
+Station(id='cb', name='České Budějovice', domain='budejovice', slogan='Rádio Vašeho kraje', description='Reportáže z jižních Čech, písničky na přání a dechovka')
+Station(id='hradec', name='Hradec Králové', domain='hradec', slogan='Rádio Vašeho kraje', description='Seriózní a regionální. Zábava, písničky, soutěže')
+Station(id='kv', name='Karlovy Vary', domain='vary', slogan='', description='Zábavní hosté, užitečné rady a zprávy ze západu Čech')
+Station(id='liberec', name='Liberec', domain='liberec', slogan='', description='Zprávy ze severních Čech, zajímaví hosté, užitečné rady')
+Station(id='olomouc', name='Olomouc', domain='olomouc', slogan='Vaše moravské rádio', description='Denně s vámi. Reportáže, zábava a dobrá muzika')
+Station(id='ostrava', name='Ostrava', domain='ostrava', slogan='Rádio Vašeho kraje', description='Zprávy, rozhovory, magazíny, písničková přání, dechovky')
+Station(id='pardubice', name='Pardubice', domain='pardubice', slogan='Region jako na dlani', description='Informace, hudba a zábava pro východní Čechy')
+Station(id='plzen', name='Plzeň', domain='plzen', slogan='Rádio Vašeho kraje', description='Zábavní hosté, užitečné rady a zprávy ze západu Čech')
+Station(id='regina', name='Rádio DAB Praha', domain='dabpraha', slogan='Vaše pražské rádio', description='Právě teď v Praze - zajímaví hosté, hity 80. a 90. let')
+Station(id='strednicechy', name='Region', domain='region', slogan='Rádio Vašeho kraje', description='Informace ze středních Čech, české písničky a zábava')
+Station(id='sever', name='Sever', domain='sever', slogan='Rádio, které žije s Vámi', description='Zprávy ze severních Čech, zajímaví hosté, užitečné rady')
+Station(id='vysocina', name='Vysočina', domain='vysocina', slogan='Rádio Vašeho kraje', description='České písničky, zajímaví hosté, zprávy a doprava')
+Station(id='zlin', name='Zlín', domain='zlin', slogan='Rozhlas pro Zlínský kraj', description='Rozhlas pro Zlínský kraj')
+
+```
+
 
 ## Popis položek JSON objektu
 
