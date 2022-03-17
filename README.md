@@ -97,10 +97,18 @@ __Endpoint__
 https://api.rozhlas.cz/data/v2/meta/stations.json
 ```
 
+__Volání__
 ```python
+    client = Client("plus")
 
-result = Client.get_stations()
+    stations: tuple[Station] = client.get_stations()
 
+    for station in stations:
+        print(station)
+```
+
+__Výstup__
+```
 Station(id='radiozurnal', name='Radiožurnál', domain='radiozurnal', slogan='Vaše zpravodajství. Vaše rádio.', description='zpravodajství a publicistika')
 Station(id='dvojka', name='Dvojka', domain='dvojka', slogan='Rádio na vlně pohody', description='Rádio, které vás baví')
 Station(id='vltava', name='Vltava', domain='vltava', slogan='Biograf pro Vaše uši', description='zaměřeno na kulturu v širším slova smyslu')
