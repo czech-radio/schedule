@@ -6,10 +6,11 @@ Module contains HTTP REST API client.
 
 from enum import Enum
 from datetime import date, datetime
+from pydoc import describe
 
 from requests import get
 
-from cro.schedule._domain import Station
+from cro.schedule._domain import Station, Show, Person, Schedule
 
 
 __all__ = tuple([
@@ -25,14 +26,18 @@ class Stations(Enum):
 
 class Client:
     """
-    The Czech Radio schedule client.
+    The Czech Radio day schedule client.
     """
 
     __URL__ = "https://api.rozhlas.cz/data"
     __VERSION__ = 2
 
-    def __init__(self, station: str = None):
-        self._station = station
+    def __init__(self, station_id: str = None):
+        """
+        :param station_id: e.g. `radiozurnal`.
+        """
+        # Fetch the station.
+        self._station = filter(lambda x: x.id == station_id, type(self).get_stations())
 
     @property
     def date(self) -> date:
@@ -67,7 +72,7 @@ class Client:
 
         return tuple(stations)
 
-    def get_schedule(self, date: date = datetime.now()) -> dict:
+    def get_schedule(self, date: date = datetime.now()) -> Schedule:
         """
         Fetch the schedule for the given day and station.
 
@@ -75,32 +80,50 @@ class Client:
             >>> get_schedule(dt.now())
 
         """
-        return get(
+        data = get(
             f"{type(self).__URL__}/v{type(self).__VERSION__}/schedule/day/{date.year:04d}/{date.month:02d}/{date.day:02d}.json" \
             if self.station is None else \
             f"{type(self).__URL__}/v{type(self).__VERSION__}/schedule/day/{date.year:04d}/{date.month:02d}/{date.day:02d}/{self.station}.json"
-        ).json()
+        ).json()["data"]
+
+        shows = []
+
+        station_id = self.station
+
+        for item in data:
+            shows.append(Show(
+                id = item["id"],
+                title = item["title"],
+                description = item["description"],
+                since = item["since"],
+                till = item["till"],
+                persons = tuple((Person(p["id"], p["name"]) for p in item["persons"])),
+                repetition = item["repetition"]
+            )
+        )
+
+        return Schedule(
+            date = date,
+            station = self.station,
+            shows = shows
+        )
 
 
 if __name__ == "__main__":
 
     client = Client("plus")
 
-    stations: tuple[Station] = client.get_stations()
+    # Shows
+    result = client.get_schedule()
 
-    for station in stations:
-        print(station)
+    print(result.date)
+    print(result.station)
 
-    # 'web': 'https://radiozurnal.rozhlas.cz',
-    # 'player': 'https://www.mujrozhlas.cz/zive/radiozurnal',
-    # 'schedule': 'https://www.rozhlas.cz/radiozurnal/program/',
-    # 'rss': 'http://www.rozhlas.cz/export/radiozurnal/',
-    # 'podcast': 'https://api.rozhlas.cz/data/v2/podcast/station/radiozurnal.rss',
-    # 'iradio': 'http://www.rozhlas.cz/iradio/radiozurnal/',
-    # 'webcam': 'http://www.rozhlas.cz/radiozurnal/studio/',
-    # 'playlist': 'http://www.rozhlas.cz/radiozurnal/playlisty/',
-    # 'audiolog': 'http://www.rozhlas.cz/radiozurnal/zaznamy/',
-    # 'audioportal': 'http://www.rozhlas.cz/radiozurnal/audioarchiv/'}
+    # for item in result:
+    #     print(item)
 
-    # result = client.get_schedule()
-    # print(result["data"])
+    # Stations
+    # result: tuple[Station] = client.get_stations()
+
+    # for item in result:
+    #     print(item)

@@ -90,6 +90,37 @@ client = Client('plus')
 result = client.get_schedule(date = date(2021, 12, 31)
 ```
 
+### Seznam pořadů
+
+```python
+client = Client("plus")
+
+result: Schedule = client.get_schedule()
+
+for item in result.shows:
+    print(item)
+```
+
+Nebo pomocí iterátoru:
+
+```python
+for item in result:
+    print(item)
+
+```
+
+```
+Show(id=17683683, title='Zprávy', description='Aktuální události doma i ve světě', since='2022-03-17T00:00:00+01:00', till='2022-03-17T00:10:00+01:00', persons=(), repetition=False)
+Show(id=17683684, title='Dvacet minut Radiožurnálu', description='Hostem je Anna Richterová, bývalá prokurátorka Mezinárodního trestního tribunálu pro bývalou Jugoslávii. Zprávy z Ukrajiny potvrzují násilí na civilistech. Televizní záběry ukazují vybombardované obytné domy, školy i nemocnice. Bude možné ruské velitele stíhat kvůli válečným zločinům? Přichází v úvahu žaloba prezidenta Putina před mezinárodním soudem? Moderuje Vladimír Kroc.', since='2022-03-17T00:10:00+01:00', till='2022-03-17T00:36:00+01:00', persons=(), repetition=True)
+Show(id=17683685, title='Pro a proti', description='remiér Petr Fiala chce Rusko dostat vedle ekonomické, také do diplomatické izolace. Je rozumné s Ruskem zcela zpřetrhat vztahy a ztratit tak nad děním ve 146 milionové zemi disponující jadernými zbraněmi jakýkoli vliv? A je ekonomicky a patrně i politicky zdecimované Rusko to, co po skončení války potřebujeme, abychom učinili svět bezpečnějším? Debatovat budou ekonomický antropolog (působící na Fakultě sociálních věd UK) Martin Tremčinský a místopředseda sněmovního výboru pro evropské záležitosti Ondřej Kolář z TOP09.', since='2022-03-17T00:36:00+01:00', till='2022-03-17T01:00:00+01:00', persons=(), repetition=True)
+Show(id=17683686, title='Zprávy', description='Aktuální události doma i ve světě', since='2022-03-17T01:00:00+01:00', till='2022-03-17T01:05:00+01:00', persons=(), repetition=False)
+Show(id=17683687, title='Zprávy v angličtině/News in English', description='Pětiminutový přehled aktuálního dění v anglickém jazyce. News in English offers a concise, English-language overview of events in the Czech Republic in the areas of politics, the economy and culture.', since='2022-03-17T01:05:00+01:00', till='2022-03-17T01:10:00+01:00', persons=(), repetition=False)
+...
+
+```
+
+
+
 ### Seznam stanic
 
 __Endpoint__

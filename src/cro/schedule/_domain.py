@@ -6,7 +6,7 @@ Module contains domain model.
 
 
 from datetime import date
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from typing import Iterable, NewType
 
 
@@ -19,6 +19,8 @@ URL = NewType("URL", str)
 @dataclass(frozen=True)
 class Station:
     """
+    Station domain model.
+
     services: Dict[str, URL] e.g.
     - 'web': 'https://radiozurnal.rozhlas.cz',
     - 'player': 'https://www.mujrozhlas.cz/zive/radiozurnal',
@@ -30,8 +32,8 @@ class Station:
     - 'playlist': 'http://www.rozhlas.cz/radiozurnal/playlisty/',
     - 'audiolog': 'http://www.rozhlas.cz/radiozurnal/zaznamy/',
     - 'audioportal': 'http://www.rozhlas.cz/radiozurnal/audioarchiv/'
-
     """
+
     id: str
     name: str
     domain: str
@@ -41,50 +43,48 @@ class Station:
 
 
 @dataclass(frozen=True)
+class Person:
+    id: int
+    name: str
+
+
+@dataclass(frozen=True)
 class Show:
     id: int
     title: str
+    description: str
     since: date
     till: date
-    description: str
+    persons: tuple[Person]
+    repetition: bool
 
 
+@dataclass(frozen=False)
 class Schedule:
     """
     Schedule for a given date and station.
     """
 
-    def __init__(self, date: date, station: Station, shows: Iterable[Show]) -> None:
-        self._date = date
-        self._station = station
-        self._shows = tuple(shows)
-
-    @property
-    def date(self) -> date:
-        return self._date
-
-    @property
-    def station(self) -> Station:
-        return self._station
-
-    @property
-    def shows(self) -> tuple[Show]:
-        return self._shows
+    date: date
+    station: Station
+    shows: tuple[Show]
+    __counter: int = field(init=False, repr=False, default=0)
 
     def __str__(self) -> str:
         return f"{type(self).__name__}(date={self.date},station={self.station.name})"
 
-    __repr__ = __str__
-
     def __iter__(self):
-        return NotImplemented
+        return self
 
-    def __eq__(self, that: object) -> bool:
-        return isinstance(that, type(self)) \
-            and (that.date, that.station) == (self.date, self.station)
+    def __next__(self):
+        try:
+            result = self.shows[self.__counter]
+        except IndexError:
+            raise StopIteration
 
-    def __hash__(self) -> int:
-        return hash((type(self), self.date, self.station))
+        self.__counter += 1
+
+        return result
 
 
 if __name__ == "__main__":
