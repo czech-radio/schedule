@@ -1,6 +1,6 @@
 # Rozhlas Schedule
 
-_Python domain model and HTTP REST API client for "Program vysílání ČRo"._
+_Python HTTP REST API client for Czech Radio broadcast day schedule._
 
 ## Zadání
 
