@@ -61,7 +61,8 @@ class Client:
                 name = item["name"],
                 domain = item["domain"],
                 slogan = item["longdescription"]["slogan"],
-                description = item["description"]
+                description = item["description"],
+                services = item["services"]
             ))
 
         return tuple(stations)
@@ -89,8 +90,6 @@ if __name__ == "__main__":
 
     for station in stations:
         print(station)
-
-    # print(station["services"])
 
     # 'web': 'https://radiozurnal.rozhlas.cz',
     # 'player': 'https://www.mujrozhlas.cz/zive/radiozurnal',

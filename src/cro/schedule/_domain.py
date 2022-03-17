@@ -7,20 +7,37 @@ Module contains domain model.
 
 from datetime import date
 from dataclasses import dataclass
-from typing import Iterable
+from typing import Iterable, NewType
 
 
 __all__ = tuple(["Station", "Schedule"])
 
 
+URL = NewType("URL", str)
+
+
 @dataclass(frozen=True)
 class Station:
+    """
+    services: Dict[str, URL] e.g.
+    - 'web': 'https://radiozurnal.rozhlas.cz',
+    - 'player': 'https://www.mujrozhlas.cz/zive/radiozurnal',
+    - 'schedule': 'https://www.rozhlas.cz/radiozurnal/program/',
+    - 'rss': 'http://www.rozhlas.cz/export/radiozurnal/',
+    - 'podcast': 'https://api.rozhlas.cz/data/v2/podcast/station/radiozurnal.rss',
+    - 'iradio': 'http://www.rozhlas.cz/iradio/radiozurnal/',
+    - 'webcam': 'http://www.rozhlas.cz/radiozurnal/studio/',
+    - 'playlist': 'http://www.rozhlas.cz/radiozurnal/playlisty/',
+    - 'audiolog': 'http://www.rozhlas.cz/radiozurnal/zaznamy/',
+    - 'audioportal': 'http://www.rozhlas.cz/radiozurnal/audioarchiv/'
+
+    """
     id: str
     name: str
     domain: str
     slogan: str
     description: str
-    # services: tuple[str]
+    services: dict[str, URL]
 
 
 @dataclass(frozen=True)
@@ -30,7 +47,6 @@ class Show:
     since: date
     till: date
     description: str
-
 
 
 class Schedule:
