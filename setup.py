@@ -7,9 +7,14 @@ NAMESPACE = "cro"
 setup(
     name="cro.schedule",
     version="0.2.0",
+    package_dir={"": "src"},
+    packages=find_namespace_packages(where="src", include=[f"{NAMESPACE}.*"]),
     install_requires=[
         "requests",
     ],
-    package_dir={"": "src"},
-    packages=find_namespace_packages(where="src", include=[f"{NAMESPACE}.*"]),
+    extras_require={
+        "test": ["pytest", "pytest-html"],
+        "docs": ["sphinx"],
+        "lint": ["black", "flake8"],
+    },
 )
