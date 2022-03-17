@@ -32,7 +32,7 @@ Nyní můžeme s balíkem pracovat v našich skriptech.
 
 __[4]__ Deakivace virtuálního prostředi se provede příkazem `deactivate` nebo stačí aktivivat jiné virtuáln prostředí.
 
-    dectivate
+    deactivate
 
  Další informace k virtuálním prostředím naleznete [zde](https://docs.python.org/3/library/venv.html)
 
