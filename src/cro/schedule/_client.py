@@ -10,7 +10,7 @@ from pydoc import describe
 
 from requests import get
 
-from cro.schedule._domain import Station, Show, Person, Schedule, Type
+from cro.schedule._domain import Station, Show, Person, Schedule, Kind
 
 
 __all__ = tuple(
@@ -31,15 +31,17 @@ class Client:
     The Czech Radio day schedule client.
     """
 
-    __URL__ = "https://api.rozhlas.cz/data"
-    __VERSION__ = 2
+    __URL__ = f"https://api.rozhlas.cz/data/v2"
 
-    def __init__(self, station_id: str = None):
+    def __init__(self, station_id: str):
         """
         :param station_id: e.g. `radiozurnal`.
         """
-        # Fetch the station.
-        self._station = filter(lambda x: x.id == station_id, type(self).get_stations())
+        # Fetch the station and pick the right one.
+        try:
+            self._station = tuple(filter(lambda x: x.id == station_id, self.get_stations()))[0]
+        except IndexError:
+            raise ValueError(f"The station with id `{station_id}` does not exist.")
 
     @property
     def date(self) -> date:
@@ -49,18 +51,16 @@ class Client:
     def station(self) -> Station:
         return self._station
 
-    @classmethod
-    def get_stations(cls) -> tuple[Station]:
+    def get_stations(self) -> tuple[Station]:
         """
         Fetch the available stations.
 
         Examples:
             >>> get_stations()
         """
-        data = get(f"{cls.__URL__}/v{cls.__VERSION__}/meta/stations.json").json()[
+        data = get(f"{type(self).__URL__}/meta/stations.json").json()[
             "data"
         ]
-
         stations = []
         for item in data:
             stations.append(
@@ -79,43 +79,37 @@ class Client:
     def get_schedule(self, date: date = datetime.now()) -> Schedule:
         """
         Fetch the schedule for the given day and station.
-
         Examples:
             >>> get_schedule(dt.now())
-
         """
         data = get(
-            f"{type(self).__URL__}/v{type(self).__VERSION__}/schedule/day/{date.year:04d}/{date.month:02d}/{date.day:02d}.json"
-            if self.station is None
-            else f"{type(self).__URL__}/v{type(self).__VERSION__}/schedule/day/{date.year:04d}/{date.month:02d}/{date.day:02d}/{self.station}.json"
+             f"{type(self).__URL__}/schedule/day/{date.year:04d}/{date.month:02d}/{date.day:02d}/{self.station.id}.json"
         ).json()["data"]
 
         shows = []
 
-        station_id = self.station
-
         for item in data:
-            shows.append(
-                Show(
-                    id=item["id"],
-                    type=Type(
-                        id=item["type"]["id"],
-                        code=item["type"]["code"],
-                        name=item["type"]["name"],
-                    ),
-                    title=item["title"],
-                    description=item["description"],
-                    since=item["since"],
-                    till=item["till"],
-                    persons=tuple(
-                        (Person(p["id"], p["name"]) for p in item["persons"])
-                    ),
-                    repetition=item["repetition"],
-                )
+            shows.append(Show(
+                id = item["id"],
+                title = item["title"],
+                station = self.station,
+                kind =Kind(
+                    id=item["type"]["id"],
+                    code=item["type"]["code"],
+                    name=item["type"]["name"]
+                ),
+                description = item["description"],
+                since = item["since"],
+                till = item["till"],
+                persons = tuple((Person(p["id"], p["name"]) for p in item["persons"])),
+                repetition = item["repetition"]
             )
-
-        return Schedule(date=date, station=self.station, shows=shows)
-
+        )
+        return Schedule(
+            date = date,
+            station = self.station,
+            shows = shows
+        )
 
 if __name__ == "__main__":
 
@@ -123,12 +117,10 @@ if __name__ == "__main__":
 
     # Shows
     result = client.get_schedule()
+    print(result)
 
-    print(result.date)
-    print(result.station)
-
-    # for item in result:
-    #     print(item)
+    for item in result:
+        print(item)
 
     # Stations
     # result: tuple[Station] = client.get_stations()

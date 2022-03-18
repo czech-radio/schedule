@@ -49,7 +49,7 @@ class Person:
 
 
 @dataclass(frozen=True)
-class Type:
+class Kind:
     id: int
     code: str
     name: str
@@ -58,8 +58,9 @@ class Type:
 @dataclass(frozen=True)
 class Show:
     id: int
-    type: Type
+    kind: Kind
     title: str
+    station: Station
     description: str
     since: date
     till: date
