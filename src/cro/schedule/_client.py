@@ -13,10 +13,12 @@ from requests import get
 from cro.schedule._domain import Station, Show, Person, Schedule, Type
 
 
-__all__ = tuple([
-    "Client",
-    "Stations",
-])
+__all__ = tuple(
+    [
+        "Client",
+        "Stations",
+    ]
+)
 
 
 class Stations(Enum):
@@ -55,20 +57,22 @@ class Client:
         Examples:
             >>> get_stations()
         """
-        data = get(
-            f"{cls.__URL__}/v{cls.__VERSION__}/meta/stations.json"
-        ).json()["data"]
+        data = get(f"{cls.__URL__}/v{cls.__VERSION__}/meta/stations.json").json()[
+            "data"
+        ]
 
         stations = []
         for item in data:
-            stations.append(Station(
-                id = item["id"],
-                name = item["name"],
-                domain = item["domain"],
-                slogan = item["longdescription"]["slogan"],
-                description = item["description"],
-                services = item["services"]
-            ))
+            stations.append(
+                Station(
+                    id=item["id"],
+                    name=item["name"],
+                    domain=item["domain"],
+                    slogan=item["longdescription"]["slogan"],
+                    description=item["description"],
+                    services=item["services"],
+                )
+            )
 
         return tuple(stations)
 
@@ -81,9 +85,9 @@ class Client:
 
         """
         data = get(
-            f"{type(self).__URL__}/v{type(self).__VERSION__}/schedule/day/{date.year:04d}/{date.month:02d}/{date.day:02d}.json" \
-            if self.station is None else \
-            f"{type(self).__URL__}/v{type(self).__VERSION__}/schedule/day/{date.year:04d}/{date.month:02d}/{date.day:02d}/{self.station}.json"
+            f"{type(self).__URL__}/v{type(self).__VERSION__}/schedule/day/{date.year:04d}/{date.month:02d}/{date.day:02d}.json"
+            if self.station is None
+            else f"{type(self).__URL__}/v{type(self).__VERSION__}/schedule/day/{date.year:04d}/{date.month:02d}/{date.day:02d}/{self.station}.json"
         ).json()["data"]
 
         shows = []
@@ -93,26 +97,24 @@ class Client:
         for item in data:
             shows.append(
                 Show(
-                    id = item["id"],
-                    type = Type(
-                        id = item["type"]["id"],
-                        code = item["type"]["code"],
-                        name = item["type"]["name"]
+                    id=item["id"],
+                    type=Type(
+                        id=item["type"]["id"],
+                        code=item["type"]["code"],
+                        name=item["type"]["name"],
                     ),
-                    title = item["title"],
-                    description = item["description"],
-                    since = item["since"],
-                    till = item["till"],
-                    persons = tuple((Person(p["id"], p["name"]) for p in item["persons"])),
-                    repetition = item["repetition"]
+                    title=item["title"],
+                    description=item["description"],
+                    since=item["since"],
+                    till=item["till"],
+                    persons=tuple(
+                        (Person(p["id"], p["name"]) for p in item["persons"])
+                    ),
+                    repetition=item["repetition"],
                 )
             )
 
-        return Schedule(
-            date = date,
-            station = self.station,
-            shows = shows
-        )
+        return Schedule(date=date, station=self.station, shows=shows)
 
 
 if __name__ == "__main__":
