@@ -6,7 +6,7 @@ NAMESPACE = "cro"
 
 setup(
     name="cro.schedule",
-    version="0.5.0",
+    version="0.6.0",
     package_dir={"": "src"},
     packages=find_namespace_packages(where="src", include=[f"{NAMESPACE}.*"]),
     install_requires=[

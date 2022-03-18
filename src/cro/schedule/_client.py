@@ -108,12 +108,6 @@ class Client:
             shows = shows
         )
 
-    def get_schedules(self, date: date = datetime.now()) -> tuple[Schedule]:
-        """
-        Fetch the availaible schedules for the given date.
-        """
-        return NotImplemented
-
 
 if __name__ == "__main__":
 
