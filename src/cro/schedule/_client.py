@@ -10,7 +10,7 @@ from pydoc import describe
 
 from requests import get
 
-from cro.schedule._domain import Station, Show, Person, Schedule
+from cro.schedule._domain import Station, Show, Person, Schedule, Type
 
 
 __all__ = tuple([
@@ -91,16 +91,22 @@ class Client:
         station_id = self.station
 
         for item in data:
-            shows.append(Show(
-                id = item["id"],
-                title = item["title"],
-                description = item["description"],
-                since = item["since"],
-                till = item["till"],
-                persons = tuple((Person(p["id"], p["name"]) for p in item["persons"])),
-                repetition = item["repetition"]
+            shows.append(
+                Show(
+                    id = item["id"],
+                    type = Type(
+                        id = item["type"]["id"],
+                        code = item["type"]["code"],
+                        name = item["type"]["name"]
+                    ),
+                    title = item["title"],
+                    description = item["description"],
+                    since = item["since"],
+                    till = item["till"],
+                    persons = tuple((Person(p["id"], p["name"]) for p in item["persons"])),
+                    repetition = item["repetition"]
+                )
             )
-        )
 
         return Schedule(
             date = date,

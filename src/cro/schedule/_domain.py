@@ -49,8 +49,16 @@ class Person:
 
 
 @dataclass(frozen=True)
+class Type:
+    id: int
+    code: str
+    name: str
+
+
+@dataclass(frozen=True)
 class Show:
     id: int
+    type: Type
     title: str
     description: str
     since: date
