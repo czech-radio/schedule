@@ -33,7 +33,7 @@ stations: tuple(Station) = client.get_stations()  # Fetch the available stations
 
 ## Install
 
-__[1]__ Naklonuj projekt lokálně a přesuň se do adresáře.
+__1. Naklonuj projekt lokálně a přesuň se do adresáře.__
 
     git clone https://github.com/czech-radio/cro.schedule.git
     cd cro.schedule
@@ -42,7 +42,7 @@ Vytvoř virtuální prostředí v adresáři projektu. Níže uvedený příkaz 
 
     py -3.10 -m venv .venv
 
-__[2]__ Aktivujeme virtuální prostředí tzn., že všechny instalace a spouštění interpreteru budou probíhat v adresáři `.venv`.
+__2. Aktivujeme virtuální prostředí tzn., že všechny instalace a spouštění interpreteru budou probíhat v adresáři `.venv`.__
 
 __Windows__
 
@@ -58,7 +58,7 @@ Měli bychom vidět podobný prefix s názvem `(.venv)` v terminálu, který uka
 
 Jako jméno jsme mohli zvolit cokoliv, ale `.venv` je standardem (je např. uveden i v souboru `.gitignore`, protože ho rozhodně nechceme přidávat do repozitáře).
 
-__[3]__ Nainstalujeme si projekt (balík).
+__3. Nainstalujeme si projekt (balík).__
 
 Instalace balíku v produkčním režimu.
 
@@ -70,7 +70,7 @@ Instalace balíku ve vývojovém režimu.
 
 Nyní můžeme s balíkem pracovat v našich skriptech.
 
-__[4]__ Deakivace virtuálního prostředi se provede příkazem `deactivate` nebo stačí aktivivat jiné virtuáln prostředí.
+__4. Deakivace virtuálního prostředi se provede příkazem `deactivate` nebo stačí aktivivat jiné virtuáln prostředí.__
 
     deactivate
 
