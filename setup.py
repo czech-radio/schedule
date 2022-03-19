@@ -6,15 +6,16 @@ NAMESPACE = "cro"
 
 setup(
     name="cro.schedule",
-    version="0.6.0",
+    version="0.8.0",
     package_dir={"": "src"},
     packages=find_namespace_packages(where="src", include=[f"{NAMESPACE}.*"]),
     install_requires=[
+        "pandas",
         "requests",
     ],
     extras_require={
         "test": ["pytest", "pytest-html"],
-        "docs": ["sphinx"],
+        "docs": ["sphinx", "jupyterlab"],
         "lint": ["black", "flake8"],
     },
 )

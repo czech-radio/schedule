@@ -95,6 +95,20 @@ class Schedule:
 
         return result
 
+    def report(format: str = None) -> 'pandas.dataframe':
+        """
+          Návrh na podobu _flat_ (_tidy_) výstupu programu.
+
+        |id|station|date|since|till|title|description|
+        |--|-------|----|-----|----|-----|-----------|
+        | | | | | | | |
+        | | | | | | | |
+        | | | | | | | |
+
+        TODO ^^^ Doplnit příklady řádků.
+        """
+        return NotImplemented
+
 
 if __name__ == "__main__":
 

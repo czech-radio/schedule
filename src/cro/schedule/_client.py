@@ -22,6 +22,17 @@ class Client:
     The Czech Radio day REST API v2 client to fetch schedeles and stations data.
     """
 
+    # Interní dokumehtace položek JSON objektu
+    # - `station` textové ID stanice (číselník viz https://api.rozhlas.cz/data/v2/meta/stations.json )
+    # - `id` NEunikátní identifikátor převzatý z interního systému, ve kterém se plánuje vysílání; položka má vždy nějakou hodnotu
+    # - `title` název pořadu; položka má vždy nějakou hodnotu
+    # - `description` - popis pořadu; položka může být prázdná
+    # - `since` - začátek vysílání pořadu; položka má vždy nějakou hodnotu
+    # - `till` - konec vysílání pořadu; položka má vždy nějakou hodnotu
+    # - `type` - nedokumentováno
+    # - `edition` - pokud pro pořad existuje tzv. "webová vizitka", položka obsahuje objekt s příslušnými informacemi (např asset - vizuál pořadu); položka ovšem může být prázdná, vizitky totiž zatím neexistují pro všechny pořady
+    # - `persons` pole objektů moderátorů pořadu (tzv. osoby), kterých může být 0-N (obsahuje kromě jiného také asset - fotografii moderátora); položka může být prázdná, protože ne každý pořad někdo moderuje a také ne pro všechny osoby máme k dispozici fotografie
+
     __URL__: str = f"https://api.rozhlas.cz/data/v2"
 
     def __init__(self, station_id: str):
@@ -29,7 +40,7 @@ class Client:
         :param station_id: e.g. `radiozurnal`.
         """
         try: # Fetch the station and pick the right one.
-            self._station = self.get_station(station_id)
+            self._station = self.get_station(station_id.lower())
         except IndexError:
             raise ValueError(f"The station with id `{self.station_id}` does not exist.")
 
@@ -69,7 +80,7 @@ class Client:
                 services=item["services"],
             )
 
-    def get_schedules(self, date: date = datetime.now()) -> Schedule:
+    def get_schedule(self, date: date = datetime.now()) -> Schedule:
         """
         Fetch the availaible schedule for the given date.
 
