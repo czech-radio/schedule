@@ -6,6 +6,7 @@ Module contains HTTP REST API client.
 
 from enum import Enum
 from datetime import date, datetime
+from typing import Generator
 
 from requests import get
 
@@ -48,7 +49,7 @@ class Client:
         except IndexError:
             raise ValueError(f"The station with id `{id}` does not exist.")
 
-    def get_stations(self) -> tuple[Station]:
+    def get_stations(self) -> Generator[Station, None, None]:
         """
         Fetch the available stations.
 
@@ -58,29 +59,26 @@ class Client:
         data = get(f"{type(self).__URL__}/meta/stations.json").json()[
             "data"
         ]
-        stations = []
         for item in data:
-            stations.append(
-                Station(
-                    id=item["id"],
-                    name=item["name"],
-                    domain=item["domain"],
-                    slogan=item["longdescription"]["slogan"],
-                    description=item["description"],
-                    services=item["services"],
-                )
+           yield Station(
+                id=item["id"],
+                name=item["name"],
+                domain=item["domain"],
+                slogan=item["longdescription"]["slogan"],
+                description=item["description"],
+                services=item["services"],
             )
-        return tuple(stations)
 
-    def get_schedule(self, date: date = datetime.now()) -> Schedule:
+    def get_schedules(self, date: date = datetime.now()) -> Schedule:
         """
         Fetch the availaible schedule for the given date.
 
         Examples:
             >>> get_schedule(dt.now())
         """
+
         data = get(
-             f"{type(self).__URL__}/schedule/day/{date.year:04d}/{date.month:02d}/{date.day:02d}/{self.station.id}.json"
+            f"{type(self).__URL__}/schedule/day/{date.year:04d}/{date.month:02d}/{date.day:02d}/{self.station.id}.json"
         ).json()["data"]
 
         shows = []
@@ -113,10 +111,10 @@ if __name__ == "__main__":
 
     client = Client("plus")
 
-    result: tuple[Schedule] = client.get_schedule()
-    for item in result:
-        print(item)
-
-    # result: tuple[Station] = client.get_stations()
+    # result: tuple[Schedule] = client.get_schedule()
     # for item in result:
     #     print(item)
+
+    result: tuple[Station] = client.get_stations()
+    for item in result:
+        print(item)
