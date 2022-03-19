@@ -18,7 +18,7 @@ __all__ = tuple(["Client"])
 
 class Client:
     """
-    The Czech Radio day REST API v2 client to fetch schedeles and stations data.
+    The Czech Radio day REST API v2 client to fetch schedule and station data.
     """
 
     __URL__: str = f"https://api.rozhlas.cz/data/v2"
