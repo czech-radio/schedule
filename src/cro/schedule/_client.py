@@ -107,7 +107,7 @@ class Client:
             )
         return Schedule(date=date, station=self.station, shows=shows)
 
-    def get_week_schedule(self, date = datetime.now()) -> tuple[Schedule]:
+    def get_week_schedule(self, date=datetime.now()) -> tuple[Schedule]:
         """
         Fetch the availaible schedule for the given week.
 
@@ -118,8 +118,12 @@ class Client:
         """
         # Get all days of the week.
         import datetime as dt
-        dates = [date + dt.timedelta(days=i) for i in range(0 - date.weekday(), 7 - date.weekday())]
-        return tuple([ self.get_day_schedule(date) for date in dates])
+
+        dates = [
+            date + dt.timedelta(days=i)
+            for i in range(0 - date.weekday(), 7 - date.weekday())
+        ]
+        return tuple([self.get_day_schedule(date) for date in dates])
 
     def get_month_schedule(self, date: datetime.now()) -> tuple[Schedule]:
         """
@@ -132,5 +136,8 @@ class Client:
         """
         # Get all days of the month.
         import datetime as dt
+
         nb_days = monthrange(date.year, date.month)[1]
-        return tuple([dt.date(date.year, date.month, day) for day in range(1, nb_days+1)])
+        return tuple(
+            [dt.date(date.year, date.month, day) for day in range(1, nb_days + 1)]
+        )
