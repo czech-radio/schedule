@@ -9,6 +9,7 @@ from datetime import date
 from dataclasses import dataclass, field
 from typing import Iterable, NewType
 
+import pandas as pd
 
 __all__ = tuple(["Station", "Schedule", "Show", "Person"])
 
@@ -95,7 +96,7 @@ class Schedule:
 
         return result
 
-    def report(format: str = None) -> "pandas.dataframe":
+    def report(format: str = None) -> pd.dataframe:
         """
           Návrh na podobu _flat_ (_tidy_) výstupu programu.
 
