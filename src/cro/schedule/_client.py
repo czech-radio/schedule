@@ -21,17 +21,6 @@ class Client:
     The Czech Radio day REST API v2 client to fetch schedeles and stations data.
     """
 
-    # Interní dokumehtace položek JSON objektu
-    # - `station` textové ID stanice (číselník viz https://api.rozhlas.cz/data/v2/meta/stations.json )
-    # - `id` NEunikátní identifikátor převzatý z interního systému, ve kterém se plánuje vysílání; položka má vždy nějakou hodnotu
-    # - `title` název pořadu; položka má vždy nějakou hodnotu
-    # - `description` - popis pořadu; položka může být prázdná
-    # - `since` - začátek vysílání pořadu; položka má vždy nějakou hodnotu
-    # - `till` - konec vysílání pořadu; položka má vždy nějakou hodnotu
-    # - `type` - nedokumentováno
-    # - `edition` - pokud pro pořad existuje tzv. "webová vizitka", položka obsahuje objekt s příslušnými informacemi (např asset - vizuál pořadu); položka ovšem může být prázdná, vizitky totiž zatím neexistují pro všechny pořady
-    # - `persons` pole objektů moderátorů pořadu (tzv. osoby), kterých může být 0-N (obsahuje kromě jiného také asset - fotografii moderátora); položka může být prázdná, protože ne každý pořad někdo moderuje a také ne pro všechny osoby máme k dispozici fotografie
-
     __URL__: str = f"https://api.rozhlas.cz/data/v2"
 
     def __init__(self, station_id: str):
@@ -128,8 +117,13 @@ class Client:
         return schedules
 
     def get_month_schedule(self, date: datetime.now()) -> Schedule:
+        """
+        :param date: Any date in the month.
+        """
         # Get all days of the month.
-        # dates = [date + datetime.timedelta(days=i) for i in range(0 - date.weekday(), 7 - date.weekday())]
-        # schedules = [ self.get_day_schedule(date) for date in dates]
-        # return schedules
+        import datetime
+        from calendar import monthrange
+        nb_days = monthrange(date.year, date.month)[1]
+        return [datetime.date(date.year, date.month, day) for day in range(1, nb_days+1)]
+
         return NotImplemented
