@@ -6,6 +6,8 @@ Module contains HTTP REST API client.
 
 from enum import Enum
 from datetime import date, datetime
+from calendar import monthrange
+
 
 from requests import get
 
@@ -106,24 +108,20 @@ class Client:
             )
         return Schedule(date=date, station=self.station, shows=shows)
 
-    def get_week_schedule(self, date = datetime.now()) -> Schedule:
+    def get_week_schedule(self, date = datetime.now()) -> tuple[Schedule]:
         """
         :param date: Any date in week
         """
-        import datetime
         # Get all days of the week.
-        dates = [date + datetime.timedelta(days=i) for i in range(0 - date.weekday(), 7 - date.weekday())]
-        schedules = [ self.get_day_schedule(date) for date in dates]
-        return schedules
+        import datetime as dt
+        dates = [date + dt.timedelta(days=i) for i in range(0 - date.weekday(), 7 - date.weekday())]
+        return tuple([ self.get_day_schedule(date) for date in dates])
 
     def get_month_schedule(self, date: datetime.now()) -> Schedule:
         """
         :param date: Any date in the month.
         """
         # Get all days of the month.
-        import datetime
-        from calendar import monthrange
+        import datetime as dt
         nb_days = monthrange(date.year, date.month)[1]
-        return [datetime.date(date.year, date.month, day) for day in range(1, nb_days+1)]
-
-        return NotImplemented
+        return tuple([dt.date(date.year, date.month, day) for day in range(1, nb_days+1)])
