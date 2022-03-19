@@ -121,9 +121,14 @@ class Client:
         dates = [date + dt.timedelta(days=i) for i in range(0 - date.weekday(), 7 - date.weekday())]
         return tuple([ self.get_day_schedule(date) for date in dates])
 
-    def get_month_schedule(self, date: datetime.now()) -> Schedule:
+    def get_month_schedule(self, date: datetime.now()) -> tuple[Schedule]:
         """
-        :param date: Any date in the month.
+        Fetch the availaible schedule for the given month.
+
+        :param date: Any date in month
+
+        Examples:
+            >>> get_month_schedule(dt.now())
         """
         # Get all days of the month.
         import datetime as dt
