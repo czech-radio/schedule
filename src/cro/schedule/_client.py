@@ -77,9 +77,8 @@ class Client:
         Fetch the availaible schedule for the given date.
 
         Examples:
-            >>> get_schedule(dt.now())
+            >>> get_day_schedule(dt.now())
         """
-
         data = get(
             f"{type(self).__URL__}/schedule/day/{date.year:04d}/{date.month:02d}/{date.day:02d}/{self.station.id}.json"
         ).json()["data"]
@@ -110,7 +109,12 @@ class Client:
 
     def get_week_schedule(self, date = datetime.now()) -> tuple[Schedule]:
         """
+        Fetch the availaible schedule for the given week.
+
         :param date: Any date in week
+
+        Examples:
+            >>> get_week_schedule(dt.now())
         """
         # Get all days of the week.
         import datetime as dt
