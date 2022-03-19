@@ -99,7 +99,7 @@ Pokud chceme spustit testy, použijeme následující příkaz.
 
     pytest -sv
 
-## resources
+## Resources
 
 - https://data.irozhlas.cz/opendata/
 - https://cs.wikipedia.org/wiki/%C4%8Cesk%C3%BD_rozhlas
