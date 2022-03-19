@@ -4,19 +4,17 @@ _Python HTTP REST API client for Czech Radio broadcast day schedule._
 
 ## Features
 
-- [x] Získej program pro daný den a všechny stanice.
-- [x] Získej program pro daný den a vybranou stanici.
+- [x] Získej seznam dostupných stanic.
+- [x] Získej program pro vybranou stanici a daný den.
+- [x] Získej program pro vybranou stanici a daný týden.
+- [x] Získej program pro vybranou stanici a daný měsíc.
 - [ ] Získej program pro daný den a daný rozsah hodin např.
   - [ ] program od/do 12:00 (PM)
   - [ ] program od 06:00 do 12:00 (PM)
 - [ ] Umožni export do `pandas.DataFrame`
-- [ ] Program by měl uchovávat atributy `date: Date` a `station: String | Station`.
-- [ ] Program by měl být iterátor, který krokuje po jednotlivých pořadech.
-- [ ] Pořad by měl uchovávvat atributy, `id`, `since Date`, `till: Date`, `title: String`, `description: String`, dále moderátor a počet osob?
 - [ ] Vytvoři schéma databáze pro ukládání programu, možnost napojení na přepisy.
-- [ ] Vytvoř webvou apliakci pro prohlížení uložených programů.
+- [ ] Vytvoř webvou aplikaci pro prohlížení uložených programů.
 - [ ] Získej konkrétní pořad podle zadaného času.
-- [x] Získej seznam stanic.
 
 ## Usage
 
