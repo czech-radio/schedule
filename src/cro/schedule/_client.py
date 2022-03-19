@@ -81,7 +81,7 @@ class Client:
             ]
         )
 
-    def get_schedule(self, date: date = datetime.now()) -> Schedule:
+    def get_day_schedule(self, date: date = datetime.now()) -> Schedule:
         """
         Fetch the availaible schedule for the given date.
 
@@ -116,3 +116,20 @@ class Client:
                 )
             )
         return Schedule(date=date, station=self.station, shows=shows)
+
+    def get_week_schedule(self, date = datetime.now()) -> Schedule:
+        """
+        :param date: Any date in week
+        """
+        import datetime
+        # Get all days of the week.
+        dates = [date + datetime.timedelta(days=i) for i in range(0 - date.weekday(), 7 - date.weekday())]
+        schedules = [ self.get_day_schedule(date) for date in dates]
+        return schedules
+
+    def get_month_schedule(self, date: datetime.now()) -> Schedule:
+        # Get all days of the month.
+        # dates = [date + datetime.timedelta(days=i) for i in range(0 - date.weekday(), 7 - date.weekday())]
+        # schedules = [ self.get_day_schedule(date) for date in dates]
+        # return schedules
+        return NotImplemented
