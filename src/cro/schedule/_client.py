@@ -6,11 +6,11 @@ Module contains HTTP REST API client.
 
 from enum import Enum
 from datetime import date, datetime
-from typing import Generator
 
 from requests import get
 
-from cro.schedule._domain import Station, Show, Person, Schedule, Kind
+from cro.schedule._domain import Station, Schedule
+from cro.schedule._domain import Show, Person, Kind # package protected
 
 
 __all__ = tuple(["Client"]
@@ -60,7 +60,7 @@ class Client:
         except IndexError:
             raise ValueError(f"The station with id `{id}` does not exist.")
 
-    def get_stations(self) -> Generator[Station, None, None]:
+    def get_stations(self) -> tuple[Station]:
         """
         Fetch the available stations.
 
@@ -70,15 +70,16 @@ class Client:
         data = get(f"{type(self).__URL__}/meta/stations.json").json()[
             "data"
         ]
-        for item in data:
-           yield Station(
+        return tuple([
+            Station(
                 id=item["id"],
                 name=item["name"],
                 domain=item["domain"],
                 slogan=item["longdescription"]["slogan"],
                 description=item["description"],
                 services=item["services"],
-            )
+            ) for item in data]
+        )
 
     def get_schedule(self, date: date = datetime.now()) -> Schedule:
         """

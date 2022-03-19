@@ -1,5 +1,9 @@
 # -*- coding: utf-8 -*-
 
+"""
+Contains tests for REST client.
+"""
+
 import pytest
 
 from cro.schedule import Client
