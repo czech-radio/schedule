@@ -11,7 +11,7 @@ from cro.schedule import Client
 
 @pytest.fixture
 def client():
-    return Client('plus')
+    return Client("plus")
 
 
 def test_that_schedule_is_retrieved(client):

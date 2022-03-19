@@ -10,11 +10,10 @@ from datetime import date, datetime
 from requests import get
 
 from cro.schedule._domain import Station, Schedule
-from cro.schedule._domain import Show, Person, Kind # package protected
+from cro.schedule._domain import Show, Person, Kind  # package protected
 
 
-__all__ = tuple(["Client"]
-)
+__all__ = tuple(["Client"])
 
 
 class Client:
@@ -39,7 +38,7 @@ class Client:
         """
         :param station_id: e.g. `radiozurnal`.
         """
-        try: # Fetch the station and pick the right one.
+        try:  # Fetch the station and pick the right one.
             self._station = self.get_station(station_id.lower())
         except IndexError:
             raise ValueError(f"The station with id `{self.station_id}` does not exist.")
@@ -55,7 +54,7 @@ class Client:
         """
         Fetch the available station with the given id.
         """
-        try: # Fetch the station and pick the right one.
+        try:  # Fetch the station and pick the right one.
             return tuple(filter(lambda x: x.id == id, self.get_stations()))[0]
         except IndexError:
             raise ValueError(f"The station with id `{id}` does not exist.")
@@ -67,18 +66,19 @@ class Client:
         Examples:
             >>> get_stations()
         """
-        data = get(f"{type(self).__URL__}/meta/stations.json").json()[
-            "data"
-        ]
-        return tuple([
-            Station(
-                id=item["id"],
-                name=item["name"],
-                domain=item["domain"],
-                slogan=item["longdescription"]["slogan"],
-                description=item["description"],
-                services=item["services"],
-            ) for item in data]
+        data = get(f"{type(self).__URL__}/meta/stations.json").json()["data"]
+        return tuple(
+            [
+                Station(
+                    id=item["id"],
+                    name=item["name"],
+                    domain=item["domain"],
+                    slogan=item["longdescription"]["slogan"],
+                    description=item["description"],
+                    services=item["services"],
+                )
+                for item in data
+            ]
         )
 
     def get_schedule(self, date: date = datetime.now()) -> Schedule:
@@ -96,37 +96,23 @@ class Client:
         shows = []
 
         for item in data:
-            shows.append(Show(
-                id = item["id"],
-                title = item["title"],
-                station = self.station,
-                kind =Kind(
-                    id=item["type"]["id"],
-                    code=item["type"]["code"],
-                    name=item["type"]["name"]
-                ),
-                description = item["description"],
-                since = item["since"],
-                till = item["till"],
-                persons = tuple((Person(p["id"], p["name"]) for p in item["persons"])),
-                repetition = item["repetition"]
+            shows.append(
+                Show(
+                    id=item["id"],
+                    title=item["title"],
+                    station=self.station,
+                    kind=Kind(
+                        id=item["type"]["id"],
+                        code=item["type"]["code"],
+                        name=item["type"]["name"],
+                    ),
+                    description=item["description"],
+                    since=item["since"],
+                    till=item["till"],
+                    persons=tuple(
+                        (Person(p["id"], p["name"]) for p in item["persons"])
+                    ),
+                    repetition=item["repetition"],
+                )
             )
-        )
-        return Schedule(
-            date = date,
-            station = self.station,
-            shows = shows
-        )
-
-
-if __name__ == "__main__":
-
-    client = Client("plus")
-
-    # result: tuple[Schedule] = client.get_schedule()
-    # for item in result:
-    #     print(item)
-
-    result: tuple[Station] = client.get_stations()
-    for item in result:
-        print(item)
+        return Schedule(date=date, station=self.station, shows=shows)

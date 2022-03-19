@@ -10,7 +10,7 @@ from dataclasses import dataclass, field
 from typing import Iterable, NewType
 
 
-__all__ = tuple(["Station", "Schedule"])
+__all__ = tuple(["Station", "Schedule", "Show", "Person"])
 
 
 URL = NewType("URL", str)
@@ -95,7 +95,7 @@ class Schedule:
 
         return result
 
-    def report(format: str = None) -> 'pandas.dataframe':
+    def report(format: str = None) -> "pandas.dataframe":
         """
           Návrh na podobu _flat_ (_tidy_) výstupu programu.
 
@@ -108,9 +108,3 @@ class Schedule:
         TODO ^^^ Doplnit příklady řádků.
         """
         return NotImplemented
-
-
-if __name__ == "__main__":
-
-    schedule = Schedule(date(2022, 12, 31), Station("Plus"), ("Show1", "Show2"))
-    print(schedule)
