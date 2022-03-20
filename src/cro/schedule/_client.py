@@ -151,7 +151,7 @@ class Client:
         import datetime as dt
 
         dates = (date + dt.timedelta(days=i) for i in range(0 - date.weekday(), 7 - date.weekday()))
-        return tuple((self.get_day_schedule(date, time) for date in dates))
+        return tuple(sorted((self.get_day_schedule(date, time) for date in dates)))
 
     def get_month_schedule(self, date: dt.date = dt.datetime.now(), time: tuple[dt.time, dt.time] = (dt.time.min, dt.time.max)) -> tuple[Schedule]:
         """
@@ -169,4 +169,4 @@ class Client:
 
         nb_days = monthrange(date.year, date.month)[1]
         dates = (dt.date(date.year, date.month, day) for day in range(1, nb_days + 1))
-        return tuple(sorted((self.get_day_schedule(date, time) for date in dates), key=attrgetter('date')))
+        return tuple(sorted((self.get_day_schedule(date, time) for date in dates)))
