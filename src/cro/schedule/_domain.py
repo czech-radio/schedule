@@ -4,10 +4,13 @@
 Module contains domain model.
 """
 
+from __future__ import annotations
+
 
 import datetime as dt
 from dataclasses import dataclass, field
 from typing import Iterable, NewType
+from functools import total_ordering
 
 import pandas as pd
 
@@ -73,6 +76,7 @@ class Show:
 
 
 @dataclass(frozen=False)
+@total_ordering
 class Schedule:
     """
     Schedule for a given date and station.
@@ -100,11 +104,19 @@ class Schedule:
 
         return result
 
-    def report(format: str = None) -> pd.DataFrame:
-        """
-        Návrh na podobu _flat_ (_tidy_) výstupu programu.
+    def __lt__(self, that: Schedule) -> bool:
+        return self.date < that.date
 
-        |id|station|date|since|till|title|description|
-        |--|-------|----|-----|----|-----|-----------|
-        """
-        return NotImplemented
+
+def schedule_as_table(schedule: Schedule) -> pd.DataFrame:
+    """
+    Return the schedule as pandas table.
+    """
+    return NotImplemented
+
+
+def schedule_as_chart(shedule: Schedule) -> dict:
+    """
+    Return the schedule as vega chart.
+    """
+    return NotImplemented

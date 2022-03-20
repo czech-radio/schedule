@@ -1,0 +1,12 @@
+# pyproject.toml
+
+[tool.pytest.ini_options]
+minversion = "6.0"
+addopts = "-ra -q"
+testpaths = [
+    "tests"
+]
+markers = [
+    "client: The client tests",
+    "domain: The domain tests",
+]

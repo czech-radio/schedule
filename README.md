@@ -126,6 +126,9 @@ Pokud chceme spustit testy, použijeme následující příkaz.
 
 ```
 pytest -sv
+pytest -sv -m domain
+pytest -sv -m client
+pytest -sv -m "not client"
 ```
 
 ## Resources
