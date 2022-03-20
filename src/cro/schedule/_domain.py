@@ -75,7 +75,7 @@ class Show:
     repetition: bool
 
 
-@dataclass(frozen=False)
+@dataclass(frozen=True)
 @total_ordering
 class Schedule:
     """
