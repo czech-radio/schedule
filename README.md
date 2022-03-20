@@ -21,19 +21,24 @@ _Python client and domain model to work with Czech Radio broadcast schedule._
 Data jsou dostupná mnoho let do historie a cca 14 dnů do budoucnosti.
 
 ```python
+
+import datetime as dt
+
 from cro.schedule import Client
 
 client = Client('plus')
 
- # Fetch the available schedule for current date.
-schedule: Schedule = client.get_day_schedule(date = datetime.now())
+ # Fetch the available schedule for the given day.
+schedule: Schedule = client.get_day_schedule(date = dt.date(2022, 1, 31))
 
-schedule: Schedule = client.get_week_schedule(date = datetime.now())
+# Fetch the available schedule for the given week.
+schedule: Schedule = client.get_week_schedule(date = dt.date(2022, 1, 31))
 
-schedule: Schedule = client.get_month_schedule(date = datetime.now())
+# Fetch the available schedule for the given month.
+schedule: Schedule = client.get_month_schedule(date = dt.date(2022, 1, 31))
 
 # Fetch the available stations.
-stations: tuple(Station) = client.get_stations(date = datetime.now())
+stations: tuple(Station) = client.get_stations()
 ```
 
 See more examples in `docs/Examples.ipynb`.
