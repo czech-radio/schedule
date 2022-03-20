@@ -29,7 +29,7 @@ def is_time_between(begin_time, end_time, check_time=None):
     check_time = check_time or dt.datetime.utcnow().time()
     if begin_time < end_time:
         return check_time >= begin_time and check_time <= end_time
-    else: # crosses midnight
+    else:  # crosses midnight
         return check_time >= begin_time or check_time <= end_time
 
 
@@ -93,7 +93,11 @@ class Client:
         except IndexError:
             raise ValueError(f"The station with id `{id}` does not exist.")
 
-    def get_day_schedule(self, date: dt.date = dt.datetime.now(), time: tuple[dt.time, dt.time] = (dt.time.min, dt.time.max)) -> Schedule:
+    def get_day_schedule(
+        self,
+        date: dt.date = dt.datetime.now(),
+        time: tuple[dt.time, dt.time] = (dt.time.min, dt.time.max),
+    ) -> Schedule:
         """
         Fetch the availaible schedule for the given date.
 
@@ -110,35 +114,41 @@ class Client:
         for item in data:
             since, till = (
                 dt.datetime.fromisoformat(item["since"]),
-                dt.datetime.fromisoformat(item["till"])
+                dt.datetime.fromisoformat(item["till"]),
             )
             # Check if since is in time range.
-            if not is_time_between(time[0], time[1], dt.datetime.fromisoformat(item["since"]).time()):
+            if not is_time_between(
+                time[0], time[1], dt.datetime.fromisoformat(item["since"]).time()
+            ):
                 continue
 
             shows.append(
                 Show(
-                    id = item["id"],
-                    title = item["title"],
-                    station = self.station,
-                    kind = Kind(
-                        id = item["type"]["id"],
-                        code = item["type"]["code"],
-                        name = item["type"]["name"],
+                    id=item["id"],
+                    title=item["title"],
+                    station=self.station,
+                    kind=Kind(
+                        id=item["type"]["id"],
+                        code=item["type"]["code"],
+                        name=item["type"]["name"],
                     ),
-                    description = item["description"],
-                    since = since,
-                    till = till,
-                    persons = tuple(
+                    description=item["description"],
+                    since=since,
+                    till=till,
+                    persons=tuple(
                         (Person(p["id"], p["name"]) for p in item["persons"])
                     ),
-                    repetition = item["repetition"],
+                    repetition=item["repetition"],
                 )
             )
         date = date.date() if isinstance(date, dt.datetime) else date
         return Schedule(date=date, time=time, station=self.station, shows=shows)
 
-    def get_week_schedule(self, date: dt.date = dt.datetime.now(), time: tuple[dt.time, dt.time] = (dt.time.min, dt.time.max)) -> tuple[Schedule]:
+    def get_week_schedule(
+        self,
+        date: dt.date = dt.datetime.now(),
+        time: tuple[dt.time, dt.time] = (dt.time.min, dt.time.max),
+    ) -> tuple[Schedule]:
         """
         Fetch the availaible schedules for the given week.
 
@@ -150,10 +160,17 @@ class Client:
         # Get all days of the week.
         import datetime as dt
 
-        dates = (date + dt.timedelta(days=i) for i in range(0 - date.weekday(), 7 - date.weekday()))
+        dates = (
+            date + dt.timedelta(days=i)
+            for i in range(0 - date.weekday(), 7 - date.weekday())
+        )
         return tuple(sorted((self.get_day_schedule(date, time) for date in dates)))
 
-    def get_month_schedule(self, date: dt.date = dt.datetime.now(), time: tuple[dt.time, dt.time] = (dt.time.min, dt.time.max)) -> tuple[Schedule]:
+    def get_month_schedule(
+        self,
+        date: dt.date = dt.datetime.now(),
+        time: tuple[dt.time, dt.time] = (dt.time.min, dt.time.max),
+    ) -> tuple[Schedule]:
         """
         Fetch the availaible schedules for the given month.
 

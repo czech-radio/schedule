@@ -14,31 +14,18 @@ from cro.schedule import Schedule, Station
 @pytest.mark.domain
 def test_that_schedule_is_sortable():
     lhs = Schedule(
-        date = dt.date(2022, 12, 1),
-        shows = (),
+        date=dt.date(2022, 12, 1),
+        shows=(),
         station=Station(
-            id=1,
-            name="Fake",
-            domain="_",
-            slogan="_",
-            description="_",
-            services=()
-        )
+            id=1, name="Fake", domain="_", slogan="_", description="_", services=()
+        ),
     )
     rhs = Schedule(
-        date = dt.date(2022, 11, 1),
-        shows = (),
+        date=dt.date(2022, 11, 1),
+        shows=(),
         station=Station(
-            id=1,
-            name="Fake",
-            domain="_",
-            slogan="_",
-            description="_",
-            services=()
-        )
+            id=1, name="Fake", domain="_", slogan="_", description="_", services=()
+        ),
     )
-
     first, second = sorted((lhs, rhs))
-
-    assert first == rhs
-    assert second == lhs
+    assert (first, second) == (rhs, lhs)
