@@ -8,21 +8,18 @@ _Python client and domain model to work with Czech Radio broadcast schedule._
 
 ## Features
 
-- [x] Získej seznam dostupných stanic.
-- [x] Získej program pro vybranou stanici a daný den.
-- [x] Získej program pro vybranou stanici a daný týden.
-- [x] Získej program pro vybranou stanici a daný měsíc.
-- [x] Získej program pro daný den/týden/měsíc a daný rozsah hodin např.
-  - [x] program od/do 12:00 (PM)
-  - [x] program od 06:00 do 12:00 (PM)
-- [ ] Umožni export do `pandas.DataFrame`
-- [ ] Vytvoři schéma databáze pro ukládání programu, možnost napojení na přepisy.
-- [ ] Vytvoř webvou aplikaci pro prohlížení uložených programů.
-- [ ] Získej konkrétní pořad podle zadaného času.
+- [x] Get the list of available stations.
+- [x] Get the schedule for the given station and day.
+- [x] Get the schedule for the given station and week.
+- [x] Get the schedule for the given station and month.
+- [x] Get the schedule for the given station and period.
+- [x] Get the schedule shows between given time range 06--12:00.
+- [ ] Convert schedule to `pandas.DataFrame`.
+- [ ] Manage schedules via flask application.
 
 ## Usage
 
-Data jsou dostupná mnoho let do historie a cca 14 dnů do budoucnosti.
+Data are available many years to the past and circa 14 days to the future.
 
 ```python
 
@@ -30,9 +27,12 @@ import datetime as dt
 
 from cro.schedule import Client
 
+# Fetch the available stations.
+stations: tuple(Station) = Client.get_stations()
+
 client = Client('plus')
 
- # Fetch the available schedule for the given day.
+# Fetch the available schedule for the given day.
 schedule: Schedule = client.get_day_schedule(date = dt.date(2022, 1, 31))
 
 # Fetch the available schedule for the given week.
@@ -40,14 +40,17 @@ schedule: Schedule = client.get_week_schedule(date = dt.date(2022, 1, 31))
 
 # Fetch the available schedule for the given month.
 schedule: Schedule = client.get_month_schedule(date = dt.date(2022, 1, 31))
-
-# Fetch the available stations.
-stations: tuple(Station) = client.get_stations()
 ```
 
 See more examples in `docs/Examples.ipynb`.
 
 ## Install
+
+Yuu can install package directly from GitHub repository.
+
+```
+pip install git+https://github.com/czech-radio/cro.schedule.git
+```
 
 __1. Clone the project and move to the project folder.__
 

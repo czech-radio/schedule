@@ -62,14 +62,15 @@ class Client:
         """
         return NotImplemented
 
-    def get_stations(self) -> tuple[Station]:
+    @classmethod
+    def get_stations(cls) -> tuple[Station]:
         """
         Fetch the available stations.
 
         Examples:
-            >>> get_stations()
+            >>> Client.get_stations()
         """
-        data = get(f"{type(self).__URL__}/meta/stations.json").json()["data"]
+        data = get(f"{cls.__URL__}/meta/stations.json").json()["data"]
         return tuple(
             [
                 Station(
