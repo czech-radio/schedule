@@ -1,6 +1,6 @@
 # Rozhlas Schedule
 
-_Python HTTP REST API client for Czech Radio broadcast day schedule._
+_Python client and domain model to work with Czech Radio broadcast schedule._
 
 ## Features
 
