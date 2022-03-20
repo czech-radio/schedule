@@ -2,6 +2,10 @@
 
 _Python client and domain model to work with Czech Radio broadcast schedule._
 
+
+[![main](https://github.com/czech-radio/cro.schedule/actions/workflows/main.yml/badge.svg)](https://github.com/czech-radio/cro.schedule/actions/workflows/main.yml)
+
+
 ## Features
 
 - [x] Získej seznam dostupných stanic.
