@@ -5,7 +5,7 @@ Module contains domain model.
 """
 
 
-from datetime import date
+import datetime as dt
 from dataclasses import dataclass, field
 from typing import Iterable, NewType
 
@@ -15,6 +15,9 @@ __all__ = tuple(["Station", "Schedule", "Show", "Person"])
 
 
 URL = NewType("URL", str)
+
+
+# TimeRange = tuple[time, time]
 
 
 @dataclass(frozen=True)
@@ -63,8 +66,8 @@ class Show:
     title: str
     station: Station
     description: str
-    since: date
-    till: date
+    since: dt.datetime
+    till: dt.datetime
     persons: tuple[Person]
     repetition: bool
 
@@ -75,13 +78,14 @@ class Schedule:
     Schedule for a given date and station.
     """
 
-    date: date
+    date: dt.date
     station: Station
     shows: tuple[Show]
+    time: tuple[dt.time, dt.time] = dt.time.min, dt.time.max
     __counter: int = field(init=False, repr=False, default=0)
 
     def __str__(self) -> str:
-        return f"{type(self).__name__}(date={self.date},station={self.station.name})"
+        return f"{type(self).__name__}(station={self.station.name}, date={self.date}, shows={len(self.shows)})"
 
     def __iter__(self):
         return self
@@ -96,16 +100,11 @@ class Schedule:
 
         return result
 
-    def report(format: str = None) -> pd.dataframe:
+    def report(format: str = None) -> pd.DataFrame:
         """
-          Návrh na podobu _flat_ (_tidy_) výstupu programu.
+        Návrh na podobu _flat_ (_tidy_) výstupu programu.
 
         |id|station|date|since|till|title|description|
         |--|-------|----|-----|----|-----|-----------|
-        | | | | | | | |
-        | | | | | | | |
-        | | | | | | | |
-
-        TODO ^^^ Doplnit příklady řádků.
         """
         return NotImplemented
