@@ -36,8 +36,9 @@ def test_that_week_schedule_are_retrieved(client):
 
 @pytest.mark.client
 def test_that_week_schedules_are_sorted(client):
-    result = client.get_week_schedule(date=date(2022, 1, 1))
-    assert result[0] < result[-1]
+    result = client.get_week_schedule(date=date(2022, 1, 3))
+    for _ in result:
+        assert result[0] <= result[-1]
 
 
 @pytest.mark.client
@@ -49,4 +50,5 @@ def test_that_month_schedules_are_retrieved(client):
 @pytest.mark.client
 def test_that_month_schedules_are_sorted(client):
     result = client.get_month_schedule(date=date(2022, 1, 1))
-    assert result[0] < result[-1]
+    for _ in result:
+        assert result[0] <= result[-1]
