@@ -62,11 +62,11 @@ client = Client(station_id = 'plus')
 
 ### Fetch the available schedule for the given day
 
-````python
+```python
 schedule: Schedule = client.get_day_schedule() # current day
 schedule: Schedule = client.get_day_schedule(date = '2022-01-31')
 schedule: Schedule = client.get_day_schedule(date = dt.date(2022, 1, 31))
-````
+```
 
 ### Fetch the available schedule for the given week
 
@@ -83,6 +83,22 @@ schedule: Schedule = client.get_month_schedule() # current month
 schedule: Schedule = client.get_month_schedule(date = '2022-01-31')
 schedule: Schedule = client.get_month_schedule(date = dt.date(2022, 1, 31))
 ```
+
+### Convert to `pandas.DataFrame`
+
+```python
+df = schdule.as_table()
+df.head(5)
+```
+
+| |id|kind|title|station|description|since|till|persons|repetition|
+|-|--|----|-----|-------|-----------|-----|----|-------|----------|
+|0|17684084|zpr|Zprávy|plus|Aktuální události doma i ve světě|2022-03-21 00:10:00|2022-03-21 00:10:00|()|False
+|1|17684085|pub|Čekání na prezidenta|plus|Další epizoda podcastu Čekání na prezidenta je...|2022-03-21 00:50:00|2022-03-21 00:50:00|()|True
+|2|17684086|pub|Názory a argumenty|plus|Den pohledem renomovaných komentátorů ve zkrác...|2022-03-21 01:00:00|2022-03-21 01:00:00|()|True
+|3|17684087|zpr|Zprávy|plus|Aktuální události doma i ve světě|2022-03-21 01:05:00|2022-03-21 01:05:00|()|False
+|4|17684088|pub|Svět ve 20 minutách|plus|Může se Rusko vyrovnat s ekonomickými následky...|2022-03-21 01:30:00|2022-03-21 01:30:00|()|True
+
 
 See more examples in `docs/Examples.ipynb`.
 
