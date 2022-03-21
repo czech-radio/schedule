@@ -15,8 +15,7 @@ _Python client and domain model to work with Czech Radio broadcast schedule._
 - [x] Get the schedule for the given station and day.
 - [x] Get the schedule for the given station and week.
 - [x] Get the schedule for the given station and month.
-- [x] Get the schedule for the given station and period.
-- [x] Get the schedule shows between given time range 06--12:00.
+- [x] Get the schedule for the given station, period and time.
 - [x] Convert schedule to `pandas.DataFrame`.
 - [ ] Manage schedules via flask application.
 
