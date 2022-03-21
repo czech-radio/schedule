@@ -153,7 +153,7 @@ class Client:
 
     def get_week_schedule(
         self,
-        date: dt.date | str = dt.datetime.now(),
+        date: Union[dt.date, str] = dt.datetime.now(),
         time: tuple[dt.time, dt.time] = (dt.time.min, dt.time.max),
     ) -> tuple[Schedule]:
         """
