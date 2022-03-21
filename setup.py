@@ -12,6 +12,7 @@ setup(
     install_requires=[
         "pandas",
         "requests",
+        "openpyxl",
     ],
     extras_require={
         "test": ["pytest", "pytest-html"],

@@ -107,16 +107,28 @@ class Schedule:
     def __lt__(self, that: Schedule) -> bool:
         return self.date < that.date
 
+    def as_table(self) -> pd.DataFrame:
+        df = pd.DataFrame(data=self.shows)
 
-def schedule_as_table(schedule: Schedule) -> pd.DataFrame:
+        # Use only one attribute from kins and station objects.
+        df["kind"] = df["kind"].apply(lambda x: x["code"].lower())
+        df["station"] = df["station"].apply(lambda x: x["id"])
+
+        # Remove timezones for Excel exports.
+        df["till"] = df["till"].apply(lambda x: x.replace(tzinfo=None))
+        df["since"] = df["till"].apply(lambda x: x.replace(tzinfo=None))
+
+        return df
+
+def schedules_as_table(schedule: Schedule) -> pd.DataFrame:
     """
-    Return the schedule as pandas table.
+    Return the multiple schedules as a pandas table.
     """
     return NotImplemented
 
 
-def schedule_as_chart(shedule: Schedule) -> dict:
+def schedules_as_chart(shedule: Schedule) -> dict:
     """
-    Return the schedule as vega chart.
+    Return the multiple schedules as a vega chart.
     """
     return NotImplemented
