@@ -7,7 +7,6 @@ Module contains HTTP REST API client.
 from enum import Enum
 import datetime as dt
 from calendar import monthrange
-# from operator import attrgetter
 from typing import Optional
 
 from requests import get
@@ -57,7 +56,8 @@ class Client:
         """
         return self._station
 
-    def check() -> dict:
+    @classmethod
+    def check(cls) -> dict:
         """
         Check the service avalaibility.
         """
@@ -87,14 +87,14 @@ class Client:
         )
 
     @classmethod
-    def get_station(self, id: str) -> Optional[Station]:
+    def get_station(cls, id: str) -> Optional[Station]:
         """
         Fetch the available station with the given id.
         """
         try:  # Fetch the station and pick the right one.
-            return tuple(filter(lambda x: x.id == id, self.get_stations()))[0]
+            return tuple(filter(lambda x: x.id == id, cls.get_stations()))[0]
         except IndexError:
-            # raise ValueError(f"The station with id `{id}` does not exist.")
+            # Should we aise ValueError(f"The station with id `{id}` does not exist.")?
             return None
 
     def get_day_schedule(

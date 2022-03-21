@@ -20,7 +20,7 @@ __all__ = tuple(["Station", "Schedule", "Show", "Person"])
 URL = NewType("URL", str)
 
 
-# TimeRange = tuple[time, time]
+# Should we define TimeRange = tuple[time, time]?
 
 
 @dataclass(frozen=True)
