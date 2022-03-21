@@ -198,8 +198,8 @@ pytest -sv -m "not client"
 
 ## Linting
 
-  black .
-  isort .
+    black .
+    isort .
 
 ## Resources
 
