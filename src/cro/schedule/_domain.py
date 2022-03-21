@@ -4,7 +4,7 @@
 Module contains domain model.
 """
 
-from __future__ import annotations
+from __future__ import annotations, with_statement
 
 
 import datetime as dt
@@ -91,7 +91,7 @@ class Schedule:
     def __str__(self) -> str:
         return f"{type(self).__name__}(station={self.station.name}, date={self.date}, shows={len(self.shows)})"
 
-    def __iter__(self):
+    def __iter__(self) -> Schedule:
         return self
 
     def __next__(self):
@@ -107,7 +107,16 @@ class Schedule:
     def __lt__(self, that: Schedule) -> bool:
         return self.date < that.date
 
-    def as_table(self) -> pd.DataFrame:
+    def is_subset(self) -> bool:
+        """
+        Does the schedule contain only a selected time range?
+        """
+        return (self.time[0], self.time[1]) == (dt.time.max, dt.time.min)
+
+    def as_table(self, without_timezone: bool = True) -> pd.DataFrame:
+        """
+        Return the schedule data as table.
+        """
         df = pd.DataFrame(data=self.shows)
 
         # Use only one attribute from kins and station objects.
@@ -115,10 +124,19 @@ class Schedule:
         df["station"] = df["station"].apply(lambda x: x["id"])
 
         # Remove timezones for Excel exports.
-        df["till"] = df["till"].apply(lambda x: x.replace(tzinfo=None))
-        df["since"] = df["till"].apply(lambda x: x.replace(tzinfo=None))
+        if without_timezone:
+            df["till"] = df["till"].apply(lambda x: x.replace(tzinfo=None))
+            df["since"] = df["till"].apply(lambda x: x.replace(tzinfo=None))
 
         return df
+
+    @classmethod
+    def make(cls, date, time, station, shows) -> Schedule:
+        """
+        Make the schedule (factory method).
+        """
+        return cls(date = date, time = time, station = station, shows = tuple(shows))
+
 
 def schedules_as_table(schedule: Schedule) -> pd.DataFrame:
     """

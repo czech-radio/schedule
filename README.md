@@ -1,7 +1,6 @@
-# Rozhlas Schedule
+# cro.schedule
 
 _Python client and domain model to work with Czech Radio broadcast schedule._
-
 
 [![build: tests](https://github.com/czech-radio/cro.schedule/actions/workflows/main.yml/badge.svg)](https://github.com/czech-radio/cro.schedule/actions/workflows/main.yml)
 [![style: black](https://img.shields.io/badge/style-black-000000.svg)](https://github.com/psf/black)
@@ -19,6 +18,16 @@ _Python client and domain model to work with Czech Radio broadcast schedule._
 - [x] Convert schedule to `pandas.DataFrame`.
 - [ ] Manage schedules via flask application.
 
+## Installation
+
+One can install package from the GitHub repository.
+
+```
+pip install git+https://github.com/czech-radio/cro.schedule.git
+```
+
+We assume that you use the virtual environment.
+
 ## Usage
 
 Data are available many years to the past and circa 14 days to the future.
@@ -27,44 +36,57 @@ Data are available many years to the past and circa 14 days to the future.
 import datetime as dt
 
 from cro.schedule import Client
+```
 
-# Fetch the available stations.
+### Fetch the available stations
+
+```python
 stations: tuple(Station) = Client.get_stations()
+```
 
-client = Client('plus')
+### Create the client instance
 
-# Fetch the available schedule for the given day.
+```python
+client = Client(station_id = 'plus')
+```
+
+### Fetch the available schedule for the given day
+
+````python
 schedule: Schedule = client.get_day_schedule(date = dt.date(2022, 1, 31))
+````
 
-# Fetch the available schedule for the given week.
+### Fetch the available schedule for the given week
+
+```python
 schedule: Schedule = client.get_week_schedule(date = dt.date(2022, 1, 31))
+```
 
-# Fetch the available schedule for the given month.
+### Fetch the available schedule for the given month
+
+```python
 schedule: Schedule = client.get_month_schedule(date = dt.date(2022, 1, 31))
 ```
 
 See more examples in `docs/Examples.ipynb`.
 
-## Install
 
-Yuu can install package directly from GitHub repository.
+## Development
+
+### Clone the project and move to the project folder
 
 ```
-pip install git+https://github.com/czech-radio/cro.schedule.git
+git clone https://github.com/czech-radio/cro.schedule.git
+cd cro.schedule
 ```
 
-__1. Clone the project and move to the project folder.__
-
-    git clone https://github.com/czech-radio/cro.schedule.git
-    cd cro.schedule
+### Create and activate the virtual environment
 
 Vytvoř virtuální prostředí v adresáři projektu. Níže uvedený příkaz je platný pro Windows. S instalací Pythonu se do cesty vloží (zaváděcí) program `py.exe`, který lze použít pro spoustění různých verzí Python interpreteru. Zde explicitně říkáme: Zavolej interpretr Pythonu verze 3.10 (doporučené, používáme nejnovější verzi) a spusť zabudovaný modul `venv` (viz parameter `-m venv`) jako program s parametrem `.venv`. Ten vytvoří adresář `.venv`, do kterého se nakopíruje interpretr Pythonu s potřebnými balíky (knihovnami).
 
 ```
-py -3.10 -m venv .venv
+py -m venv --upgrade-deps --clear .venv
 ```
-
-__2. Activate the virtual environment.__
 
 __Windows__
 
@@ -86,7 +108,7 @@ Měli bychom vidět podobný prefix s názvem `(.venv)` v terminálu, který uka
 
 Jako jméno jsme mohli zvolit cokoliv, ale `.venv` je standardem (je např. uveden i v souboru `.gitignore`, protože ho rozhodně nechceme přidávat do repozitáře).
 
-__3. Install the package in active virtual environment.__
+### Install the package in virtual environment
 
 Instalace balíku v produkčním režimu.
 
@@ -102,7 +124,7 @@ pip install -U -e .[test,docs,lint]
 
 Nyní můžeme s balíkem pracovat v našich skriptech.
 
-__4. Deactivate the virtual environment.__
+### Deactivate the virtual environment
 
 Provedeme příkazem `deactivate` nebo stačí aktivivat jiné virtuální prostředí.
 
