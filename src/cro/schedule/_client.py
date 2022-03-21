@@ -7,7 +7,7 @@ Module contains HTTP REST API client.
 from enum import Enum
 import datetime as dt
 from calendar import monthrange
-from typing import Optional
+from typing import Optional, Union
 
 from requests import get
 
@@ -92,7 +92,7 @@ class Client:
 
     def get_day_schedule(
         self,
-        date: dt.date | str = dt.datetime.now(),
+        date: Union[dt.date, str] = dt.datetime.now(),
         time: tuple[dt.time, dt.time] = (dt.time.min, dt.time.max),
     ) -> Schedule:
         """
@@ -181,7 +181,7 @@ class Client:
 
     def get_month_schedule(
         self,
-        date: dt.date | str = dt.datetime.now(),
+        date: Union[dt.date, str] = dt.datetime.now(),
         time: tuple[dt.time, dt.time] = (dt.time.min, dt.time.max),
     ) -> tuple[Schedule]:
         """
@@ -207,7 +207,7 @@ class Client:
 
         return tuple(sorted((self.get_day_schedule(date, time) for date in dates)))
 
-    def get_playlist(self, date: dt.date | str = dt.datetime.now()) -> object:
+    def get_playlist(self, date: Union[dt.date, str] = dt.datetime.now()) -> object:
         """
         Fetch the playlist for Radio Wave station.
         """

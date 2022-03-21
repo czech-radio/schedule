@@ -23,7 +23,7 @@ _Python client and domain model to work with Czech Radio schedules and playlists
 
 ## Prerequisities
 
-We assume that you use at least Python 3.10.
+We assume that you use at least Python 3.9.
 
 ## Installation
 
