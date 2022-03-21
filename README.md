@@ -1,4 +1,4 @@
-# cro.schedule
+# 𝖈𝖗𝖔.𝖘𝖈𝖍𝖊𝖉𝖚𝖑𝖊
 
 _Python library to work with Czech Radio schedules and playlists._
 
