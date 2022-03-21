@@ -1,6 +1,6 @@
 # cro.schedule
 
-_Python client and domain model to work with Czech Radio schedules and playlists._
+_Python library to work with Czech Radio schedules and playlists._
 
 [![build: tests](https://github.com/czech-radio/cro.schedule/actions/workflows/main.yml/badge.svg)](https://github.com/czech-radio/cro.schedule/actions/workflows/main.yml)
 [![style: black](https://img.shields.io/badge/style-black-000000.svg)](https://github.com/psf/black)
@@ -26,7 +26,7 @@ _Python client and domain model to work with Czech Radio schedules and playlists
 - [ ] Get the playlist for supported stations (only Radio Wave).
 - [x] Convert schedule to `pandas.DataFrame`.
 
-## Prerequisities
+## Prerequisites
 
 We assume that you use at least Python 3.9.
 
