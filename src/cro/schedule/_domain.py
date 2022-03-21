@@ -135,7 +135,7 @@ class Schedule:
         """
         Make the schedule (factory method).
         """
-        return cls(date = date, time = time, station = station, shows = tuple(shows))
+        return cls(date=date, time=time, station=station, shows=tuple(shows))
 
 
 def schedules_as_table(schedule: Schedule) -> pd.DataFrame:

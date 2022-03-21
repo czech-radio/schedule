@@ -35,7 +35,7 @@ def is_time_between(begin_time, end_time, check_time=None):
 
 class Client:
     """
-    The Czech Radio day REST API v2 client to fetch schedule and station data.
+    The Czech Radio client to fetch schedules and stations metadata.
     """
 
     __URL__: str = f"https://api.rozhlas.cz/data/v2"
@@ -55,13 +55,6 @@ class Client:
         Get the current station.
         """
         return self._station
-
-    @classmethod
-    def check(cls) -> dict:
-        """
-        Check the service avalaibility.
-        """
-        return NotImplemented
 
     @classmethod
     def get_stations(cls) -> tuple[Station]:
@@ -110,7 +103,11 @@ class Client:
             >>> get_day_schedule(date = dt.datetime.now())
         """
 
-        date = dt.datetime.strptime(date, '%Y-%m-%d').date() if isinstance(date, str) else date
+        date = (
+            dt.datetime.strptime(date, "%Y-%m-%d").date()
+            if isinstance(date, str)
+            else date
+        )
 
         data = get(
             f"{type(self).__URL__}/schedule/day/{date.year:04d}/{date.month:02d}/{date.day:02d}/{self.station.id}.json"
@@ -168,7 +165,11 @@ class Client:
             >>> import datetime as dt
             >>> get_week_schedule(date = dt.datetime.now())
         """
-        date = dt.datetime.strptime(date, '%Y-%m-%d').date() if isinstance(date, str) else date
+        date = (
+            dt.datetime.strptime(date, "%Y-%m-%d").date()
+            if isinstance(date, str)
+            else date
+        )
 
         # Get all days of the week.
         dates = (
@@ -194,10 +195,20 @@ class Client:
             >>> import datetime as dt
             >>> get_month_schedule(date = dt.datetime.now())
         """
-        date = dt.datetime.strptime(date, '%Y-%m-%d').date() if isinstance(date, str) else date
+        date = (
+            dt.datetime.strptime(date, "%Y-%m-%d").date()
+            if isinstance(date, str)
+            else date
+        )
 
         # Get all days of the month.
         nb_days = monthrange(date.year, date.month)[1]
         dates = (dt.date(date.year, date.month, day) for day in range(1, nb_days + 1))
 
         return tuple(sorted((self.get_day_schedule(date, time) for date in dates)))
+
+    def get_playlist(self, date: dt.date | str = dt.datetime.now()) -> object:
+        """
+        Fetch the playlist for Radio Wave station.
+        """
+        return NotImplemented
