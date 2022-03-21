@@ -1,15 +1,15 @@
 # -*- coding: utf-8 -*-
 
 """
-Module contains domain model.
+This module contains domain model.
 """
 
-from __future__ import annotations, with_statement
+from __future__ import annotations
 
 import datetime as dt
-from dataclasses import dataclass, field
+from typing import NewType
 from functools import total_ordering
-from typing import Iterable, NewType
+from dataclasses import dataclass, field
 
 import pandas as pd
 
@@ -19,27 +19,8 @@ __all__ = tuple(["Station", "Schedule", "Show", "Person"])
 URL = NewType("URL", str)
 
 
-# Should we define TimeRange = tuple[time, time]?
-
-
 @dataclass(frozen=True)
 class Station:
-    """
-    Station domain model.
-
-    services: Dict[str, URL] e.g.
-    - 'web': 'https://radiozurnal.rozhlas.cz',
-    - 'player': 'https://www.mujrozhlas.cz/zive/radiozurnal',
-    - 'schedule': 'https://www.rozhlas.cz/radiozurnal/program/',
-    - 'rss': 'http://www.rozhlas.cz/export/radiozurnal/',
-    - 'podcast': 'https://api.rozhlas.cz/data/v2/podcast/station/radiozurnal.rss',
-    - 'iradio': 'http://www.rozhlas.cz/iradio/radiozurnal/',
-    - 'webcam': 'http://www.rozhlas.cz/radiozurnal/studio/',
-    - 'playlist': 'http://www.rozhlas.cz/radiozurnal/playlisty/',
-    - 'audiolog': 'http://www.rozhlas.cz/radiozurnal/zaznamy/',
-    - 'audioportal': 'http://www.rozhlas.cz/radiozurnal/audioarchiv/'
-    """
-
     id: str
     name: str
     domain: str
@@ -61,7 +42,7 @@ class Kind:
     name: str
 
 
-@dataclass(frozen=True)
+@dataclass(frozen=False, unsafe_hash=True)
 class Show:
     id: int
     kind: Kind
@@ -70,38 +51,24 @@ class Show:
     description: str
     since: dt.datetime
     till: dt.datetime
+    duration: dt.time = field(init=False)
     persons: tuple[Person]
     repetition: bool
+
+    def __post_init__(self) -> None:
+        self.duration = (dt.datetime.min + (self.till - self.since)).time()
 
 
 @dataclass(frozen=True)
 @total_ordering
 class Schedule:
-    """
-    Schedule for a given date and station.
-    """
-
     date: dt.date
     station: Station
     shows: tuple[Show]
     time: tuple[dt.time, dt.time] = dt.time.min, dt.time.max
-    __counter: int = field(init=False, repr=False, default=0)
 
     def __str__(self) -> str:
         return f"{type(self).__name__}(station={self.station.name}, date={self.date}, shows={len(self.shows)})"
-
-    def __iter__(self) -> Schedule:
-        return self
-
-    def __next__(self):
-        try:
-            result = self.shows[self.__counter]
-        except IndexError:
-            raise StopIteration
-
-        self.__counter += 1
-
-        return result
 
     def __lt__(self, that: Schedule) -> bool:
         return self.date < that.date
@@ -128,13 +95,6 @@ class Schedule:
             df["since"] = df["till"].apply(lambda x: x.replace(tzinfo=None))
 
         return df
-
-    @classmethod
-    def make(cls, date, time, station, shows) -> Schedule:
-        """
-        Make the schedule (factory method).
-        """
-        return cls(date=date, time=time, station=station, shows=tuple(shows))
 
 
 def schedules_as_table(schedule: Schedule) -> pd.DataFrame:
