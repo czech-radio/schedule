@@ -58,7 +58,7 @@ stations: tuple(Station) = Client.get_stations()
 ### Create the client instance
 
 ```python
-client = Client(station_id = 'plus')
+client = Client(id = 'plus')
 ```
 
 ### Fetch the available schedule for the given day
