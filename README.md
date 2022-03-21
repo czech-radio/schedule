@@ -24,7 +24,6 @@ _Python client and domain model to work with Czech Radio broadcast schedule._
 Data are available many years to the past and circa 14 days to the future.
 
 ```python
-
 import datetime as dt
 
 from cro.schedule import Client
