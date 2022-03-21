@@ -37,6 +37,8 @@ def is_time_between(begin_time, end_time, check_time=None):
         return check_time >= begin_time or check_time <= end_time
 
 
+StationID = str
+
 class Client:
     """
     The Czech Radio client to fetch schedules and stations metadata.
@@ -45,14 +47,14 @@ class Client:
     __url__: str = f"https://api.rozhlas.cz/data/v2"
     __date_format__: str = "%Y-%m-%d"
 
-    def __init__(self, station_id: str):
+    def __init__(self, id: StationID):
         """
         :param station_id: e.g. `radiozurnal`.
         """
         try:  # Fetch the station and pick the right one.
-            self._station = self.get_station(station_id.lower())
+            self._station = self.get_station(id.lower())
         except IndexError:
-            raise ValueError(f"The station with id `{self.station_id}` does not exist.")
+            raise ValueError(f"The station with id `{id}` does not exist.")
 
     @property
     def station(self) -> Station:
@@ -60,6 +62,13 @@ class Client:
         Get the current station.
         """
         return self._station
+
+    @station.setter
+    def station(self, id: StationID) -> None:
+        try:  # Fetch the station and pick the right one.
+            self._station = self.get_station(id.lower())
+        except IndexError:
+            raise ValueError(f"The station with id `{self.id}` does not exist.")
 
     @classmethod
     def get_stations(cls) -> tuple[Station]:
