@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from setuptools import setup, find_namespace_packages
+from setuptools import find_namespace_packages, setup
 
 NAMESPACE = "cro"
 
@@ -17,6 +17,6 @@ setup(
     extras_require={
         "test": ["pytest", "pytest-html"],
         "docs": ["sphinx", "jupyterlab"],
-        "lint": ["black", "flake8"],
+        "lint": ["black[jupyter]", "flake8", "isort"],
     },
 )

@@ -10,3 +10,17 @@ markers = [
     "client: The client tests",
     "domain: The domain tests",
 ]
+
+[tool.black]
+line-length = 88
+target-version = ['py39']
+include = '\.pyi?$'
+extend-exclude = '''
+/(
+  | tests/data
+)/
+'''
+
+[tool.isort]
+profile = "hug"
+src_paths = ["src", "tests"]

@@ -4,16 +4,20 @@
 Module contains HTTP REST API client.
 """
 
-from enum import Enum
 import datetime as dt
 from calendar import monthrange
+from enum import Enum
 from typing import Optional, Union
 
 from requests import get
 
-from cro.schedule._domain import Station, Schedule
-from cro.schedule._domain import Show, Person, Kind  # package protected
-
+from cro.schedule._domain import (
+    Kind,
+    Person,
+    Schedule,
+    Show,
+    Station,
+)  # package protected
 
 __all__ = tuple(["Client"])
 
@@ -39,7 +43,7 @@ class Client:
     """
 
     __url__: str = f"https://api.rozhlas.cz/data/v2"
-    __date_format__ : str = "%Y-%m-%d"
+    __date_format__: str = "%Y-%m-%d"
 
     def __init__(self, station_id: str):
         """
@@ -105,7 +109,7 @@ class Client:
         """
 
         date = (
-            dt.datetime.strptime(date, type(self).__date_format__ ).date()
+            dt.datetime.strptime(date, type(self).__date_format__).date()
             if isinstance(date, str)
             else date
         )

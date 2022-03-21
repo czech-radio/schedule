@@ -6,11 +6,10 @@ Module contains domain model.
 
 from __future__ import annotations, with_statement
 
-
 import datetime as dt
 from dataclasses import dataclass, field
-from typing import Iterable, NewType
 from functools import total_ordering
+from typing import Iterable, NewType
 
 import pandas as pd
 

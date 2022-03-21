@@ -99,7 +99,6 @@ df.head(5)
 |3|17684087|zpr|Zprávy|plus|Aktuální události doma i ve světě|2022-03-21 01:05:00|2022-03-21 01:05:00|()|False
 |4|17684088|pub|Svět ve 20 minutách|plus|Může se Rusko vyrovnat s ekonomickými následky...|2022-03-21 01:30:00|2022-03-21 01:30:00|()|True
 
-
 See more examples in `docs/Examples.ipynb`.
 
 ## Development
@@ -196,6 +195,11 @@ pytest -sv -m domain
 pytest -sv -m client
 pytest -sv -m "not client"
 ```
+
+## Linting
+
+  black .
+  isort .
 
 ## Resources
 
