@@ -1,7 +1,5 @@
 # 𝖈𝖗𝖔.𝖘𝖈𝖍𝖊𝖉𝖚𝖑𝖊
 
-_Python library to work with Czech Radio schedules and playlists._
-
 [![build: tests](https://github.com/czech-radio/cro.schedule/actions/workflows/main.yml/badge.svg)](https://github.com/czech-radio/cro.schedule/actions/workflows/main.yml)
 [![style: black](https://img.shields.io/badge/style-black-000000.svg)](https://github.com/psf/black)
 [![quality: bugs](https://sonarcloud.io/api/project_badges/measure?project=czech-radio_cro.schedule&metric=bugs)](https://sonarcloud.io/dashboard?id=czech-radio_cro.schedule)
@@ -15,7 +13,7 @@ _Python library to work with Czech Radio schedules and playlists._
 
 ## Purpose
 
-&hellip;
+Python library to work with Czech Radio schedules and playlists.
 
 ## Features
 
