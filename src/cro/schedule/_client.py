@@ -38,7 +38,8 @@ class Client:
     The Czech Radio client to fetch schedules and stations metadata.
     """
 
-    __URL__: str = f"https://api.rozhlas.cz/data/v2"
+    __url__: str = f"https://api.rozhlas.cz/data/v2"
+    __date_format__ : str = "%Y-%m-%d"
 
     def __init__(self, station_id: str):
         """
@@ -64,7 +65,7 @@ class Client:
         Examples:
             >>> Client.get_stations()
         """
-        data = get(f"{cls.__URL__}/meta/stations.json").json()["data"]
+        data = get(f"{cls.__url__}/meta/stations.json").json()["data"]
         return tuple(
             [
                 Station(
@@ -104,13 +105,13 @@ class Client:
         """
 
         date = (
-            dt.datetime.strptime(date, "%Y-%m-%d").date()
+            dt.datetime.strptime(date, type(self).__date_format__ ).date()
             if isinstance(date, str)
             else date
         )
 
         data = get(
-            f"{type(self).__URL__}/schedule/day/{date.year:04d}/{date.month:02d}/{date.day:02d}/{self.station.id}.json"
+            f"{type(self).__url__}/schedule/day/{date.year:04d}/{date.month:02d}/{date.day:02d}/{self.station.id}.json"
         ).json()["data"]
 
         shows = []
@@ -166,7 +167,7 @@ class Client:
             >>> get_week_schedule(date = dt.datetime.now())
         """
         date = (
-            dt.datetime.strptime(date, "%Y-%m-%d").date()
+            dt.datetime.strptime(date, type(self).__date_format__).date()
             if isinstance(date, str)
             else date
         )
@@ -196,7 +197,7 @@ class Client:
             >>> get_month_schedule(date = dt.datetime.now())
         """
         date = (
-            dt.datetime.strptime(date, "%Y-%m-%d").date()
+            dt.datetime.strptime(date, type(self).__date_format__).date()
             if isinstance(date, str)
             else date
         )
