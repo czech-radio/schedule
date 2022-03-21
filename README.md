@@ -102,6 +102,25 @@ df.head(5)
 
 See more examples in `docs/Examples.ipynb`.
 
+### Store schedule in Excel
+
+```python
+data = []
+date = '2022-03-14'
+for station in ('plus', 'radiozurnal'):
+    client.station = station
+    schedules = client.get_week_schedule(date)
+    for schedule in schedules:
+        print(schedule.date, schedule.station.name, len(schedule.shows))
+        data.append(schedule.as_table())
+        with pd.ExcelWriter(f"../data/Schedule_{schedule.station.name}_{schedule.date}.xlsx") as writer:
+            df.to_excel(writer)
+
+all = pd.concat(data)
+with pd.ExcelWriter(f"../data/Schedule_{date}.xlsx") as writer:
+    all.to_excel(writer)
+```
+
 ## Development
 
 ### Clone the project and move to the project folder
