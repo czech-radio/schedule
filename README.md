@@ -22,6 +22,7 @@ Documentation https://czech-radio.github.io/cro.schedule/ (work-in-progress).
 - [x] Get the schedule for the given station and month.
 - [x] Get the schedule for the given station, period and time.
 - [x] Convert schedule to `pandas.DataFrame`.
+- [ ] Get the playlist for supported stations (only Radio Wave).
 
 ## Prerequisities
 
