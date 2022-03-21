@@ -99,7 +99,7 @@ class Client:
 
     def get_day_schedule(
         self,
-        date: dt.date = dt.datetime.now(),
+        date: dt.date | str = dt.datetime.now(),
         time: tuple[dt.time, dt.time] = (dt.time.min, dt.time.max),
     ) -> Schedule:
         """
@@ -109,6 +109,9 @@ class Client:
             >>> import datetime as dt
             >>> get_day_schedule(date = dt.datetime.now())
         """
+
+        date = dt.datetime.strptime(date, '%Y-%m-%d').date() if isinstance(date, str) else date
+
         data = get(
             f"{type(self).__URL__}/schedule/day/{date.year:04d}/{date.month:02d}/{date.day:02d}/{self.station.id}.json"
         ).json()["data"]
@@ -146,12 +149,14 @@ class Client:
                     repetition=item["repetition"],
                 )
             )
+
         date = date.date() if isinstance(date, dt.datetime) else date
+
         return Schedule(date=date, time=time, station=self.station, shows=shows)
 
     def get_week_schedule(
         self,
-        date: dt.date = dt.datetime.now(),
+        date: dt.date | str = dt.datetime.now(),
         time: tuple[dt.time, dt.time] = (dt.time.min, dt.time.max),
     ) -> tuple[Schedule]:
         """
@@ -163,24 +168,25 @@ class Client:
             >>> import datetime as dt
             >>> get_week_schedule(date = dt.datetime.now())
         """
-        # Get all days of the week.
-        import datetime as dt
+        date = dt.datetime.strptime(date, '%Y-%m-%d').date() if isinstance(date, str) else date
 
+        # Get all days of the week.
         dates = (
             date + dt.timedelta(days=i)
             for i in range(0 - date.weekday(), 7 - date.weekday())
         )
+
         return tuple(sorted((self.get_day_schedule(date, time) for date in dates)))
 
     def get_month_schedule(
         self,
-        date: dt.date = dt.datetime.now(),
+        date: dt.date | str = dt.datetime.now(),
         time: tuple[dt.time, dt.time] = (dt.time.min, dt.time.max),
     ) -> tuple[Schedule]:
         """
         Fetch the availaible schedules for the given month.
 
-        :param date: Any date in the month
+        :param date: Any date in the month.
 
         :return The collection of schedules sorted by date.
 
@@ -188,9 +194,10 @@ class Client:
             >>> import datetime as dt
             >>> get_month_schedule(date = dt.datetime.now())
         """
-        # Get all days of the month.
-        import datetime as dt
+        date = dt.datetime.strptime(date, '%Y-%m-%d').date() if isinstance(date, str) else date
 
+        # Get all days of the month.
         nb_days = monthrange(date.year, date.month)[1]
         dates = (dt.date(date.year, date.month, day) for day in range(1, nb_days + 1))
+
         return tuple(sorted((self.get_day_schedule(date, time) for date in dates)))

@@ -18,6 +18,10 @@ _Python client and domain model to work with Czech Radio broadcast schedule._
 - [x] Convert schedule to `pandas.DataFrame`.
 - [ ] Manage schedules via flask application.
 
+## Prerequisities
+
+We assume that you use at least Python 3.10.
+
 ## Installation
 
 One can install package from the GitHub repository.
