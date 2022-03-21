@@ -8,7 +8,9 @@ _Python client and domain model to work with Czech Radio schedules and playlists
 [![quality: code smells](https://sonarcloud.io/api/project_badges/measure?project=czech-radio_cro.schedule&metric=code_smells)](https://sonarcloud.io/dashboard?id=czech-radio_cro.schedule)
 [![quality: reliability](https://sonarcloud.io/api/project_badges/measure?project=czech-radio_cro.schedule&metric=reliability_rating)](https://sonarcloud.io/dashboard?id=czech-radio_cro.schedule)
 
-Documentation https://czech-radio.github.io/cro.schedule/ (work-in-progress).
+- Status: This project is used in production, and is being actively developed and maintained.
+- Releases https://github.com/czech-radio/cro.schedule/releases/
+- Documentation https://czech-radio.github.io/cro.schedule/.
 
 ## Purpose
 
