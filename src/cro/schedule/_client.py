@@ -7,7 +7,8 @@ Module contains HTTP REST API client.
 from enum import Enum
 import datetime as dt
 from calendar import monthrange
-from operator import attrgetter, is_
+# from operator import attrgetter
+from typing import Optional
 
 from requests import get
 
@@ -85,14 +86,16 @@ class Client:
             ]
         )
 
-    def get_station(self, id: str) -> Station:
+    @classmethod
+    def get_station(self, id: str) -> Optional[Station]:
         """
         Fetch the available station with the given id.
         """
         try:  # Fetch the station and pick the right one.
             return tuple(filter(lambda x: x.id == id, self.get_stations()))[0]
         except IndexError:
-            raise ValueError(f"The station with id `{id}` does not exist.")
+            # raise ValueError(f"The station with id `{id}` does not exist.")
+            return None
 
     def get_day_schedule(
         self,
@@ -103,7 +106,8 @@ class Client:
         Fetch the availaible schedule for the given date.
 
         Examples:
-            >>> get_day_schedule(dt.now())
+            >>> import datetime as dt
+            >>> get_day_schedule(date = dt.datetime.now())
         """
         data = get(
             f"{type(self).__URL__}/schedule/day/{date.year:04d}/{date.month:02d}/{date.day:02d}/{self.station.id}.json"
@@ -156,7 +160,8 @@ class Client:
         :param date: Any date in the week
 
         Examples:
-            >>> get_week_schedule(dt.now())
+            >>> import datetime as dt
+            >>> get_week_schedule(date = dt.datetime.now())
         """
         # Get all days of the week.
         import datetime as dt
@@ -180,7 +185,8 @@ class Client:
         :return The collection of schedules sorted by date.
 
         Examples:
-            >>> get_month_schedule(dt.now())
+            >>> import datetime as dt
+            >>> get_month_schedule(date = dt.datetime.now())
         """
         # Get all days of the month.
         import datetime as dt
