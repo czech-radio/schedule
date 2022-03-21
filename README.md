@@ -1,12 +1,16 @@
 # cro.schedule
 
-_Python client and domain model to work with Czech Radio broadcast schedule._
+_Python client and domain model to work with Czech Radio schedules and playlists._
 
 [![build: tests](https://github.com/czech-radio/cro.schedule/actions/workflows/main.yml/badge.svg)](https://github.com/czech-radio/cro.schedule/actions/workflows/main.yml)
 [![style: black](https://img.shields.io/badge/style-black-000000.svg)](https://github.com/psf/black)
 [![quality: bugs](https://sonarcloud.io/api/project_badges/measure?project=czech-radio_cro.schedule&metric=bugs)](https://sonarcloud.io/dashboard?id=czech-radio_cro.schedule)
 [![quality: code smells](https://sonarcloud.io/api/project_badges/measure?project=czech-radio_cro.schedule&metric=code_smells)](https://sonarcloud.io/dashboard?id=czech-radio_cro.schedule)
 [![quality: reliability](https://sonarcloud.io/api/project_badges/measure?project=czech-radio_cro.schedule&metric=reliability_rating)](https://sonarcloud.io/dashboard?id=czech-radio_cro.schedule)
+
+## Purpose
+
+&hellip;
 
 ## Features
 
@@ -16,7 +20,6 @@ _Python client and domain model to work with Czech Radio broadcast schedule._
 - [x] Get the schedule for the given station and month.
 - [x] Get the schedule for the given station, period and time.
 - [x] Convert schedule to `pandas.DataFrame`.
-- [ ] Manage schedules via flask application.
 
 ## Prerequisities
 
@@ -57,23 +60,28 @@ client = Client(station_id = 'plus')
 ### Fetch the available schedule for the given day
 
 ````python
+schedule: Schedule = client.get_day_schedule() # current day
+schedule: Schedule = client.get_day_schedule(date = '2022-01-31')
 schedule: Schedule = client.get_day_schedule(date = dt.date(2022, 1, 31))
 ````
 
 ### Fetch the available schedule for the given week
 
 ```python
+schedule: Schedule = client.get_week_schedule() # current week
+schedule: Schedule = client.get_week_schedule(date = '2022-01-31')
 schedule: Schedule = client.get_week_schedule(date = dt.date(2022, 1, 31))
 ```
 
 ### Fetch the available schedule for the given month
 
 ```python
+schedule: Schedule = client.get_month_schedule() # current month
+schedule: Schedule = client.get_month_schedule(date = '2022-01-31')
 schedule: Schedule = client.get_month_schedule(date = dt.date(2022, 1, 31))
 ```
 
 See more examples in `docs/Examples.ipynb`.
-
 
 ## Development
 
