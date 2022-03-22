@@ -11,6 +11,8 @@
 - Release: https://github.com/czech-radio/cro.schedule/releases/
 - Website: https://czech-radio.github.io/cro.schedule/.
 
+:star: Star us on GitHub — it motivates us!
+
 ## Purpose
 
 Python library to work with Czech Radio schedules and playlists.
