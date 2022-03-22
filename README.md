@@ -124,7 +124,11 @@ See more examples in `docs/Examples.ipynb` and data outputs in `data` directory.
 
 ## Development
 
-### Clone the project and move to the project folder
+-  Clone the project and move to the folder.
+-  Create and activate the virtual environment.
+-  Install the package in virtual environment.
+
+### Clone the project and move to the folder
 
 ```
 git clone https://github.com/czech-radio/cro.schedule.git
@@ -218,10 +222,10 @@ pytest -sv -m "not client"
 ```
 
 ## Linting
-
-    black .
-    isort .
-
+```
+black .
+isort .
+```
 ## Resources
 
 - https://data.irozhlas.cz/opendata/
