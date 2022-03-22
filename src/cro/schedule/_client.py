@@ -47,17 +47,19 @@ class Client:
     __url__: str = f"https://api.rozhlas.cz/data/v2"
     __date_format__: str = "%Y-%m-%d"
 
-    def __init__(self, id: StationID):
+    def __init__(self, id: Optional[StationID] = None):
         """
         :param station_id: e.g. `radiozurnal`.
         """
-        try:  # Fetch the station and pick the right one.
-            self._station = self.get_station(id.lower())
-        except IndexError:
-            raise ValueError(f"The station with id `{id}` does not exist.")
-
+        if id is not None:
+            try: # Fetch the station and pick the right one.
+                self._station = self.get_station(id.lower())
+            except IndexError:
+                raise ValueError(f"The station with id `{id}` does not exist.")
+        else:
+            self._station = None
     @property
-    def station(self) -> Station:
+    def station(self) -> Optional[Station]:
         """
         Get the current station.
         """
@@ -65,10 +67,17 @@ class Client:
 
     @station.setter
     def station(self, id: StationID) -> None:
-        try:  # Fetch the station and pick the right one.
+        try: # Fetch the station and pick the right one.
             self._station = self.get_station(id.lower())
         except IndexError:
             raise ValueError(f"The station with id `{self.id}` does not exist.")
+
+    def _check_station(self) -> None:
+        """
+        Check the station property.
+        """
+        if self.station is None:
+            raise ValueError("Set the station property!")
 
     @classmethod
     def get_stations(cls) -> tuple[Station]:
@@ -116,6 +125,7 @@ class Client:
             >>> import datetime as dt
             >>> get_day_schedule(date = dt.datetime.now())
         """
+        self._check_station()
 
         date = (
             dt.datetime.strptime(date, type(self).__date_format__).date()
@@ -179,6 +189,8 @@ class Client:
             >>> import datetime as dt
             >>> get_week_schedule(date = dt.datetime.now())
         """
+        self._check_station()
+
         date = (
             dt.datetime.strptime(date, type(self).__date_format__).date()
             if isinstance(date, str)
@@ -209,6 +221,8 @@ class Client:
             >>> import datetime as dt
             >>> get_month_schedule(date = dt.datetime.now())
         """
+        self._check_station
+
         date = (
             dt.datetime.strptime(date, type(self).__date_format__).date()
             if isinstance(date, str)

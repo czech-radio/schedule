@@ -99,26 +99,29 @@ df.head(5)
 |3|17684087|zpr|Zprávy|plus|Aktuální události doma i ve světě|2022-03-21 01:05:00|2022-03-21 01:05:00|00:05:00| None|False
 |4|17684088|pub|Svět ve 20 minutách|plus|Může se Rusko vyrovnat s ekonomickými následky...|2022-03-21 01:30:00|2022-03-21 01:30:00|00:25:00|None|True
 
-See more examples in `docs/Examples.ipynb`.
-
 ### Store schedule in Excel
 
 ```python
-data = []
-date = '2022-03-14'
-for station in ('plus', 'radiozurnal'):
-    client.station = station
+date: str = '2022-03-14'
+
+data: list[Schedule] = []
+for sid in ('plus', 'radiozurnal'):
+    client.station = sid
     schedules = client.get_week_schedule(date)
+
     for schedule in schedules:
         print(schedule.date, schedule.station.name, len(schedule.shows))
         data.append(schedule.to_table())
-        with pd.ExcelWriter(f"../data/Schedule_{schedule.station.name}_{schedule.date}.xlsx") as writer:
-            df.to_excel(writer)
+        # Write single dataset to Excel.
+        with pd.ExcelWriter(f"../data/sheet/Schedule_{schedule.station.name}_{schedule.date}.xlsx") as writer:
+            data[-1].to_excel(writer)
 
-all = pd.concat(data)
-with pd.ExcelWriter(f"../data/Schedule_{date}.xlsx") as writer:
-    all.to_excel(writer)
+# Write concatenated datasets to Excel.
+with pd.ExcelWriter(f"../data/sheet/Schedule_{date}.xlsx") as writer:
+    pd.concat(data).to_excel(writer)
 ```
+
+See more examples in `docs/Examples.ipynb` and data outputs in `data` directory.
 
 ## Development
 
