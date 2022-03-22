@@ -25,12 +25,12 @@ Python library to work with Czech Radio schedules and playlists.
 - [ ] Get the playlist for supported stations (only Radio Wave).
 - [x] Convert schedule to `pandas.DataFrame`.
 
-## Prerequisites
-
-- We assume that you use at least Python 3.9.
-- We assume that you use the virtual environment.
-
 ## Installation
+
+**Prerequisites**
+
+* We assume that you use at least Python 3.9.
+* We assume that you use the virtual environment.
 
 One can install package from the GitHub repository.
 
