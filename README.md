@@ -27,7 +27,8 @@ Python library to work with Czech Radio schedules and playlists.
 
 ## Prerequisites
 
-We assume that you use at least Python 3.9.
+- We assume that you use at least Python 3.9.
+- We assume that you use the virtual environment.
 
 ## Installation
 
@@ -36,8 +37,6 @@ One can install package from the GitHub repository.
 ```
 pip install git+https://github.com/czech-radio/cro.schedule.git
 ```
-
-We assume that you use the virtual environment.
 
 ## Usage
 
