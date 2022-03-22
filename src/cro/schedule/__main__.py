@@ -12,4 +12,4 @@ def main() -> None:
 
     parser.add_argument()
 
-    arguments = parser.parse_args()
+    # TODO arguments = parser.parse_args()

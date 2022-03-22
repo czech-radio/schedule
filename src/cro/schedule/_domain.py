@@ -100,7 +100,7 @@ class Schedule:
         return df
 
     @classmethod
-    def from_table(table: pd.DataFrame) -> Schedule:
+    def from_table(cls, table: pd.DataFrame) -> Schedule:
         """Factory method to create a schedule from the given dataset."""
         #
         # Preconditions:
