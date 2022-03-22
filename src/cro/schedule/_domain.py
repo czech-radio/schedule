@@ -85,7 +85,7 @@ class Schedule:
         """
         df = pd.DataFrame(data=self.shows)
 
-        # Use only one attribute from kins and station objects.
+        # Use only one attribute from kind and station objects.
         df["kind"] = df["kind"].apply(lambda x: x["code"].lower())
         df["station"] = df["station"].apply(lambda x: x["id"])
 

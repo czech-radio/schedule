@@ -87,7 +87,7 @@ schedule: Schedule = client.get_month_schedule(date = dt.date(2022, 1, 31))
 ### Convert to `pandas.DataFrame`
 
 ```python
-df = schedule.as_table()
+df = schedule.to_table()
 df.head(5)
 ```
 
