@@ -89,6 +89,9 @@ class Schedule:
         df["kind"] = df["kind"].apply(lambda x: x["code"].lower())
         df["station"] = df["station"].apply(lambda x: x["id"])
 
+        # Replace empty persosn by None/NaN?
+        df.persons = df.persons.apply(lambda xs: None if len(xs) == 0 else xs)
+
         # Remove timezones for Excel exports.
         if without_timezone:
             df["till"] = df["till"].apply(lambda x: x.replace(tzinfo=None))
