@@ -60,7 +60,7 @@ stations: tuple(Station) = Client.get_stations()
 #### Create the client instance
 
 ```python
-client = Client(id = 'plus')
+client = Client(sid = 'plus')
 ```
 
 #### Fetch the available schedule for the given day
@@ -94,13 +94,7 @@ df = schedule.to_table()
 df.head(5)
 ```
 
-| |id|kind|title|station|description|since|till|duration|persons|repetition|
-|-|--|----|-----|-------|-----------|-----|----|--------|-------|----------|
-|0|17684084|zpr|Zprávy|plus|Aktuální události doma i ve světě|2022-03-21 00:10:00|2022-03-21 00:10:00|00:10:00|None|False
-|1|17684085|pub|Čekání na prezidenta|plus|Další epizoda podcastu Čekání na prezidenta je...|2022-03-21 00:50:00|2022-03-21 00:50:00|00:40:00|None|True
-|2|17684086|pub|Názory a argumenty|plus|Den pohledem renomovaných komentátorů ve zkrác...|2022-03-21 01:00:00|2022-03-21 01:00:00|00:10:00|None|True
-|3|17684087|zpr|Zprávy|plus|Aktuální události doma i ve světě|2022-03-21 01:05:00|2022-03-21 01:05:00|00:05:00| None|False
-|4|17684088|pub|Svět ve 20 minutách|plus|Může se Rusko vyrovnat s ekonomickými následky...|2022-03-21 01:30:00|2022-03-21 01:30:00|00:25:00|None|True
+<table>  <thead>  <tr>      <th></th>      <th>id</th>      <th>kind</th>      <th>title</th>      <th>station</th>      <th>description</th>      <th>since</th>      <th>till</th>      <th>duration</th>      <th>persons</th>      <th>repetition</th>    </tr>  </thead>  <tbody>    <tr>      <th>0</th>      <td>17750161</td>      <td>zpr</td>      <td>Zprávy</td>      <td>radiozurnal</td>      <td>Zpravodajství z Česka i ze světa. Sport, Zelená vlna a předpověď počasí. O dopravní situaci informujte na bezplatné lince 800 553 553.</td>      <td>2022-03-22 00:00:00</td>      <td>2022-03-22 00:09:00</td>      <td>00:09:00</td>      <td>None</td>      <td>False</td>    </tr>    <tr>      <th>1</th>      <td>17750164</td>      <td>pub</td>      <td>Dvacet minut Radiožurnálu</td>      <td>radiozurnal</td>      <td>Hostem je Josef Středula, předseda Českomoravské komory odborových svazů. V Česku se už zaregistrovalo přes dvě stě tisíc uprchlíků z Ukrajiny. Jak jejich příchod zasáhne sociální systém a pracovní trh? Je vláda na migrační vlnu připravena? Moderuje Vladimír Kroc. (repríza)</td>      <td>2022-03-22 00:10:00</td>      <td>2022-03-22 00:30:00</td>      <td>00:20:00</td>      <td>({\'id\': 5004021, \'name\': \'Vladimír Kroc\'},)</td>      <td>True</td>    </tr>    <tr>      <th>2</th>      <td>17750165</td>      <td>zpr</td>      <td>Zprávy</td>      <td>radiozurnal</td>      <td>Z domova i ze světa. Sport, Zelená vlna a počasí. O dopravní situaci informujte na bezplatné lince 800 553 553.</td>      <td>2022-03-22 00:30:00</td>      <td>2022-03-22 00:32:00</td>      <td>00:02:00</td>      <td>None</td>      <td>False</td>    </tr>    <tr>      <th>3</th>      <td>17750168</td>      <td>mag</td>      <td>Noční Radiožurnál</td>      <td>radiozurnal</td>      <td>Aktuální reportáže a nejrychlejší zpravodajství. Moderuje Petr Zajíček.</td>      <td>2022-03-22 00:33:00</td>      <td>2022-03-22 01:00:00</td>      <td>00:27:00</td>      <td>None</td>      <td>False</td>    </tr>    <tr>      <th>4</th>      <td>17750169</td>      <td>zpr</td>      <td>Zprávy</td>      <td>radiozurnal</td>      <td>Zpravodajství z Česka i ze světa. Sport, Zelená vlna a předpověď počasí. O dopravní situaci informujte na bezplatné lince 800 553 553.</td>      <td>2022-03-22 01:00:00</td>      <td>2022-03-22 01:04:00</td>      <td>00:04:00</td>      <td>None</td>      <td>False</td>    </tr>  </tbody></table>
 
 #### Store schedule in Excel
 

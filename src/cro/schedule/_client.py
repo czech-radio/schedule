@@ -47,15 +47,15 @@ class Client:
     __url__: str = f"https://api.rozhlas.cz/data/v2"
     __date_format__: str = "%Y-%m-%d"
 
-    def __init__(self, id: Optional[StationID] = None):
+    def __init__(self, sid: Optional[StationID] = None):
         """
         :param station_id: e.g. `radiozurnal`.
         """
-        if id is not None:
+        if sid is not None:
             try: # Fetch the station and pick the right one.
-                self._station = self.get_station(id.lower())
+                self._station = self.get_station(sid.lower())
             except IndexError:
-                raise ValueError(f"The station with id `{id}` does not exist.")
+                raise ValueError(f"The station with id `{sid}` does not exist.")
         else:
             self._station = None
     @property
@@ -66,11 +66,11 @@ class Client:
         return self._station
 
     @station.setter
-    def station(self, id: StationID) -> None:
+    def station(self, sid: StationID) -> None:
         try: # Fetch the station and pick the right one.
-            self._station = self.get_station(id.lower())
+            self._station = self.get_station(sid.lower())
         except IndexError:
-            raise ValueError(f"The station with id `{self.id}` does not exist.")
+            raise ValueError(f"The station with id `{self.sid}` does not exist.")
 
     def _check_station(self) -> None:
         """
