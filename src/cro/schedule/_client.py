@@ -221,7 +221,7 @@ class Client:
             >>> import datetime as dt
             >>> get_month_schedule(date = dt.datetime.now())
         """
-        self._check_station
+        self._check_station()
 
         date = (
             dt.datetime.strptime(date, type(self).__date_format__).date()
