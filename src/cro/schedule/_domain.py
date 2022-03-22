@@ -95,7 +95,7 @@ class Schedule:
         # Remove timezones for Excel exports.
         if without_timezone:
             df["till"] = df["till"].apply(lambda x: x.replace(tzinfo=None))
-            df["since"] = df["till"].apply(lambda x: x.replace(tzinfo=None))
+            df["since"] = df["since"].apply(lambda x: x.replace(tzinfo=None))
 
         return df
 
