@@ -51,7 +51,7 @@ import datetime as dt
 
 from cro.schedule import Client
 ```
-## Use cases
+### Use cases
 
 #### Fetch the available stations
 
