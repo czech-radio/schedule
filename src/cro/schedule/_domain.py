@@ -79,7 +79,7 @@ class Schedule:
         """
         return (self.time[0], self.time[1]) == (dt.time.max, dt.time.min)
 
-    def as_table(self, without_timezone: bool = True) -> pd.DataFrame:
+    def to_table(self, without_timezone: bool = True) -> pd.DataFrame:
         """
         Return the schedule data as table.
         """
@@ -95,6 +95,18 @@ class Schedule:
             df["since"] = df["till"].apply(lambda x: x.replace(tzinfo=None))
 
         return df
+
+    @classmethod
+    def from_table(table: pd.DataFrame) -> Schedule:
+        """Factory method to create a schedule from the given dataset."""
+        #
+        # Preconditions:
+        # - Dataset contain only data for one station and one date.
+        #
+        # Parse date from since or till columns.
+        # Parse time from min(since) and max(till) columns.
+        # Fetch station with the given station id.
+        return NotImplemented
 
 
 def schedules_as_table(schedule: Schedule) -> pd.DataFrame:

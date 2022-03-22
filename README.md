@@ -7,7 +7,7 @@
 [![quality: reliability](https://sonarcloud.io/api/project_badges/measure?project=czech-radio_cro.schedule&metric=reliability_rating)](https://sonarcloud.io/dashboard?id=czech-radio_cro.schedule)
 
 - Status: developed (maintained)
-- Version: 0.11.0-alpha (latest)
+- Version: 0.13.0-alpha (latest)
 - Release: https://github.com/czech-radio/cro.schedule/releases/
 - Website: https://czech-radio.github.io/cro.schedule/.
 
@@ -111,7 +111,7 @@ for station in ('plus', 'radiozurnal'):
     schedules = client.get_week_schedule(date)
     for schedule in schedules:
         print(schedule.date, schedule.station.name, len(schedule.shows))
-        data.append(schedule.as_table())
+        data.append(schedule.to_table())
         with pd.ExcelWriter(f"../data/Schedule_{schedule.station.name}_{schedule.date}.xlsx") as writer:
             df.to_excel(writer)
 
