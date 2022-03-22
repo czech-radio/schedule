@@ -49,20 +49,21 @@ import datetime as dt
 
 from cro.schedule import Client
 ```
+## Use cases
 
-### Fetch the available stations
+#### Fetch the available stations
 
 ```python
 stations: tuple(Station) = Client.get_stations()
 ```
 
-### Create the client instance
+#### Create the client instance
 
 ```python
 client = Client(id = 'plus')
 ```
 
-### Fetch the available schedule for the given day
+#### Fetch the available schedule for the given day
 
 ```python
 schedule: Schedule = client.get_day_schedule() # current day
@@ -70,7 +71,7 @@ schedule: Schedule = client.get_day_schedule(date = '2022-01-31')
 schedule: Schedule = client.get_day_schedule(date = dt.date(2022, 1, 31))
 ```
 
-### Fetch the available schedule for the given week
+#### Fetch the available schedule for the given week
 
 ```python
 schedule: Schedule = client.get_week_schedule() # current week
@@ -78,7 +79,7 @@ schedule: Schedule = client.get_week_schedule(date = '2022-01-31')
 schedule: Schedule = client.get_week_schedule(date = dt.date(2022, 1, 31))
 ```
 
-### Fetch the available schedule for the given month
+#### Fetch the available schedule for the given month
 
 ```python
 schedule: Schedule = client.get_month_schedule() # current month
@@ -86,7 +87,7 @@ schedule: Schedule = client.get_month_schedule(date = '2022-01-31')
 schedule: Schedule = client.get_month_schedule(date = dt.date(2022, 1, 31))
 ```
 
-### Convert to `pandas.DataFrame`
+#### Convert to `pandas.DataFrame`
 
 ```python
 df = schedule.to_table()
@@ -101,7 +102,7 @@ df.head(5)
 |3|17684087|zpr|Zprávy|plus|Aktuální události doma i ve světě|2022-03-21 01:05:00|2022-03-21 01:05:00|00:05:00| None|False
 |4|17684088|pub|Svět ve 20 minutách|plus|Může se Rusko vyrovnat s ekonomickými následky...|2022-03-21 01:30:00|2022-03-21 01:30:00|00:25:00|None|True
 
-### Store schedule in Excel
+#### Store schedule in Excel
 
 ```python
 date: str = '2022-03-14'
