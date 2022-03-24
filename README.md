@@ -39,7 +39,7 @@ Python library to work with Czech Radio schedules and playlists.
 One can install package from the GitHub repository.
 
 ```
-pip install git+https://github.com/czech-radio/cro.schedule.git
+pip install git+https://github.com/czech-radio/cro-schedule-client.git
 ```
 
 ## Usage
@@ -139,7 +139,7 @@ See more examples in `docs/Examples.ipynb` and data outputs in `data` directory.
 ### Clone the project and move to the folder
 
 ```
-git clone https://github.com/czech-radio/cro.schedule.git
+git clone https://github.com/czech-radio/cro-schedule-client.git
 cd cro.schedule
 ```
 
