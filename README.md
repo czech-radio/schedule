@@ -89,6 +89,14 @@ schedule: Schedule = client.get_month_schedule(date = '2022-01-31')
 schedule: Schedule = client.get_month_schedule(date = dt.date(2022, 1, 31))
 ```
 
+#### Change the client station
+
+```python
+client.station = 'radiozurnal'
+
+# Fecth tha schedule for Radiožurnál station (same as previous examples).
+```
+
 #### Convert to `pandas.DataFrame`
 
 ```python
