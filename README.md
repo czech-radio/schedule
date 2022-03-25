@@ -157,6 +157,11 @@ black .  # Format the code.
 isort .  # Sort the imports.
 ```
 
+### Release
+
+&hellip;
+
+
 ## References
 
 - https://data.irozhlas.cz/opendata/

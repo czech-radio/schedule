@@ -50,17 +50,18 @@ class Client:
     __url__: str = f"https://api.rozhlas.cz/data/v2"
     __date_format__: str = "%Y-%m-%d"
 
-    def __init__(self, sid: Optional[StationID] = None):
+    def __init__(self, sid: Optional[StationID] = None) -> None:
         """
         :param station_id: e.g. `radiozurnal`.
         """
+        self._station = None
+
+        # Fetch the station and pick the right one.
         if sid is not None:
-            try: # Fetch the station and pick the right one.
-                self._station = self.get_station(sid.lower())
+            try:
+                self._station = type(self).get_station(sid.lower())
             except IndexError:
                 raise ValueError(f"The station with id `{sid}` does not exist.")
-        else:
-            self._station = None
 
     def __enter__(self) -> Client:
         """
@@ -90,16 +91,24 @@ class Client:
         Set the current station.
         """
         try: # Fetch the station and pick the right one.
-            self._station = self.get_station(sid.lower())
+            self._station = type(self).get_station(sid.lower())
+            print(self._station)
         except IndexError:
-            raise ValueError(f"The station with id `{self.sid}` does not exist.")
+            raise ValueError(f"The station with id `{sid}` does not exist.")
 
     def _check_station(self) -> None:
         """
-        Check the station property.
+        Check that station property is set.
         """
         if self.station is None:
             raise ValueError("Set the station property!")
+
+    @classmethod
+    def make(cls) -> Client:
+        """
+        Make the client instance (factory method).
+        """
+        return NotImplemented
 
     @classmethod
     def get_stations(cls) -> tuple[Station]:
@@ -110,6 +119,7 @@ class Client:
             >>> Client.get_stations()
         """
         data = get(f"{cls.__url__}/meta/stations.json").json()["data"]
+
         return tuple(
             [
                 Station(
@@ -132,11 +142,12 @@ class Client:
         :param sid: The station id.
         :return: The sequence of stations.
         """
-        try:  # Fetch the station and pick the right one.
-            return tuple(filter(lambda x: x.id == id, cls.get_stations()))[0]
+        # Fetch the station and pick the right one.
+        try:
+            return tuple(filter(lambda x: x.id == sid, cls.get_stations()))[0]
         except IndexError:
             # Should we aise ValueError(f"The station with id `{id}` does not exist.")?
-            return None
+            raise
 
     def get_day_schedule(
         self,
