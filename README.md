@@ -11,7 +11,8 @@
 - Version: 0.13.0-alpha (latest)
 - Release: https://github.com/czech-radio/cro.schedule/releases/
 - Website: https://czech-radio.github.io/cro.schedule/.
-- Category: library
+- Category: library, client
+- Suppport: Python 3.9+, Windows, macOS, Ubuntu
 
 :star: Star us on GitHub — it motivates us!
 
