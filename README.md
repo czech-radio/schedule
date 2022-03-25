@@ -37,7 +37,7 @@ Python library to work with Czech Radio schedules and playlists.
 * We assume that you use at least Python 3.9.
 * We assume that you use the virtual environment.
 
-One can install package from the GitHub repository.
+Install the package latest version from the GitHub repository.
 
 ```
 pip install git+https://github.com/czech-radio/cro-schedule-client.git
@@ -131,95 +131,15 @@ with pd.ExcelWriter(f"../data/sheet/Schedule_{date}.xlsx") as writer:
 
 See more examples in `docs/Examples.ipynb` and data outputs in `data` directory.
 
-## Development
+## Contributing
+
+### Setup
 
 -  Clone the project and move to the folder.
 -  Create and activate the virtual environment.
 -  Install the package in virtual environment.
 
-### Clone the project and move to the folder
-
-```
-git clone https://github.com/czech-radio/cro-schedule-client.git
-cd cro.schedule
-```
-
-### Create and activate the virtual environment
-
-Vytvoř virtuální prostředí v adresáři projektu. Níže uvedený příkaz je platný pro Windows. S instalací Pythonu se do cesty vloží (zaváděcí) program `py.exe`, který lze použít pro spoustění různých verzí Python interpreteru. Zde explicitně říkáme: Zavolej interpretr Pythonu verze 3.10 (doporučené, používáme nejnovější verzi) a spusť zabudovaný modul `venv` (viz parameter `-m venv`) jako program s parametrem `.venv`. Ten vytvoří adresář `.venv`, do kterého se nakopíruje interpretr Pythonu s potřebnými balíky (knihovnami).
-
-```
-py -m venv --upgrade-deps --clear .venv
-```
-
-__Windows__
-
-```
-.\.venv\Scripts\activate
-```
-
-__UNIX__
-
-```
-source ./venv/bin/activate
-```
-
-Měli bychom vidět podobný prefix s názvem `(.venv)` v terminálu, který ukazuje, že máme aktivní virtuální prostředí daného jména tzn., že všechny instalace balíků a spouštění interpreteru bude probíhat v adresáři `.venv`.
-
-```
-(.venv) $ cro.schedule>
-```
-
-Jako jméno jsme mohli zvolit cokoliv, ale `.venv` je standardem (je např. uveden i v souboru `.gitignore`, protože ho rozhodně nechceme přidávat do repozitáře).
-
-### Install the package in virtual environment
-
-Instalace balíku v produkčním režimu.
-
-```
-pip install -U .
-```
-
-Instalace balíku ve vývojovém režimu.
-
-```
-pip install -U -e .[test,docs,lint]
-```
-
-Nyní můžeme s balíkem pracovat v našich skriptech.
-
-### Deactivate the virtual environment
-
-Provedeme příkazem `deactivate` nebo stačí aktivivat jiné virtuální prostředí.
-
-```
-deactivate
-```
-
-Další informace k virtuálním prostředím naleznete [zde](https://docs.python.org/3/library/venv.html)
-
-Pokud si chcem být jistí, že spouštíme Python interpretr ze správného prostředí použijeme
-
-__Windows__
-
-```
-where.exe python
-
-C:\Users\{name}\Projects\{project}\.venv\Scripts\python.exe
-^^^ OK: Jako výchozí spouštíme z virtuálního prostředí a další v řadě jsou následující:
-
-C:\Users\{name}\AppData\Local\Programs\Python\Python310\python.exe
-C:\Users\{name}\AppData\Local\Programs\Python\Python39\python.exe
-C:\Users\{name}\AppData\Local\Microsoft\WindowsApps\python.exe
-```
-
-__UNIX__
-
-```
-which python
-```
-
-## Testing
+### Testing
 
 Pokud chceme spustit testy, použijeme následující příkaz.
 
@@ -229,13 +149,13 @@ pytest -sv -m domain
 pytest -sv -m client
 pytest -sv -m "not client"
 ```
-
-## Linting
+### Linting
 ```
 black .
 isort .
 ```
-## Resources
+
+## References
 
 - https://data.irozhlas.cz/opendata/
 - https://cs.wikipedia.org/wiki/%C4%8Cesk%C3%BD_rozhlas
