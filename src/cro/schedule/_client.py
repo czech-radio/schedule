@@ -63,9 +63,17 @@ class Client:
             self._station = None
 
     def __enter__(self) -> Client:
+        """
+        Enter the context.
+        """
         return self
 
     def __exit__(self, *args) -> None: # ?type
+        """
+        Exit the context.
+        """
+        # This is a remainder how to implement manager
+        # see https://peps.python.org/pep-0343/.
         # exc_type, exc_value, traceback = *args
         return None
 
