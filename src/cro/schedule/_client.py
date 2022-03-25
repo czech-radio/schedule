@@ -65,8 +65,8 @@ class Client:
     def __enter__(self) -> Client:
         return self
 
-    def __exit__(self, type, value, traceback) -> None: # ?type
-        type, value, traceback, None, None, None
+    def __exit__(self, *args) -> None: # ?type
+        # exc_type, exc_value, traceback = *args
         return None
 
     @property
