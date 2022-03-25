@@ -6,6 +6,7 @@ This module contains domain model.
 
 from __future__ import annotations
 
+import pathlib as pl
 import datetime as dt
 from typing import NewType
 from functools import total_ordering
@@ -26,7 +27,7 @@ class Station:
     domain: str
     slogan: str
     description: str
-    services: dict[str, URL]
+    services: dict[str, URL] = field(hash=False)
 
 
 @dataclass(frozen=True)
@@ -52,7 +53,7 @@ class Show:
     since: dt.datetime
     till: dt.datetime
     duration: dt.time = field(init=False)
-    persons: tuple[Person]
+    persons: tuple[Person] =  field(hash=False)
     repetition: bool
 
     def __post_init__(self) -> None:
@@ -72,6 +73,9 @@ class Schedule:
 
     def __lt__(self, that: Schedule) -> bool:
         return self.date < that.date
+
+    def __len__(self) -> int:
+        return len(self.shows)
 
     def is_subset(self) -> bool:
         """
@@ -112,15 +116,24 @@ class Schedule:
         return NotImplemented
 
 
-def schedules_as_table(schedule: Schedule) -> pd.DataFrame:
+def schedule_as_table(schedule: Schedule) -> pd.DataFrame:
     """
     Return the multiple schedules as a pandas table.
     """
     return NotImplemented
 
 
-def schedules_as_chart(shedule: Schedule) -> dict:
+def schedule_as_chart(shedule: Schedule) -> dict:
     """
     Return the multiple schedules as a vega chart.
+    """
+    return NotImplemented
+
+
+def save_schedule_as_excel(schedule: Schedule, path: pl.Path) -> None:
+    """
+    Save the given schedule as Excel.
+
+    :raise: IOError
     """
     return NotImplemented

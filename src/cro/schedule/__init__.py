@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 
-
 from cro.schedule._client import Client
 from cro.schedule._domain import Schedule, Show, Station
 

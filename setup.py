@@ -13,10 +13,11 @@ setup(
         "pandas",
         "requests",
         "openpyxl",
+        "tqdm"
     ],
     extras_require={
         "test": ["pytest", "pytest-html"],
         "docs": ["sphinx", "jupyterlab"],
-        "lint": ["black[jupyter]", "flake8", "isort"],
+        "lint": ["black[jupyter]", "flake8", "isort", "mypy"],
     },
 )

@@ -4,6 +4,9 @@
 Module contains HTTP REST API client.
 """
 
+from __future__ import annotations
+
+
 import datetime as dt
 from calendar import monthrange
 from enum import Enum
@@ -58,6 +61,14 @@ class Client:
                 raise ValueError(f"The station with id `{sid}` does not exist.")
         else:
             self._station = None
+
+    def __enter__(self) -> Client:
+        return self
+
+    def __exit__(self, type, value, traceback) -> None: # ?type
+        type, value, traceback, None, None, None
+        return None
+
     @property
     def station(self) -> Optional[Station]:
         """
@@ -67,6 +78,9 @@ class Client:
 
     @station.setter
     def station(self, sid: StationID) -> None:
+        """
+        Set the current station.
+        """
         try: # Fetch the station and pick the right one.
             self._station = self.get_station(sid.lower())
         except IndexError:
@@ -103,9 +117,12 @@ class Client:
         )
 
     @classmethod
-    def get_station(cls, id: str) -> Optional[Station]:
+    def get_station(cls, sid: str) -> Optional[Station]:
         """
-        Fetch the available station with the given id.
+        Fetch the available station with the given station id (`sid`).
+
+        :param sid: The station id.
+        :return: The sequence of stations.
         """
         try:  # Fetch the station and pick the right one.
             return tuple(filter(lambda x: x.id == id, cls.get_stations()))[0]
@@ -120,6 +137,10 @@ class Client:
     ) -> Schedule:
         """
         Fetch the availaible schedule for the given date.
+
+        :param date: The schedule date.
+        :param time: The schedule time range (since, till).
+        :return: The schedule for the given day.
 
         Examples:
             >>> import datetime as dt
@@ -173,7 +194,7 @@ class Client:
 
         date = date.date() if isinstance(date, dt.datetime) else date
 
-        return Schedule(date=date, time=time, station=self.station, shows=shows)
+        return Schedule(date=date, time=time, station=self.station, shows=tuple(shows))
 
     def get_week_schedule(
         self,
@@ -183,7 +204,9 @@ class Client:
         """
         Fetch the availaible schedules for the given week.
 
-        :param date: Any date in the week
+        :param date: The schedule week date (any).
+        :param time: The schedule time range (since, till).
+        :return The sequence of schedules for the given week sorted by date.
 
         Examples:
             >>> import datetime as dt
@@ -213,9 +236,9 @@ class Client:
         """
         Fetch the availaible schedules for the given month.
 
-        :param date: Any date in the month.
-
-        :return The collection of schedules sorted by date.
+        :param date: The schedule month date (any).
+        :param time: The schedule time range (since, till).
+        :return The sequence of schedules for the given week sorted by date.
 
         Examples:
             >>> import datetime as dt
