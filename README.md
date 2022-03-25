@@ -138,21 +138,23 @@ See more examples in `docs/Examples.ipynb` and data outputs in `data` directory.
 -  Clone the project and move to the folder.
 -  Create and activate the virtual environment.
 -  Install the package in virtual environment.
+-  Write, test and lint the code.
 
-### Testing
+### Test
 
-Pokud chceme spustit testy, použijeme následující příkaz.
+To run a tests use following commands.
 
 ```
-pytest -sv
-pytest -sv -m domain
-pytest -sv -m client
-pytest -sv -m "not client"
+pytest -sv                   # Run all tests.
+pytest -sv -m domain         # Run domain tests.
+pytest -sv -m client         # Run client tests.
+pytest -sv -m "not client"   # Run all tests except client.
 ```
-### Linting
+
+### Lint
 ```
-black .
-isort .
+black .  # Format the code.
+isort .  # Sort the imports.
 ```
 
 ## References
