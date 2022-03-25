@@ -94,7 +94,7 @@ schedule: Schedule = client.get_month_schedule(date = dt.date(2022, 1, 31))
 ```python
 client.station = 'radiozurnal'
 
-# Fecth tha schedule for Radiožurnál station (same as previous examples).
+# Fetch the schedule for Radiožurnál station (same as the previous examples).
 ```
 
 #### Convert to `pandas.DataFrame`
