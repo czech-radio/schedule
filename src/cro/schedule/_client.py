@@ -12,7 +12,7 @@ from calendar import monthrange
 from enum import Enum
 from typing import Optional, Union
 
-from requests import get
+from requests import get, Session
 
 from cro.schedule._domain import (
     Kind,
@@ -47,7 +47,10 @@ class Client:
     The Czech Radio client to fetch schedules and stations metadata.
     """
 
+    #: The service REST API V2 base URL.
     __url__: str = f"https://api.rozhlas.cz/data/v2"
+
+    #: The date format as data string input.
     __date_format__: str = "%Y-%m-%d"
 
     def __init__(self, sid: Optional[StationID] = None) -> None:
@@ -67,6 +70,7 @@ class Client:
         """
         Enter the context.
         """
+        self._session = Session()
         return self
 
     def __exit__(self, *args) -> None: # ?type
@@ -76,7 +80,7 @@ class Client:
         # This is a remainder how to implement manager
         # see https://peps.python.org/pep-0343/.
         # exc_type, exc_value, traceback = *args
-        return None
+        self._session.close()
 
     @property
     def station(self) -> Optional[Station]:
