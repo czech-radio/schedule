@@ -96,7 +96,7 @@ class Client:
         """
         try: # Fetch the station and pick the right one.
             self._station = type(self).get_station(sid.lower())
-            print(self._station)
+            # logger.info(self._station)
         except IndexError:
             raise ValueError(f"The station with id `{sid}` does not exist.")
 
