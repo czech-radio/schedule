@@ -6,21 +6,15 @@ Module contains HTTP REST API client.
 
 from __future__ import annotations
 
-
 import datetime as dt
 from calendar import monthrange
 from enum import Enum
 from typing import Optional, Union
 
-from requests import get, Session
+from requests import Session, get
 
-from cro.schedule._domain import (
-    Kind,
-    Person,
-    Schedule,
-    Show,
-    Station,
-)  # package protected
+from cro.schedule._domain import (Kind, Person, Schedule,  # package protected
+                                  Show, Station)
 
 __all__ = tuple(["Client"])
 

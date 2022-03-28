@@ -17,6 +17,14 @@ import flask
 
 # @todo Add to dependencies.
 
+__all__ = tuple(["Server"])
+
+
+class Server:
+    """
+    The Flask based server application.
+    """
+
 
 def main():
     app = flask.current_app

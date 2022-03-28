@@ -6,11 +6,11 @@ This module contains domain model.
 
 from __future__ import annotations
 
-import pathlib as pl
 import datetime as dt
-from typing import NewType
-from functools import total_ordering
+import pathlib as pl
 from dataclasses import dataclass, field
+from functools import total_ordering
+from typing import NewType
 
 import pandas as pd
 
