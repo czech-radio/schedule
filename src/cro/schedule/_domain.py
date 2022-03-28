@@ -53,7 +53,7 @@ class Show:
     since: dt.datetime
     till: dt.datetime
     duration: dt.time = field(init=False)
-    persons: tuple[Person] =  field(hash=False)
+    persons: tuple[Person] = field(hash=False)
     repetition: bool
 
     def __post_init__(self) -> None:

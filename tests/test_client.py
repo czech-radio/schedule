@@ -13,9 +13,10 @@ from cro.schedule import Client
 
 @pytest.fixture
 def client():
-    _client = Client(sid = "plus")
+    _client = Client(sid="plus")
     assert _client.station is not None
     return _client
+
 
 @pytest.mark.client
 def test_that_stations_are_retrieved(client):

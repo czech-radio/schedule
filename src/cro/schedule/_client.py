@@ -42,6 +42,7 @@ def is_time_between(begin_time, end_time, check_time=None):
 
 StationID = str
 
+
 class Client:
     """
     The Czech Radio client to fetch schedules and stations metadata.
@@ -73,7 +74,7 @@ class Client:
         self._session = Session()
         return self
 
-    def __exit__(self, *args) -> None: # ?type
+    def __exit__(self, *args) -> None:  # ?type
         """
         Exit the context.
         """
@@ -94,7 +95,7 @@ class Client:
         """
         Set the current station.
         """
-        try: # Fetch the station and pick the right one.
+        try:  # Fetch the station and pick the right one.
             self._station = type(self).get_station(sid.lower())
             # logger.info(self._station)
         except IndexError:
