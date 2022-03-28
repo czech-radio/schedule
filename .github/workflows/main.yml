@@ -28,7 +28,9 @@ jobs:
                   python -m pip install --upgrade pip
                   python -m pip install --editable ".[test,lint,docs]"
                   python -c "import cro.schedule"
-
+            - name: Format the code
+              run: |
+                  black --check . --exclude docs/ data/
             - name: Lint the code
               run: |
                   #flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
