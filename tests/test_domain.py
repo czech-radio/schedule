@@ -46,5 +46,10 @@ def test_that_schedule_is_not_subsest():
 
 
 @pytest.mark.domain
-def test_that_schedule_show_filtering_works():
+def test_that_schedule_show_time_filtering_works():
+    assert False
+
+
+@pytest.mark.domain
+def test_that_schedule_show_title_filtering_works():
     assert False

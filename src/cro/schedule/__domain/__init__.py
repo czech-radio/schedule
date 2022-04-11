@@ -86,7 +86,7 @@ class Schedule:
         """
         return (self.time[0], self.time[1]) == (dt.time.max, dt.time.min)
 
-    def shows_between(
+    def shows_by_time(
         self, since: Union[dt.time, str], till: Union[dt.time, str]
     ) -> tuple[Show]:
         since = (
@@ -103,7 +103,17 @@ class Schedule:
 
         return tuple(
             filter(
-                lambda show: (show.since.time() >= since) and (show.till.time() < till),
+                lambda show: (show.since.time() >= since)
+                and (show.till.time() <= till),
+                self.shows,
+            )
+        )
+
+    def shows_by_title(self, title: str, exact_match=True) -> tuple[Show]:
+
+        return tuple(
+            filter(
+                lambda show: (show.title == title),
                 self.shows,
             )
         )
