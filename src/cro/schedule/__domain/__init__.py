@@ -83,6 +83,10 @@ class Schedule:
         """
         return (self.time[0], self.time[1]) == (dt.time.max, dt.time.min)
 
+    def shows_between(self, since, till) -> tuple[Show]:
+        return tuple(
+            filter(lambda show: show.since.time >= since and show.till.time <= till , self.shows))
+
     def to_table(self, without_timezone: bool = True) -> pd.DataFrame:
         """
         Return the schedule data as table.

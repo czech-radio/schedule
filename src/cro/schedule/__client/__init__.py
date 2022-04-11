@@ -13,7 +13,7 @@ from typing import Optional, Union
 
 from requests import Session, get
 
-from cro.schedule._domain import (Kind, Person, Schedule,  # package protected
+from cro.schedule.__domain import (Kind, Person, Schedule,  # package private
                                   Show, Station)
 
 __all__ = tuple(["Client"])
