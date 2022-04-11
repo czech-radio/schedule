@@ -86,7 +86,9 @@ class Schedule:
         """
         return (self.time[0], self.time[1]) == (dt.time.max, dt.time.min)
 
-    def shows_between(self, since: Union[dt.time, str], till: Union[dt.time, str]) -> tuple[Show]:
+    def shows_between(
+        self, since: Union[dt.time, str], till: Union[dt.time, str]
+    ) -> tuple[Show]:
         since = (
             dt.datetime.strptime(since, type(self).__time_format__).time()
             if isinstance(since, str)
@@ -100,7 +102,11 @@ class Schedule:
         )
 
         return tuple(
-            filter(lambda show: (show.since.time() >= since) and (show.till.time() < till) , self.shows))
+            filter(
+                lambda show: (show.since.time() >= since) and (show.till.time() < till),
+                self.shows,
+            )
+        )
 
     def to_table(self, without_timezone: bool = True) -> pd.DataFrame:
         """
