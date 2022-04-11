@@ -10,8 +10,6 @@
 [![quality: code smells](https://sonarcloud.io/api/project_badges/measure?project=czech-radio_cro.schedule&metric=code_smells)](https://sonarcloud.io/dashboard?id=czech-radio_cro.schedule)
 [![quality: reliability](https://sonarcloud.io/api/project_badges/measure?project=czech-radio_cro.schedule&metric=reliability_rating)](https://sonarcloud.io/dashboard?id=czech-radio_cro.schedule)
 
-
-
 - Status: developed (maintained)
 - Version: 0.13.0-alpha (latest)
 - Release: https://github.com/czech-radio/cro.schedule/releases/
