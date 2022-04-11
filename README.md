@@ -15,7 +15,7 @@
 - Release: https://github.com/czech-radio/cro.schedule/releases/
 - Examples: https://github.com/czech-radio/cro-schedule-sdk/tree/main/docs/source/notebooks
 - Website: https://czech-radio.github.io/cro.schedule/.
-- Category: library, client
+- Category: library, client, SDK
 - Suppport: Python 3.9+, Windows, macOS, Ubuntu
 
 
