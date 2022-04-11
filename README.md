@@ -5,7 +5,6 @@
 ![Python](https://img.shields.io/badge/language-Python-blue.svg)
 ![package-version](https://img.shields.io/badge/version-0.15.0-blue)
 [![build: tests](https://github.com/czech-radio/cro.schedule/actions/workflows/main.yml/badge.svg)](https://github.com/czech-radio/cro.schedule/actions/workflows/main.yml)
-
 [![style: black](https://img.shields.io/badge/style-black-000000.svg)](https://github.com/psf/black)
 [![quality: bugs](https://sonarcloud.io/api/project_badges/measure?project=czech-radio_cro.schedule&metric=bugs)](https://sonarcloud.io/dashboard?id=czech-radio_cro.schedule)
 [![quality: code smells](https://sonarcloud.io/api/project_badges/measure?project=czech-radio_cro.schedule&metric=code_smells)](https://sonarcloud.io/dashboard?id=czech-radio_cro.schedule)
