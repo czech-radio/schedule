@@ -10,7 +10,7 @@ import datetime as dt
 import pathlib as pl
 from dataclasses import dataclass, field
 from functools import total_ordering
-from typing import NewType
+from typing import NewType, Union
 
 import pandas as pd
 
@@ -68,6 +68,9 @@ class Schedule:
     shows: tuple[Show]
     time: tuple[dt.time, dt.time] = dt.time.min, dt.time.max
 
+    #: The time format as data string input.
+    __time_format__: str = "%H:%M:%S"
+
     def __str__(self) -> str:
         return f"{type(self).__name__}(station={self.station.name}, date={self.date}, shows={len(self.shows)})"
 
@@ -83,9 +86,21 @@ class Schedule:
         """
         return (self.time[0], self.time[1]) == (dt.time.max, dt.time.min)
 
-    def shows_between(self, since, till) -> tuple[Show]:
+    def shows_between(self, since: Union[dt.time, str], till: Union[dt.time, str]) -> tuple[Show]:
+        since = (
+            dt.datetime.strptime(since, type(self).__time_format__).time()
+            if isinstance(since, str)
+            else since
+        )
+
+        till = (
+            dt.datetime.strptime(till, type(self).__time_format__).time()
+            if isinstance(till, str)
+            else till
+        )
+
         return tuple(
-            filter(lambda show: show.since.time >= since and show.till.time <= till , self.shows))
+            filter(lambda show: (show.since.time() >= since) and (show.till.time() < till) , self.shows))
 
     def to_table(self, without_timezone: bool = True) -> pd.DataFrame:
         """
