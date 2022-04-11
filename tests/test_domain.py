@@ -43,3 +43,8 @@ def test_that_schedule_is_not_subsest():
         ),
     )
     assert not schedule.is_subset()
+
+
+@pytest.mark.domain
+def test_that_schedule_show_filtering_works():
+    assert False
