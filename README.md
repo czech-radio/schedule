@@ -1,6 +1,6 @@
 # 𝖈𝖗𝖔-𝖘𝖈𝖍𝖊𝖉𝖚𝖑𝖊-𝖘𝖉𝖐
 
-**Python library to work with ČRo schedule REST service.**
+**Python library to work with Rozhlas schedule REST service.**
 
 ![Python](https://img.shields.io/badge/Language-Python-blue.svg)
 [![build: tests](https://github.com/czech-radio/cro.schedule/actions/workflows/main.yml/badge.svg)](https://github.com/czech-radio/cro.schedule/actions/workflows/main.yml)
