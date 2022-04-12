@@ -6,10 +6,7 @@ Module contains HTTP REST API client.
 
 from __future__ import annotations
 
-
 import datetime as dt
-from calendar import monthrange
-from enum import Enum
 from typing import Optional, Union
 
 from requests import get, Session
@@ -17,7 +14,7 @@ from requests import get, Session
 from cro.schedule._domain import (
     Kind,
     Person,
-    Schedule,
+    DaySchedule,
     Show,
     Station,
 )  # package protected
@@ -107,13 +104,7 @@ class Client:
         if self.station is None:
             raise ValueError("Set the station property!")
 
-    @classmethod
-    def make(cls) -> Client:
-        """
-        Make the client instance (factory method).
-        """
-        return NotImplemented
-
+   
     @classmethod
     def get_stations(cls) -> tuple[Station]:
         """
@@ -157,7 +148,7 @@ class Client:
         self,
         date: Union[dt.date, str] = dt.datetime.now(),
         time: tuple[dt.time, dt.time] = (dt.time.min, dt.time.max),
-    ) -> Schedule:
+    ) -> DaySchedule:
         """
         Fetch the availaible schedule for the given date.
 
@@ -217,72 +208,6 @@ class Client:
 
         date = date.date() if isinstance(date, dt.datetime) else date
 
-        return Schedule(date=date, time=time, station=self.station, shows=tuple(shows))
+        return DaySchedule(date=date, time=time, station=self.station, shows=tuple(shows))
 
-    def get_week_schedule(
-        self,
-        date: Union[dt.date, str] = dt.datetime.now(),
-        time: tuple[dt.time, dt.time] = (dt.time.min, dt.time.max),
-    ) -> tuple[Schedule]:
-        """
-        Fetch the availaible schedules for the given week.
-
-        :param date: The schedule week date (any).
-        :param time: The schedule time range (since, till).
-        :return The sequence of schedules for the given week sorted by date.
-
-        Examples:
-            >>> import datetime as dt
-            >>> get_week_schedule(date = dt.datetime.now())
-        """
-        self._check_station()
-
-        date = (
-            dt.datetime.strptime(date, type(self).__date_format__).date()
-            if isinstance(date, str)
-            else date
-        )
-
-        # Get all days of the week.
-        dates = (
-            date + dt.timedelta(days=i)
-            for i in range(0 - date.weekday(), 7 - date.weekday())
-        )
-
-        return tuple(sorted((self.get_day_schedule(date, time) for date in dates)))
-
-    def get_month_schedule(
-        self,
-        date: Union[dt.date, str] = dt.datetime.now(),
-        time: tuple[dt.time, dt.time] = (dt.time.min, dt.time.max),
-    ) -> tuple[Schedule]:
-        """
-        Fetch the availaible schedules for the given month.
-
-        :param date: The schedule month date (any).
-        :param time: The schedule time range (since, till).
-        :return The sequence of schedules for the given week sorted by date.
-
-        Examples:
-            >>> import datetime as dt
-            >>> get_month_schedule(date = dt.datetime.now())
-        """
-        self._check_station()
-
-        date = (
-            dt.datetime.strptime(date, type(self).__date_format__).date()
-            if isinstance(date, str)
-            else date
-        )
-
-        # Get all days of the month.
-        nb_days = monthrange(date.year, date.month)[1]
-        dates = (dt.date(date.year, date.month, day) for day in range(1, nb_days + 1))
-
-        return tuple(sorted((self.get_day_schedule(date, time) for date in dates)))
-
-    def get_playlist(self, date: Union[dt.date, str] = dt.datetime.now()) -> object:
-        """
-        Fetch the playlist for Radio Wave station.
-        """
-        return NotImplemented
+    
