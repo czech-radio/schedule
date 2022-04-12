@@ -1,4 +1,4 @@
-# 𝖈𝖗𝖔-𝖘𝖈𝖍𝖊𝖉𝖚𝖑𝖊-𝔰𝔡𝔨
+# 𝖈𝖗𝖔-𝖘𝖈𝖍𝖊𝖉𝖚𝖑𝖊-𝖘𝖉𝖐
 
 **Python library to work with ČRo schedule REST service.**
 
