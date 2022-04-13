@@ -96,13 +96,14 @@ def test_that_schedule_show_time_filtering_works():
     shows = schedule.shows_by_time("06:00:00", "06:45:00")
 
     assert len(shows) == 1
-    assert len(schedule.shows)  == 2
+    assert len(schedule.shows) == 2
 
 
 @pytest.mark.skip
 @pytest.mark.domain
 def test_that_schedule_show_title_filtering_works():
     assert False
+
 
 @pytest.mark.skip
 @pytest.mark.domain
