@@ -34,11 +34,15 @@ def main():
     app = flask.Flask(__name__, template_folder="./templates")
 
     app.config.update(
+        SECRET_KEY="secret_sauce",
         SESSION_COOKIE_SECURE=True,
         SESSION_COOKIE_HTTPONLY=True,
         SESSION_COOKIE_SAMESITE="Lax",
+        TEMPLATES_AUTO_RELOAD = True
     )
-    csrf = CSRFProtect(app)
+
+    csrf = CSRFProtect()
+    csrf.init_app(app)
 
     from cro.schedule import Client
 

@@ -8,65 +8,64 @@
     <link rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
 
+    <!-- custom css -->
+    <style>
+    div.columns {
+      margin-top: 50px;
+    }
+
+    h1 {
+      color: green !important;
+      margin-bottom: 20px;
+
+    }
+
+    .table td {
+      font-size: 17px
+    }
+
+    .table th {
+      font-size: 17px
+    }
+  </style>
   </head>
 
   <body>
 
-    <nav class="navbar is-transparent">
-      <div class="navbar-brand">
-        <a class="navbar-item" href="https://bulma.io">
-          Rozhlas
-        </a>
-        <div class="navbar-burger burger"
-          data-target="navbarExampleTransparentExample">
-          <span></span>
-          <span></span>
-          <span></span>
-        </div>
-      </div>
+    <div class="container is-fluid">
 
-      <div id="navbarExampleTransparentExample" class="navbar-menu">
-        <div class="navbar-start">
-          <a class="navbar-item" href="#">Home</a>
-          <div class="navbar-item has-dropdown is-hoverable">
-            <a class="navbar-link" href="#">About Us</a>
-            <div class="navbar-dropdown is-boxed">
-              <a class="navbar-item" href="#">Our Team</a>
-              <a class="navbar-item" href="#">Our Story</a>
-              <a class="navbar-item" href="#">Locations</a>
+      <h1 class="title">Schedules</h1>
+
+      Current date: {{date.date()}}
+
+      <div class="columns">
+
+        <div class="column is-2">
+          <form>
+
+            <div class="field">
+              <label class="label">Date</label>
+              <div class="control">
+                <input class="input" type="date" placeholder="">
+              </div>
+              <div class="field">
+                <label class="label">Station</label>
+                <div class="control">
+                  <input class="input" type="text" placeholder="Plus">
+                </div>
+              </div>
+              <div class="field is-grouped">
+                <div class="control">
+                  <button class="button is-link">Submit</button>
+                </div>
+                <div class="control">
+                  <button class="button is-link is-light">Cancel</button>
+                </div>
+              </div>
             </div>
-          </div>
+          </form>
         </div>
-
-        <div class="navbar-end">
-          <div class="navbar-item">
-            <div class="field is-grouped">
-              <p class="control">
-                <a class="button is-primary" href="#">
-                  <span class="icon">
-                    <i class="far fa-envelope-open"></i>
-                  </span>
-                  <span>Contact</span>
-                </a>
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </nav>
-
-    <section class="content">
-
-      <div class="container is-desktop">
-
-        <div class="columns">
-          <h1 class>Schedules</h1>
-
-          Current date: {{date}}
-
-        </div>
-
-        <div class="columns">
+        <div class="column is-10">
 
           <div class="table-container">
             <table class="table is-striped is-narrow is-hoverable">
@@ -87,10 +86,10 @@
                 {% for show in shows %}
                 <tr>
                   <td>{{ show.station.name }}</td>
-                  <td>{{ show.date }}</td>
+                  <td>{{ show.since.date() }}</td>
                   <td>{{ show.title }}</td>
-                  <td>{{ show.since }}</td>
-                  <td>{{ show.till }}</td>
+                  <td>{{ show.since.time() }}</td>
+                  <td>{{ show.till.time() }}</td>
                   <td>{{ show.duration }}</td>
                   <td>{{ show.persons }}</td>
                   <td>{{ show.repetition }}</td>
@@ -100,10 +99,9 @@
             </table>
           </div>
         </div>
-
       </div>
 
-    </section>
+    </div>
 
   </body>
 
