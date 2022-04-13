@@ -287,5 +287,5 @@ class Client:
         """
         Fetch the playlist for Radio Wave station.
         """
-        date # unused
+        date  # unused
         return NotImplemented

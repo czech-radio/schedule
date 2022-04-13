@@ -141,7 +141,10 @@ class Schedule:
             )
         )
 
-    def shows_by_title(self, title: str,) -> tuple[Show]:
+    def shows_by_title(
+        self,
+        title: str,
+    ) -> tuple[Show]:
         """
         Return the subset of shows filtered by title.
         """
@@ -157,14 +160,14 @@ class Schedule:
         """
         Return the given schedule as Excel workbook.
         """
-        schedule, path # unused
+        schedule, path  # unused
         return NotImplemented
 
     def to_chart(self, shedule: Schedule) -> dict:
         """
         Return the multiple schedules as a vega chart.
         """
-        shedule # unused
+        shedule  # unused
         return NotImplemented
 
     def to_table(self, without_timezone: bool = True) -> pd.DataFrame:
