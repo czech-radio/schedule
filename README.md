@@ -43,9 +43,10 @@ Data are available many years to the past and circa 14 days to the future.
 - [x] Get the schedule for the given station and day [[recipe](https://github.com/czech-radio/cro-schedule-sdk/blob/feature/server/docs/source/notebooks/Recipe_Get_Day_Schedules.ipynb)].
 - [x] Get the schedule for the given station and week [[recipe](https://github.com/czech-radio/cro-schedule-sdk/blob/feature/server/docs/source/notebooks/Recipe_Get_Week_Schedules.ipynb)].
 - [x] Get the schedule for the given station and month [[recipe](https://github.com/czech-radio/cro-schedule-sdk/blob/feature/server/docs/source/notebooks/Recipe_Get_Month_Schedules.ipynb)].
+- [x] Get the schedule for the given station and year [[recipe](https://github.com/czech-radio/cro-schedule-sdk/blob/feature/server/docs/source/notebooks/Recipe_Get_Year_Schedules.ipynb)].
 - [x] Get the schedule for the given station, period and time [recipe].
 - [ ] Get the playlist for supported stations (only Radio Wave) [recipe].
-- [x] Convert schedule to `pandas.DataFrame` [recipe].
+- [x] Convert schedule to `pandas.DataFrame` with `Schedule::to_table()` method.
 
 Both `date = '2022-01-31'` and `dt.date(2022, 1, 31)` are valid date formats.
 
