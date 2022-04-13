@@ -13,11 +13,11 @@ __Features__
       Must be specified
 """
 
+import datetime as dt
+
 import flask
 
-# @todo Add to dependencies.
-
-__all__ = tuple(["Server"])
+__all__ = tuple(["main"])
 
 
 class Server:
@@ -25,6 +25,23 @@ class Server:
     The Flask based server application.
     """
 
+    # todo
+
 
 def main():
-    app = flask.current_app
+
+    app = flask.Flask(__name__, template_folder="./templates")
+
+    from cro.schedule import Client
+
+    client = Client(sid="plus")
+
+    @app.route("/")
+    def index():
+        schedule = client.get_day_schedule()
+
+        shows = schedule.shows
+
+        return flask.render_template("index.html", date=dt.datetime.now(), shows=shows)
+
+    app.run()

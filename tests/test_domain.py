@@ -85,7 +85,7 @@ def test_that_schedule_show_time_filtering_works():
                 till=dt.datetime(2022, 12, 1, 8, 0, 0),
                 repetition=False,
                 persons=tuple([]),
-            )
+            ),
         ),
         station=Station(
             id=1, name="Fake", domain="_", slogan="_", description="_", services=()
@@ -93,7 +93,7 @@ def test_that_schedule_show_time_filtering_works():
     )
     shows = schedule.shows_by_time("06:00:00", "07:45:00")
 
-    assert len(shows) == 1          # filtered
+    assert len(shows) == 1  # filtered
     assert len(schedule.shows) == 2  # original
 
 
@@ -137,7 +137,7 @@ def test_that_schedule_show_time_filtering_works():
                 till=dt.datetime(2022, 12, 1, 8, 0, 0),
                 repetition=False,
                 persons=tuple([]),
-            )
+            ),
         ),
         station=Station(
             id=1, name="Fake", domain="_", slogan="_", description="_", services=()
@@ -145,7 +145,7 @@ def test_that_schedule_show_time_filtering_works():
     )
     shows = schedule.shows_by_title("t1")
 
-    assert len(shows) == 1          # filtered
+    assert len(shows) == 1  # filtered
     assert len(schedule.shows) == 2  # original
 
 
