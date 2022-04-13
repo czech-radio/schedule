@@ -41,7 +41,7 @@ pip install git+https://github.com/czech-radio/cro-schedule-client.git
 
 Data are available many years to the past and circa 14 days to the future.
 
-- [x] Get the list of available stations [recipe](https://github.com/czech-radio/cro-schedule-sdk/blob/main/docs/source/notebooks/Recipe_Get_Available_Stations.ipynb).
+- [x] Get the list of available stations [[recipe](https://github.com/czech-radio/cro-schedule-sdk/blob/main/docs/source/notebooks/Recipe_Get_Available_Stations.ipynb)].
 - [x] Get the schedule for the given station and day [recipe].
 - [x] Get the schedule for the given station and week [recipe].
 - [x] Get the schedule for the given station and month [recipe].
