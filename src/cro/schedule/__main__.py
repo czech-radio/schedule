@@ -1,15 +1,23 @@
 # -*- coding: utf-8 -*-
 
 """
-The command line interface.
+The command line interface to download the schedules..
 """
+
+import argparse
+
+__all__ = tuple(["main"])
 
 
 def main() -> None:
-    import argparse
+    parser = argparse.ArgumentParser("cro-schedule-cli")
 
-    parser = argparse.ArgumentParser()
+    parser.add_argument("--station")
+    parser.add_argument("--since")
+    parser.add_argument("--till")
+    parser.add_argument("--output")
+    parser.add_argument("--format")
 
-    parser.add_argument()
+    # To be continued.
 
-    # TODO arguments = parser.parse_args()
+    print("--OK--")

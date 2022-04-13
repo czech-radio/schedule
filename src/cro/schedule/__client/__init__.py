@@ -6,28 +6,23 @@ Module contains HTTP REST API client.
 
 from __future__ import annotations
 
-
 import datetime as dt
 from calendar import monthrange
 from enum import Enum
 from typing import Optional, Union
 
-from requests import get, Session
+from requests import Session, get
 
-from cro.schedule._domain import (
-    Kind,
-    Person,
-    Schedule,
-    Show,
-    Station,
-)  # package protected
+from cro.schedule.__domain import Schedule  # package private
+from cro.schedule.__domain import Kind, Person, Show, Station
+from cro.schedule.__shared import convert_date
 
 __all__ = tuple(["Client"])
 
 
 def is_time_between(begin_time, end_time, check_time=None):
     """
-    Determine if current time is within a specified range
+    Determine if current time is within a specified range.
 
     @author https://stackoverflow.com/users/48837/joe-holloway
     @see https://stackoverflow.com/a/10048290
@@ -41,6 +36,7 @@ def is_time_between(begin_time, end_time, check_time=None):
 
 
 StationID = str
+
 
 class Client:
     """
@@ -73,7 +69,7 @@ class Client:
         self._session = Session()
         return self
 
-    def __exit__(self, *args) -> None: # ?type
+    def __exit__(self, *args) -> None:  # ?type
         """
         Exit the context.
         """
@@ -94,9 +90,9 @@ class Client:
         """
         Set the current station.
         """
-        try: # Fetch the station and pick the right one.
+        try:  # Fetch the station and pick the right one.
             self._station = type(self).get_station(sid.lower())
-            print(self._station)
+            # logger.info(self._station)
         except IndexError:
             raise ValueError(f"The station with id `{sid}` does not exist.")
 
@@ -150,8 +146,25 @@ class Client:
         try:
             return tuple(filter(lambda x: x.id == sid, cls.get_stations()))[0]
         except IndexError:
-            # Should we aise ValueError(f"The station with id `{id}` does not exist.")?
-            raise
+            raise ValueError(f"The station with id `{id}` does not exist.")
+
+    def get_any_schedule(
+        self,
+        since: Union[dt.date, str],
+        till: Union[dt.date, str] = dt.datetime.now(),
+        time: tuple[dt.time, dt.time] = (dt.time.min, dt.time.max),
+    ) -> tuple[Schedule]:
+        """
+        Fetch the avalaible schedules for the given date range.
+        """
+        self._check_station()
+
+        since, till = convert_date(since), convert_date(till)
+
+        # Get all days between since and till.
+        dates = [since + dt.timedelta(days=i) for i in range((till - since).days + 1)]
+
+        return tuple(sorted((self.get_day_schedule(date, time) for date in dates)))
 
     def get_day_schedule(
         self,
@@ -171,11 +184,7 @@ class Client:
         """
         self._check_station()
 
-        date = (
-            dt.datetime.strptime(date, type(self).__date_format__).date()
-            if isinstance(date, str)
-            else date
-        )
+        date = convert_date(date)
 
         data = get(
             f"{type(self).__url__}/schedule/day/{date.year:04d}/{date.month:02d}/{date.day:02d}/{self.station.id}.json"
@@ -237,11 +246,7 @@ class Client:
         """
         self._check_station()
 
-        date = (
-            dt.datetime.strptime(date, type(self).__date_format__).date()
-            if isinstance(date, str)
-            else date
-        )
+        date = convert_date(date)
 
         # Get all days of the week.
         dates = (
@@ -269,11 +274,7 @@ class Client:
         """
         self._check_station()
 
-        date = (
-            dt.datetime.strptime(date, type(self).__date_format__).date()
-            if isinstance(date, str)
-            else date
-        )
+        date = convert_date(date)
 
         # Get all days of the month.
         nb_days = monthrange(date.year, date.month)[1]
@@ -285,4 +286,5 @@ class Client:
         """
         Fetch the playlist for Radio Wave station.
         """
+        assert date is not None
         return NotImplemented
