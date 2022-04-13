@@ -54,7 +54,7 @@ See more examples in `docs/notebooks` and data outputs in `data` directory.
 
 ## Documentation
 
-&hellip;
+The complete documentation soon&hellip;
 
 ## Contribute
 
