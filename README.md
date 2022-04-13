@@ -41,13 +41,13 @@ pip install git+https://github.com/czech-radio/cro-schedule-client.git
 
 Data are available many years to the past and circa 14 days to the future.
 
-- [x] Get the list of available stations.
-- [x] Get the schedule for the given station and day.
-- [x] Get the schedule for the given station and week.
-- [x] Get the schedule for the given station and month.
-- [x] Get the schedule for the given station, period and time.
-- [ ] Get the playlist for supported stations (only Radio Wave).
-- [x] Convert schedule to `pandas.DataFrame`.
+- [x] Get the list of available stations [recipe](https://github.com/czech-radio/cro-schedule-sdk/blob/main/docs/source/notebooks/Recipe_Get_Available_Stations.ipynb).
+- [x] Get the schedule for the given station and day [recipe].
+- [x] Get the schedule for the given station and week [recipe].
+- [x] Get the schedule for the given station and month [recipe].
+- [x] Get the schedule for the given station, period and time [recipe].
+- [ ] Get the playlist for supported stations (only Radio Wave) [recipe].
+- [x] Convert schedule to `pandas.DataFrame` [recipe].
 
 Both `date = '2022-01-31'` and `dt.date(2022, 1, 31)` are valid date formats.
 
@@ -55,33 +55,7 @@ See more examples in `docs/notebooks` and data outputs in `data` directory.
 
 ## Contribute
 
-### Setup
-
--  Clone the project and move to the folder.
--  Create and activate the virtual environment.
--  Install the package in virtual environment.
--  Write, test and lint the code.
-
-### Test
-
-To run a tests use following commands.
-
-```
-pytest -sv                   # Run all tests.
-pytest -sv -m domain         # Run domain tests.
-pytest -sv -m client         # Run client tests.
-pytest -sv -m "not client"   # Run all tests except client.
-```
-
-### Lint
-```
-black .  # Format the code.
-isort .  # Sort the imports.
-```
-
-### Release
-
-&hellip;
+See the documentn [here]().github\CONTRIBUTING.md)
 
 ## References
 
