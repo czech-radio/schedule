@@ -44,48 +44,57 @@ def test_that_schedule_is_not_subsest():
     assert not schedule.is_subset()
 
 
+@pytest.fixture
+def lhs_fake_show():
+    return Show(
+        id=1,
+        kind="k1",
+        title="t1",
+        station=Station(
+            id=1,
+            name="Fake",
+            domain="_",
+            slogan="_",
+            description="_",
+            services=(),
+        ),
+        description="d1",
+        since=dt.datetime(2022, 12, 1, 6, 0, 0),
+        till=dt.datetime(2022, 12, 1, 7, 0, 0),
+        repetition=False,
+        persons=tuple([]),
+    )
+
+
+@pytest.fixture
+def rhs_fake_show():
+    return (
+        Show(
+            id=2,
+            kind="k2",
+            title="t2",
+            station=Station(
+                id=1,
+                name="Fake",
+                domain="_",
+                slogan="_",
+                description="_",
+                services=(),
+            ),
+            description="d2",
+            since=dt.datetime(2022, 12, 1, 7, 0, 0),
+            till=dt.datetime(2022, 12, 1, 8, 0, 0),
+            repetition=False,
+            persons=tuple([]),
+        ),
+    )
+
+
 @pytest.mark.domain
-def test_that_schedule_show_time_filtering_works():
+def test_that_schedule_show_time_filtering_works(lhs_fake_show):
     schedule = Schedule(
         date=dt.date(2022, 12, 1),
-        shows=(
-            Show(
-                id=1,
-                kind="k1",
-                title="t1",
-                station=Station(
-                    id=1,
-                    name="Fake",
-                    domain="_",
-                    slogan="_",
-                    description="_",
-                    services=(),
-                ),
-                description="d1",
-                since=dt.datetime(2022, 12, 1, 6, 0, 0),
-                till=dt.datetime(2022, 12, 1, 7, 0, 0),
-                repetition=False,
-                persons=tuple([]),
-            ),
-            Show(
-                id=2,
-                kind="k2",
-                title="t2",
-                station=Station(
-                    id=1,
-                    name="Fake",
-                    domain="_",
-                    slogan="_",
-                    description="_",
-                    services=(),
-                ),
-                description="d2",
-                since=dt.datetime(2022, 12, 1, 7, 0, 0),
-                till=dt.datetime(2022, 12, 1, 8, 0, 0),
-                repetition=False,
-                persons=tuple([]),
-            ),
-        ),
+        shows=(lhs_fake_show, rhs_fake_show),
         station=Station(
             id=1, name="Fake", domain="_", slogan="_", description="_", services=()
         ),
@@ -97,47 +106,10 @@ def test_that_schedule_show_time_filtering_works():
 
 
 @pytest.mark.domain
-def test_that_schedule_show_time_filtering_works():
+def test_that_schedule_show_time_filtering_works(lhs_fake_show, rhs_fake_show):
     schedule = Schedule(
         date=dt.date(2022, 12, 1),
-        shows=(
-            Show(
-                id=1,
-                kind="k1",
-                title="t1",
-                station=Station(
-                    id=1,
-                    name="Fake",
-                    domain="_",
-                    slogan="_",
-                    description="_",
-                    services=(),
-                ),
-                description="d1",
-                since=dt.datetime(2022, 12, 1, 6, 0, 0),
-                till=dt.datetime(2022, 12, 1, 7, 0, 0),
-                repetition=False,
-                persons=tuple([]),
-            ),
-            Show(
-                id=2,
-                kind="k2",
-                title="t2",
-                station=Station(
-                    id=1,
-                    name="Fake",
-                    domain="_",
-                    slogan="_",
-                    description="_",
-                    services=(),
-                ),
-                description="d2",
-                since=dt.datetime(2022, 12, 1, 7, 0, 0),
-                till=dt.datetime(2022, 12, 1, 8, 0, 0),
-                repetition=False,
-                persons=tuple([]),
-            ),
-        ),
+        shows=(lhs_fake_show, rhs_fake_show),
         station=Station(
             id=1, name="Fake", domain="_", slogan="_", description="_", services=()
         ),
@@ -149,47 +121,10 @@ def test_that_schedule_show_time_filtering_works():
 
 
 @pytest.mark.domain
-def test_that_schedule_is_subset():
+def test_that_schedule_is_subset(lhs_fake_show, rhs_fake_show):
     schedule = Schedule(
         date=dt.date(2022, 12, 1),
-        shows=(
-            Show(
-                id=1,
-                kind="k1",
-                title="t1",
-                station=Station(
-                    id=1,
-                    name="Fake",
-                    domain="_",
-                    slogan="_",
-                    description="_",
-                    services=(),
-                ),
-                description="d1",
-                since=dt.datetime(2022, 12, 1, 6, 0, 0),
-                till=dt.datetime(2022, 12, 1, 7, 0, 0),
-                repetition=False,
-                persons=tuple([]),
-            ),
-            Show(
-                id=2,
-                kind="k2",
-                title="t2",
-                station=Station(
-                    id=1,
-                    name="Fake",
-                    domain="_",
-                    slogan="_",
-                    description="_",
-                    services=(),
-                ),
-                description="d2",
-                since=dt.datetime(2022, 12, 1, 7, 0, 0),
-                till=dt.datetime(2022, 12, 1, 8, 0, 0),
-                repetition=False,
-                persons=tuple([]),
-            ),
-        ),
+        shows=(lhs_fake_show, rhs_fake_show),
         station=Station(
             id=1, name="Fake", domain="_", slogan="_", description="_", services=()
         ),
