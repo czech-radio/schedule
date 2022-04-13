@@ -15,10 +15,10 @@ def convert_date(
 
     """
     return (
-            dt.datetime.strptime(date, date_format).date()
-            if isinstance(date, str)
-            else date
-        )
+        dt.datetime.strptime(date, date_format).date()
+        if isinstance(date, str)
+        else date
+    )
 
 
 def convert_time(
