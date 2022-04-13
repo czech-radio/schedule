@@ -37,7 +37,7 @@ Install the package latest version from the GitHub repository.
 pip install git+https://github.com/czech-radio/cro-schedule-client.git
 ```
 
-## Features & Usage
+## Features
 
 Data are available many years to the past and circa 14 days to the future.
 
@@ -53,9 +53,13 @@ Both `date = '2022-01-31'` and `dt.date(2022, 1, 31)` are valid date formats.
 
 See more examples in `docs/notebooks` and data outputs in `data` directory.
 
+## Documentation
+
+&hellip;
+
 ## Contribute
 
-See the documentn [here]().github\CONTRIBUTING.md)
+See the documentn [here](/.github\CONTRIBUTING.md)
 
 ## References
 
