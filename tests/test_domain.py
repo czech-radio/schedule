@@ -48,7 +48,55 @@ def test_that_schedule_is_not_subsest():
 @pytest.mark.skip
 @pytest.mark.domain
 def test_that_schedule_show_time_filtering_works():
-    assert False
+    schedule = Schedule(
+        date=dt.date(2022, 12, 1),
+        shows=(
+            Show(
+                id=1,
+                kind="k1",
+                title="t1",
+                station=Station(
+                    id=1,
+                    name="Fake",
+                    domain="_",
+                    slogan="_",
+                    description="_",
+                    services=(),
+                ),
+                description="d1",
+                since=dt.datetime(2022, 12, 1, 6, 0, 0),
+                till=dt.datetime(2022, 12, 1, 7, 0, 0),
+                repetition=False,
+                persons=tuple([]),
+            ),
+            Show(
+                id=2,
+                kind="k2",
+                title="t2",
+                station=Station(
+                    id=1,
+                    name="Fake",
+                    domain="_",
+                    slogan="_",
+                    description="_",
+                    services=(),
+                ),
+                description="d2",
+                since=dt.datetime(2022, 12, 1, 7, 0, 0),
+                till=dt.datetime(2022, 12, 1, 8, 0, 0),
+                repetition=False,
+                persons=tuple([]),
+            ),
+        ),
+        station=Station(
+            id=1, name="Fake", domain="_", slogan="_", description="_", services=()
+        ),
+    )
+
+    shows = schedule.shows_by_time("06:00:00", "06:45:00")
+
+    assert len(shows) == 1
+    assert len(schedule.shows)  == 2
 
 
 @pytest.mark.skip
@@ -56,7 +104,7 @@ def test_that_schedule_show_time_filtering_works():
 def test_that_schedule_show_title_filtering_works():
     assert False
 
-
+@pytest.mark.skip
 @pytest.mark.domain
 def test_that_schedule_is_subset():
     schedule = Schedule(

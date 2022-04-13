@@ -2,6 +2,9 @@
 
 """
 Contains tests for REST client.
+
+They are in fact the integration tests because we call the external REST service.
+They can fail with connection or timeout issue. Keep it in mind!
 """
 
 from datetime import date
