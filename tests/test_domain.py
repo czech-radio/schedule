@@ -68,33 +68,31 @@ def lhs_fake_show():
 
 @pytest.fixture
 def rhs_fake_show():
-    return (
-        Show(
-            id=2,
-            kind="k2",
-            title="t2",
-            station=Station(
-                id=1,
-                name="Fake",
-                domain="_",
-                slogan="_",
-                description="_",
-                services=(),
-            ),
-            description="d2",
-            since=dt.datetime(2022, 12, 1, 7, 0, 0),
-            till=dt.datetime(2022, 12, 1, 8, 0, 0),
-            repetition=False,
-            persons=tuple([]),
+    return Show(
+        id=2,
+        kind="k2",
+        title="t2",
+        station=Station(
+            id=1,
+            name="Fake",
+            domain="_",
+            slogan="_",
+            description="_",
+            services=(),
         ),
+        description="d2",
+        since=dt.datetime(2022, 12, 1, 7, 0, 0),
+        till=dt.datetime(2022, 12, 1, 8, 0, 0),
+        repetition=False,
+        persons=tuple([]),
     )
 
 
 @pytest.mark.domain
-def test_that_schedule_show_time_filtering_works(lhs_fake_show):
+def test_that_schedule_show_time_filtering_works(lhs_fake_show, rhs_fake_show):
     schedule = Schedule(
         date=dt.date(2022, 12, 1),
-        shows=(lhs_fake_show, rhs_fake_show),
+        shows=[lhs_fake_show, rhs_fake_show],
         station=Station(
             id=1, name="Fake", domain="_", slogan="_", description="_", services=()
         ),
@@ -109,7 +107,7 @@ def test_that_schedule_show_time_filtering_works(lhs_fake_show):
 def test_that_schedule_show_time_filtering_works(lhs_fake_show, rhs_fake_show):
     schedule = Schedule(
         date=dt.date(2022, 12, 1),
-        shows=(lhs_fake_show, rhs_fake_show),
+        shows=[lhs_fake_show, rhs_fake_show],
         station=Station(
             id=1, name="Fake", domain="_", slogan="_", description="_", services=()
         ),
@@ -124,7 +122,7 @@ def test_that_schedule_show_time_filtering_works(lhs_fake_show, rhs_fake_show):
 def test_that_schedule_is_subset(lhs_fake_show, rhs_fake_show):
     schedule = Schedule(
         date=dt.date(2022, 12, 1),
-        shows=(lhs_fake_show, rhs_fake_show),
+        shows=[lhs_fake_show, rhs_fake_show],
         station=Station(
             id=1, name="Fake", domain="_", slogan="_", description="_", services=()
         ),
