@@ -5,7 +5,6 @@ Contains tests for domain model.
 """
 
 import datetime as dt
-from unicodedata import name
 
 import pytest
 

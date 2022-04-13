@@ -141,10 +141,11 @@ class Schedule:
             )
         )
 
-    def shows_by_title(self, title: str, exact_match=True) -> tuple[Show]:
+    def shows_by_title(self, title: str,) -> tuple[Show]:
         """
-        return the subset of shows filtered by title.
+        Return the subset of shows filtered by title.
         """
+        # Use not `exact_match`?
         return tuple(
             filter(
                 lambda show: (show.title == title),
@@ -152,16 +153,18 @@ class Schedule:
             )
         )
 
-    def to_excel(schedule: Schedule, path: pl.Path) -> object:
+    def to_excel(self, schedule: Schedule, path: pl.Path) -> object:
         """
         Return the given schedule as Excel workbook.
         """
+        schedule, path # unused
         return NotImplemented
 
     def to_chart(self, shedule: Schedule) -> dict:
         """
         Return the multiple schedules as a vega chart.
         """
+        shedule # unused
         return NotImplemented
 
     def to_table(self, without_timezone: bool = True) -> pd.DataFrame:
