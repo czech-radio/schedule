@@ -18,8 +18,6 @@ import datetime as dt
 import flask
 from flask_wtf.csrf import CSRFProtect
 
-
-
 __all__ = tuple(["main"])
 
 
@@ -38,7 +36,7 @@ def main():
     app.config.update(
         SESSION_COOKIE_SECURE=True,
         SESSION_COOKIE_HTTPONLY=True,
-        SESSION_COOKIE_SAMESITE='Lax',
+        SESSION_COOKIE_SAMESITE="Lax",
     )
     csrf = CSRFProtect(app)
 
