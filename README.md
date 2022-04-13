@@ -9,14 +9,12 @@
 
 - Status: developed (maintained)
 - Version: 0.1.0-alpha (latest)
-- Release: https://github.com/czech-radio/cro.schedule/releases/
-- Website: https://czech-radio.github.io/cro.schedule/.
 - Category: library, client
 - Suppport: Python 3.9+, Windows, macOS, Ubuntu
 
 ## Purpose
 
-Python library to work with Czech Radio schedules and playlists.
+Python library to work with Czech Radio schedules.
 
 ## Features
 
