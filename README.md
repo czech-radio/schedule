@@ -40,9 +40,9 @@ pip install git+https://github.com/czech-radio/cro-schedule-client.git
 Data are available many years to the past and circa 14 days to the future.
 
 - [x] Get the list of available stations [[recipe](https://github.com/czech-radio/cro-schedule-sdk/blob/main/docs/source/notebooks/Recipe_Get_Available_Stations.ipynb)].
-- [x] Get the schedule for the given station and day [recipe].
-- [x] Get the schedule for the given station and week [recipe].
-- [x] Get the schedule for the given station and month [recipe].
+- [x] Get the schedule for the given station and day [[recipe](https://github.com/czech-radio/cro-schedule-sdk/blob/feature/server/docs/source/notebooks/Recipe_Get_Day_Schedules.ipynb)].
+- [x] Get the schedule for the given station and week [[recipe](https://github.com/czech-radio/cro-schedule-sdk/blob/feature/server/docs/source/notebooks/Recipe_Get_Week_Schedules.ipynb)].
+- [x] Get the schedule for the given station and month [[recipe]()].
 - [x] Get the schedule for the given station, period and time [recipe].
 - [ ] Get the playlist for supported stations (only Radio Wave) [recipe].
 - [x] Convert schedule to `pandas.DataFrame` [recipe].
