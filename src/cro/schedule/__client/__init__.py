@@ -146,8 +146,7 @@ class Client:
         try:
             return tuple(filter(lambda x: x.id == sid, cls.get_stations()))[0]
         except IndexError:
-            # Should we aise ValueError(f"The station with id `{id}` does not exist.")?
-            raise
+            raise ValueError(f"The station with id `{id}` does not exist.")
 
     def get_any_schedule(
         self,
