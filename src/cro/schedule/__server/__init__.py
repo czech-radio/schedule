@@ -16,6 +16,9 @@ __Features__
 import datetime as dt
 
 import flask
+from flask_wtf.csrf import CSRFProtect
+
+
 
 __all__ = tuple(["main"])
 
@@ -31,6 +34,13 @@ class Server:
 def main():
 
     app = flask.Flask(__name__, template_folder="./templates")
+
+    app.config.update(
+        SESSION_COOKIE_SECURE=True,
+        SESSION_COOKIE_HTTPONLY=True,
+        SESSION_COOKIE_SAMESITE='Lax',
+    )
+    csrf = CSRFProtect(app)
 
     from cro.schedule import Client
 

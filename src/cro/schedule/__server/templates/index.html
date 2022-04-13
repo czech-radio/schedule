@@ -4,38 +4,107 @@
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
+    <link rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
 
   </head>
 
   <body>
 
-    <div class="container mx-auto">
+    <nav class="navbar is-transparent">
+      <div class="navbar-brand">
+        <a class="navbar-item" href="https://bulma.io">
+          <img src="https://bulma.io/images/bulma-logo.png" alt="Bulma: a modern
+            CSS framework based on Flexbox" width="112" height="28">
+        </a>
+        <div class="navbar-burger burger"
+          data-target="navbarExampleTransparentExample">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+      </div>
 
-      <h1>Schedules</h1>
+      <div id="navbarExampleTransparentExample" class="navbar-menu">
+        <div class="navbar-start">
+          <a class="navbar-item" href="#">Home</a>
+          <div class="navbar-item has-dropdown is-hoverable">
+            <a class="navbar-link" href="#">About Us</a>
+            <div class="navbar-dropdown is-boxed">
+              <a class="navbar-item" href="#">Our Team</a>
+              <a class="navbar-item" href="#">Our Story</a>
+              <a class="navbar-item" href="#">Locations</a>
+            </div>
+          </div>
+        </div>
 
-      Current date: {{date}}
+        <div class="navbar-end">
+          <div class="navbar-item">
+            <div class="field is-grouped">
+              <p class="control">
+                <a class="button is-primary" href="#">
+                  <span class="icon">
+                    <i class="far fa-envelope-open"></i>
+                  </span>
+                  <span>Contact</span>
+                </a>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </nav>
 
-      <section class="content">
+    <section class="content">
 
-        <table class="table-auto">
-        {% for show in shows %}
-          <tr>
-            <td>{{ show.station.name }}</td>
-            <td>{{ show.date }}</td>
-            <td>{{ show.title }}</td>
-            <td>{{ show.since }}</td>
-            <td>{{ show.till }}</td>
-            <td>{{ show.duration }}</td>
-            <td>{{ show.persons }}</td>
-            <td>{{ show.repetition }}</td>
-          </tr>
-          {% endfor %}
-        </table>
-      </section>
+      <div class="container is-desktop">
 
-    </div>
+        <div class="columns">
+          <h1 class>Schedules</h1>
+
+          Current date: {{date}}
+
+        </div>
+
+        <div class="columns">
+
+          <div class="table-container">
+            <table class="table is-striped is-narrow is-hoverable">
+
+              <thead>
+                <tr>
+                  <th><abbr title="Station">Station</abbr></th>
+                  <th><abbr title="Date">Date</abbr></th>
+                  <th><abbr title="Title">Title</abbr></th>
+                  <th><abbr title="Since">Since</abbr></th>
+                  <th><abbr title="Till">Till</abbr></th>
+                  <th><abbr title="Duration">Duration</abbr></th>
+                  <th><abbr title="Moderators">Moderators</abbr></th>
+                  <th><abbr title="Repetition">Repetition</abbr></th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for show in shows %}
+                <tr>
+                  <td>{{ show.station.name }}</td>
+                  <td>{{ show.date }}</td>
+                  <td>{{ show.title }}</td>
+                  <td>{{ show.since }}</td>
+                  <td>{{ show.till }}</td>
+                  <td>{{ show.duration }}</td>
+                  <td>{{ show.persons }}</td>
+                  <td>{{ show.repetition }}</td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+      </div>
+
+    </section>
 
   </body>
 
-  </html>
+</html>
