@@ -15,9 +15,7 @@ _Python library to work with Czech Radio schedules and playlists._
 [![quality: reliability](https://sonarcloud.io/api/project_badges/measure?project=czech-radio_cro.schedule&metric=reliability_rating)](https://sonarcloud.io/dashboard?id=czech-radio_cro.schedule)
 
 - Status: developed (maintained)
-- Version: 0.20.0 (latest)
 - Release: https://github.com/czech-radio/cro.schedule/releases/
-- Examples: https://github.com/czech-radio/cro-schedule-sdk/tree/main/docs/source/notebooks
 - Website: https://czech-radio.github.io/cro.schedule/.
 - Category: library, client, SDK
 - Suppport: Python 3.9+, Windows, macOS, Ubuntu
