@@ -2,6 +2,8 @@
 
 **Python library to work with Rozhlas schedule REST service.**
 
+_Python library to work with Czech Radio schedules and playlists._
+
 ![Python](https://img.shields.io/badge/language-Python-blue.svg)
 ![package-version](https://img.shields.io/badge/version-0.15.0-blue)
 [![build: tests](https://github.com/czech-radio/cro.schedule/actions/workflows/main.yml/badge.svg)](https://github.com/czech-radio/cro.schedule/actions/workflows/main.yml)
@@ -19,10 +21,6 @@
 - Suppport: Python 3.9+, Windows, macOS, Ubuntu
 
 :star: Star us on GitHub — it motivates us!
-
-## Purpose
-
-Python library to work with Czech Radio schedules and playlists.
 
 ## Install
 
