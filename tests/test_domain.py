@@ -85,26 +85,70 @@ def test_that_schedule_show_time_filtering_works():
                 till=dt.datetime(2022, 12, 1, 8, 0, 0),
                 repetition=False,
                 persons=tuple([]),
-            ),
+            )
         ),
         station=Station(
             id=1, name="Fake", domain="_", slogan="_", description="_", services=()
         ),
     )
+    shows = schedule.shows_by_time("06:00:00", "07:45:00")
 
-    shows = schedule.shows_by_time("06:00:00", "06:45:00")
-
-    # assert len(shows) == 1          # filtered
+    assert len(shows) == 1          # filtered
     assert len(schedule.shows) == 2  # original
 
 
-@pytest.mark.skip
 @pytest.mark.domain
-def test_that_schedule_show_title_filtering_works():
-    assert False
+def test_that_schedule_show_time_filtering_works():
+    schedule = Schedule(
+        date=dt.date(2022, 12, 1),
+        shows=(
+            Show(
+                id=1,
+                kind="k1",
+                title="t1",
+                station=Station(
+                    id=1,
+                    name="Fake",
+                    domain="_",
+                    slogan="_",
+                    description="_",
+                    services=(),
+                ),
+                description="d1",
+                since=dt.datetime(2022, 12, 1, 6, 0, 0),
+                till=dt.datetime(2022, 12, 1, 7, 0, 0),
+                repetition=False,
+                persons=tuple([]),
+            ),
+            Show(
+                id=2,
+                kind="k2",
+                title="t2",
+                station=Station(
+                    id=1,
+                    name="Fake",
+                    domain="_",
+                    slogan="_",
+                    description="_",
+                    services=(),
+                ),
+                description="d2",
+                since=dt.datetime(2022, 12, 1, 7, 0, 0),
+                till=dt.datetime(2022, 12, 1, 8, 0, 0),
+                repetition=False,
+                persons=tuple([]),
+            )
+        ),
+        station=Station(
+            id=1, name="Fake", domain="_", slogan="_", description="_", services=()
+        ),
+    )
+    shows = schedule.shows_by_title("t1")
+
+    assert len(shows) == 1          # filtered
+    assert len(schedule.shows) == 2  # original
 
 
-@pytest.mark.skip
 @pytest.mark.domain
 def test_that_schedule_is_subset():
     schedule = Schedule(
@@ -152,7 +196,7 @@ def test_that_schedule_is_subset():
         ),
     )
 
-    schedule_subset = schedule.as_subset(since="06:00:00", till="06:30:00")
+    schedule_subset = schedule.as_subset(since="06:00:00", till="07:30:00")
 
     assert schedule_subset.is_subset()
     assert len(schedule.shows) == 2

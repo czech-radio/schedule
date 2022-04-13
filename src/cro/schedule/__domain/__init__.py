@@ -126,12 +126,12 @@ class Schedule:
 
     def shows_by_time(self, since: SinceTime, till: TillTime) -> tuple[Show]:
         """
-        Return the subset of shows filtered by time.
+        Return the subset of shows filtered by time (till exclusive).
         """
         since = convert_time(since)
         till = convert_time(till)
 
-        print(since, till)
+        # Fix error if `show.till` is midnight 00.00.00
 
         return tuple(
             filter(
