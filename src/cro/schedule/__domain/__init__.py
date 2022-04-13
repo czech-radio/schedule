@@ -160,14 +160,14 @@ class Schedule:
         """
         Return the given schedule as Excel workbook.
         """
-        schedule, path  # unused
+        assert schedule, path is not None
         return NotImplemented
 
     def to_chart(self, shedule: Schedule) -> dict:
         """
         Return the multiple schedules as a vega chart.
         """
-        shedule  # unused
+        assert shedule is not None  # unused
         return NotImplemented
 
     def to_table(self, without_timezone: bool = True) -> pd.DataFrame:
@@ -192,7 +192,9 @@ class Schedule:
 
     @classmethod
     def from_table(cls, table: pd.DataFrame, columns: dict = None) -> Schedule:
-        """Factory method to create a schedule from the given dataset."""
+        """
+        Factory method to create a schedule from the given dataset.
+        """
         #
         # Preconditions:
         # - Dataset contain only data for one station and one date.
@@ -200,4 +202,5 @@ class Schedule:
         # Parse date from since or till columns.
         # Parse time from min(since) and max(till) columns.
         # Fetch station with the given station id.
+        assert table, columns is not None
         return NotImplemented
