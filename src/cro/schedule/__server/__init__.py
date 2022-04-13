@@ -38,7 +38,7 @@ def main():
         SESSION_COOKIE_SECURE=True,
         SESSION_COOKIE_HTTPONLY=True,
         SESSION_COOKIE_SAMESITE="Lax",
-        TEMPLATES_AUTO_RELOAD = True
+        TEMPLATES_AUTO_RELOAD=True,
     )
 
     csrf = CSRFProtect()
