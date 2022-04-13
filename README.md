@@ -39,12 +39,12 @@ pip install git+https://github.com/czech-radio/cro-schedule-client.git
 
 Data are available many years to the past and circa 14 days to the future.
 
-- [x] Get the list of available stations [[recipe](https://github.com/czech-radio/cro-schedule-sdk/blob/main/docs/source/notebooks/Recipe_Get_Available_Stations.ipynb)].
-- [x] Get the schedule for the given station and day [[recipe](https://github.com/czech-radio/cro-schedule-sdk/blob/feature/server/docs/source/notebooks/Recipe_Get_Day_Schedules.ipynb)].
-- [x] Get the schedule for the given station and week [[recipe](https://github.com/czech-radio/cro-schedule-sdk/blob/feature/server/docs/source/notebooks/Recipe_Get_Week_Schedules.ipynb)].
-- [x] Get the schedule for the given station and month [[recipe](https://github.com/czech-radio/cro-schedule-sdk/blob/feature/server/docs/source/notebooks/Recipe_Get_Month_Schedules.ipynb)].
-- [x] Get the schedule for the given station and year [[recipe](https://github.com/czech-radio/cro-schedule-sdk/blob/feature/server/docs/source/notebooks/Recipe_Get_Year_Schedules.ipynb)].
-- [x] Get the schedule for the given station, period and time [recipe].
+- [x] Get the list of available stations [[recipe](https://github.com/czech-radio/cro-schedule-sdk/blob/main/docs/source/notebooks/Recipe_Get_Stations.ipynb)].
+- [x] Get the schedule for the given station and day [[recipe](https://github.com/czech-radio/cro-schedule-sdk/blob/feature/server/docs/source/notebooks/Recipe_Get_Schedule_Day.ipynb)].
+- [x] Get the schedule for the given station and week [[recipe](https://github.com/czech-radio/cro-schedule-sdk/blob/feature/server/docs/source/notebooks/Recipe_Get_Schedule_Week.ipynb)].
+- [x] Get the schedule for the given station and month [[recipe](https://github.com/czech-radio/cro-schedule-sdk/blob/feature/server/docs/source/notebooks/Recipe_Get_Schedule_Month.ipynb)].
+- [x] Get the schedule for the given station and year [[recipe](https://github.com/czech-radio/cro-schedule-sdk/blob/feature/server/docs/source/notebooks/Recipe_Get_Schedule_Year.ipynb)].
+- [x] Get the schedule for the given station, any period and time [[recipe](https://github.com/czech-radio/cro-schedule-sdk/blob/feature/server/docs/source/notebooks/Recipe_Get_Schedule_Any.ipynb)].
 - [ ] Get the playlist for supported stations (only Radio Wave) [recipe].
 - [x] Convert schedule to `pandas.DataFrame` with `Schedule::to_table()` method.
 

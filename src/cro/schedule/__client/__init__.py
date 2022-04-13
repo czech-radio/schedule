@@ -21,7 +21,7 @@ __all__ = tuple(["Client"])
 
 def is_time_between(begin_time, end_time, check_time=None):
     """
-    Determine if current time is within a specified range
+    Determine if current time is within a specified range.
 
     @author https://stackoverflow.com/users/48837/joe-holloway
     @see https://stackoverflow.com/a/10048290
@@ -76,6 +76,13 @@ class Client:
         # see https://peps.python.org/pep-0343/.
         # exc_type, exc_value, traceback = *args
         self._session.close()
+
+    def _convert_date(self, date) -> dt.date:
+        return (
+            dt.datetime.strptime(date, type(self).__date_format__).date()
+            if isinstance(date, str)
+            else date
+        )
 
     @property
     def station(self) -> Optional[Station]:
@@ -148,6 +155,23 @@ class Client:
             # Should we aise ValueError(f"The station with id `{id}` does not exist.")?
             raise
 
+    def get_any_schedule(
+        self,
+        since: Union[dt.date, str],
+        till: Union[dt.date, str] = dt.datetime.now(),
+        time: tuple[dt.time, dt.time] = (dt.time.min, dt.time.max)) -> tuple[Schedule]:
+        """
+        Fetch the avalaible schedules for the given date range.
+        """
+        self._check_station()
+
+        since, till = self._convert_date(since), self._convert_date(till)
+
+        # Get all days between since and till.
+        dates = [since + dt.timedelta(days=i) for i in range((till - since).days + 1)]
+
+        return tuple(sorted((self.get_day_schedule(date, time) for date in dates)))
+
     def get_day_schedule(
         self,
         date: Union[dt.date, str] = dt.datetime.now(),
@@ -166,11 +190,7 @@ class Client:
         """
         self._check_station()
 
-        date = (
-            dt.datetime.strptime(date, type(self).__date_format__).date()
-            if isinstance(date, str)
-            else date
-        )
+        date = self._convert_date(date)
 
         data = get(
             f"{type(self).__url__}/schedule/day/{date.year:04d}/{date.month:02d}/{date.day:02d}/{self.station.id}.json"
@@ -232,11 +252,7 @@ class Client:
         """
         self._check_station()
 
-        date = (
-            dt.datetime.strptime(date, type(self).__date_format__).date()
-            if isinstance(date, str)
-            else date
-        )
+        date = self._convert_date(date)
 
         # Get all days of the week.
         dates = (
@@ -264,17 +280,14 @@ class Client:
         """
         self._check_station()
 
-        date = (
-            dt.datetime.strptime(date, type(self).__date_format__).date()
-            if isinstance(date, str)
-            else date
-        )
+        date = self._convert_date(date)
 
         # Get all days of the month.
         nb_days = monthrange(date.year, date.month)[1]
         dates = (dt.date(date.year, date.month, day) for day in range(1, nb_days + 1))
 
         return tuple(sorted((self.get_day_schedule(date, time) for date in dates)))
+
 
     def get_playlist(self, date: Union[dt.date, str] = dt.datetime.now()) -> object:
         """

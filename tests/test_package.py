@@ -8,4 +8,4 @@ from cro.schedule import __version__
 
 
 def test_version():
-    assert __version__ == "0.16.0"
+    assert __version__ == "0.20.0"

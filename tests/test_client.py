@@ -53,6 +53,12 @@ def test_that_week_schedules_are_sorted(client):
 
 
 @pytest.mark.client
+def test_that_any_schedule_are_retrieved(client):
+    result = client.get_any_schedule(since=date(2022, 1, 1), till=date(2022, 1, 15))
+    assert len(result) == 15
+
+
+@pytest.mark.client
 def test_that_month_schedules_are_retrieved(client):
     result = client.get_month_schedule(date=date(2022, 1, 1))
     assert len(result) == 31
