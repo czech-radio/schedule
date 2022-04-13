@@ -14,6 +14,8 @@ from typing import NewType, Union
 
 import pandas as pd
 
+from cro.schedule.__shared import convert_time
+
 __all__ = tuple(["Schedule", "Show", "Station", "Person"])
 
 
@@ -22,8 +24,8 @@ Title = str
 Code = str
 Name = str
 
-SinceTime = dt.time
-TillTime = dt.time
+SinceTime = Union[dt.time, str]
+TillTime = Union[dt.time, str]
 
 
 @dataclass(frozen=True)
@@ -100,9 +102,7 @@ class Schedule:
         """
         return self.time[0] > dt.time.min or self.time[1] < dt.time.max
 
-    def as_subset(
-        self, since: Union[SinceTime, str], till: Union[TillTime, str]
-    ) -> Schedule:
+    def as_subset(self, since: SinceTime, till: TillTime) -> Schedule:
         """
         Return the subset of this schedule.
         """
@@ -124,23 +124,14 @@ class Schedule:
             shows=self.shows_by_time(since, till),
         )
 
-    def shows_by_time(
-        self, since: Union[SinceTime, str], till: Union[TillTime, str]
-    ) -> tuple[Show]:
+    def shows_by_time(self, since: SinceTime, till: TillTime) -> tuple[Show]:
         """
         Return the subset of shows filtered by time.
         """
-        since = (
-            dt.datetime.strptime(since, type(self).__time_format__).time()
-            if isinstance(since, str)
-            else since
-        )
+        since = convert_time(since)
+        till = convert_time(till)
 
-        till = (
-            dt.datetime.strptime(till, type(self).__time_format__).time()
-            if isinstance(till, str)
-            else till
-        )
+        print(since, till)
 
         return tuple(
             filter(

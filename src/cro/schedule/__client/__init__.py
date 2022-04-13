@@ -15,6 +15,7 @@ from requests import Session, get
 
 from cro.schedule.__domain import Schedule  # package private
 from cro.schedule.__domain import Kind, Person, Show, Station
+from cro.schedule.__shared import convert_date
 
 __all__ = tuple(["Client"])
 
@@ -76,13 +77,6 @@ class Client:
         # see https://peps.python.org/pep-0343/.
         # exc_type, exc_value, traceback = *args
         self._session.close()
-
-    def _convert_date(self, date) -> dt.date:
-        return (
-            dt.datetime.strptime(date, type(self).__date_format__).date()
-            if isinstance(date, str)
-            else date
-        )
 
     @property
     def station(self) -> Optional[Station]:
@@ -159,13 +153,14 @@ class Client:
         self,
         since: Union[dt.date, str],
         till: Union[dt.date, str] = dt.datetime.now(),
-        time: tuple[dt.time, dt.time] = (dt.time.min, dt.time.max)) -> tuple[Schedule]:
+        time: tuple[dt.time, dt.time] = (dt.time.min, dt.time.max),
+    ) -> tuple[Schedule]:
         """
         Fetch the avalaible schedules for the given date range.
         """
         self._check_station()
 
-        since, till = self._convert_date(since), self._convert_date(till)
+        since, till = convert_date(since), convert_date(till)
 
         # Get all days between since and till.
         dates = [since + dt.timedelta(days=i) for i in range((till - since).days + 1)]
@@ -190,7 +185,7 @@ class Client:
         """
         self._check_station()
 
-        date = self._convert_date(date)
+        date = convert_date(date)
 
         data = get(
             f"{type(self).__url__}/schedule/day/{date.year:04d}/{date.month:02d}/{date.day:02d}/{self.station.id}.json"
@@ -252,7 +247,7 @@ class Client:
         """
         self._check_station()
 
-        date = self._convert_date(date)
+        date = convert_date(date)
 
         # Get all days of the week.
         dates = (
@@ -280,14 +275,13 @@ class Client:
         """
         self._check_station()
 
-        date = self._convert_date(date)
+        date = convert_date(date)
 
         # Get all days of the month.
         nb_days = monthrange(date.year, date.month)[1]
         dates = (dt.date(date.year, date.month, day) for day in range(1, nb_days + 1))
 
         return tuple(sorted((self.get_day_schedule(date, time) for date in dates)))
-
 
     def get_playlist(self, date: Union[dt.date, str] = dt.datetime.now()) -> object:
         """

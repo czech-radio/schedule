@@ -6,7 +6,6 @@ The command line interface to download the schedules..
 
 import argparse
 
-
 __all__ = tuple(["main"])
 
 
