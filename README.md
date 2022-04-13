@@ -52,6 +52,12 @@ Both `date = '2022-01-31'` and `dt.date(2022, 1, 31)` are valid date formats.
 
 See more examples in `docs/notebooks` and data outputs in `data` directory.
 
+### Use as command line program
+
+```
+cro.schedule ...
+```
+
 ## Documentation
 
 The complete documentation soon&hellip;

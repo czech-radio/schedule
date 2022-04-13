@@ -8,4 +8,4 @@ from cro.schedule.__server import Server as Server
 
 __all__ = tuple(["Client", "Station", "Show", "Schedule", "Server"])
 
-__version__ = "0.16.0"
+__version__ = "0.20.0"
