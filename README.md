@@ -32,7 +32,7 @@ _Python library to work with Czech Radio schedules and playlists._
 Install the package latest version from the GitHub repository.
 
 ```
-pip install git+https://github.com/czech-radio/cro-schedule-client.git
+pip install git+https://github.com/czech-radio/cro-schedule-sdk.git
 ```
 
 ## Features
