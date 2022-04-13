@@ -1,0 +1,41 @@
+<!doctype html>
+
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
+
+  </head>
+
+  <body>
+
+    <div class="container mx-auto">
+
+      <h1>Schedules</h1>
+
+      Current date: {{date}}
+
+      <section class="content">
+
+        <table class="table-auto">
+        {% for show in shows %}
+          <tr>
+            <td>{{ show.station.name }}</td>
+            <td>{{ show.date }}</td>
+            <td>{{ show.title }}</td>
+            <td>{{ show.since }}</td>
+            <td>{{ show.till }}</td>
+            <td>{{ show.duration }}</td>
+            <td>{{ show.persons }}</td>
+            <td>{{ show.repetition }}</td>
+          </tr>
+          {% endfor %}
+        </table>
+      </section>
+
+    </div>
+
+  </body>
+
+  </html>
