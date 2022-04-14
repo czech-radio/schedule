@@ -10,7 +10,7 @@ Welcome to cro.schedule's documentation!
    :maxdepth: 2
    :caption: Contents:
 
-
+   include
 
 Indices and tables
 ==================
