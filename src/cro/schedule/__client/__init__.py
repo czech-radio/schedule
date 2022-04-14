@@ -5,11 +5,13 @@ Module contains HTTP REST API client.
 """
 
 from __future__ import annotations
+from cmath import log
 
 import datetime as dt
 from calendar import monthrange
 from enum import Enum
 from typing import Optional, Union
+from charset_normalizer import logging
 
 from requests import Session, get
 
@@ -186,9 +188,14 @@ class Client:
 
         date = convert_date(date)
 
-        data = get(
-            f"{type(self).__url__}/schedule/day/{date.year:04d}/{date.month:02d}/{date.day:02d}/{self.station.id}.json"
-        ).json()["data"]
+        # Handle possible errors.
+        try:
+            data = get(
+                f"{type(self).__url__}/schedule/day/{date.year:04d}/{date.month:02d}/{date.day:02d}/{self.station.id}.json"
+            ).json()["data"]
+        except Exception as ex:
+            logging.error(ex)
+            return None, ex
 
         shows = []
 

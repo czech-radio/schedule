@@ -13,10 +13,12 @@ __Features__
       Must be specified
 """
 
+import logging
 import datetime as dt
 
 import flask
 from flask_wtf.csrf import CSRFProtect
+
 
 __all__ = tuple(["main"])
 
@@ -25,11 +27,12 @@ class Server:
     """
     The Flask based server application.
     """
-
     # todo
 
 
 def main():
+
+    logging.basicConfig(level=logging.DEBUG)
 
     app = flask.Flask(__name__, template_folder="./templates")
 
@@ -41,19 +44,45 @@ def main():
         TEMPLATES_AUTO_RELOAD=True,
     )
 
-    csrf = CSRFProtect()
-    csrf.init_app(app)
+    # csrf = CSRFProtect()
+    # csrf.init_app(app)
 
     from cro.schedule import Client
 
-    client = Client(sid="plus")
-
-    @app.route("/")
+    @app.route("/", methods = ["POST", "GET"])
     def index():
-        schedule = client.get_day_schedule()
 
-        shows = schedule.shows
+        client = Client()
 
-        return flask.render_template("index.html", date=dt.datetime.now(), shows=shows)
+        match flask.request.method:
 
-    app.run()
+            case "GET":
+                shows = []
+                for station in Client.get_stations():
+                    client.station = station.id
+                    schedule = client.get_day_schedule()
+                    app.logger.info(schedule)
+                    shows.append(sorted(schedule.shows))
+
+                return flask.render_template("index.html", date=dt.datetime.now(), shows=shows)
+
+            case "POST":
+                date = flask.request.form.get("date")
+
+                if date is None:
+                    date = dt.datetime.now.date().isoformat()
+
+                station = flask.request.form.get("station")
+
+                app.logger.info(f"{date}, {station}, '<<<<<<<<<<<<<<<'")
+
+                client.station = station
+                schedule = client.get_day_schedule(date = date)
+                shows = sorted(schedule.shows)
+
+                return flask.render_template("index.html", date = date, shows=shows)
+
+            case _:
+                raise Exception("HTTP method not known!")
+
+    app.run(debug=True, use_debugger=False, use_reloader=False)

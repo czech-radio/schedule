@@ -36,22 +36,19 @@
 
       <h1 class="title">Schedules</h1>
 
-      Current date: {{date.date()}}
-
       <div class="columns">
 
         <div class="column is-2">
-          <form>
-
+          <form action="{{ url_for('index') }}" method="post">
             <div class="field">
               <label class="label">Date</label>
               <div class="control">
-                <input class="input" type="date" placeholder="">
+                <input class="input" type="date" placeholder="" name="date">
               </div>
               <div class="field">
                 <label class="label">Station</label>
                 <div class="control">
-                  <input class="input" type="text" placeholder="Plus">
+                  <input class="input" type="text" placeholder="Plus" name="station">
                 </div>
               </div>
               <div class="field is-grouped">
@@ -72,27 +69,37 @@
               <caption>Shows for the selected day and station.</caption>
               <thead>
                 <tr>
-                  <th><abbr title="Station">Station</abbr></th>
-                  <th><abbr title="Date">Date</abbr></th>
-                  <th><abbr title="Title">Title</abbr></th>
-                  <th><abbr title="Since">Since</abbr></th>
-                  <th><abbr title="Till">Till</abbr></th>
-                  <th><abbr title="Duration">Duration</abbr></th>
-                  <th><abbr title="Moderators">Moderators</abbr></th>
-                  <th><abbr title="Repetition">Repetition</abbr></th>
+                  <th>ID</th>
+                  <th>Station</th>
+                  <th>Date</th>
+                  <th>Kind</th>
+                  <th>Title</th>
+                  <th>Since</th>
+                  <th>Till</th>
+                  <th>Duration</th>
+                  <th>Moderators</th>
+                  <th>Repetition</th>
+                  <th>Type</th>
                 </tr>
               </thead>
               <tbody>
                 {% for show in shows %}
                 <tr>
+                  <td>{{ show.id }}</td>
                   <td>{{ show.station.name }}</td>
                   <td>{{ show.since.date() }}</td>
+                  <td>{{ show.since.kind }}</td>
                   <td>{{ show.title }}</td>
                   <td>{{ show.since.time() }}</td>
                   <td>{{ show.till.time() }}</td>
                   <td>{{ show.duration }}</td>
                   <td>{{ show.persons }}</td>
-                  <td>{{ show.repetition }}</td>
+                  {% if show.repetition %}
+                    <td>Yes</td>
+                    {% else %}
+                    <td>No</td>
+                  {% endif %}
+                  <td>{{ show.type() }}</td>
                 </tr>
                 {% endfor %}
               </tbody>
