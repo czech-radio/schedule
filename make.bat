@@ -31,10 +31,7 @@ if "%1" == "quick" (
     git commit -am "Update README"
 )
 
-
-
 goto end
-
 
 :help
 echo There will be hellp message.
