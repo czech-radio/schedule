@@ -14,7 +14,7 @@ from typing import NewType, Union
 
 import pandas as pd
 
-from cro.schedule.__shared import convert_time
+from cro.schedule.sdk.__shared import convert_time
 
 __all__ = tuple(["Schedule", "Show", "Station", "Person"])
 
@@ -51,6 +51,7 @@ class Kind:
     name: Name
 
 
+@total_ordering
 @dataclass(frozen=False, unsafe_hash=True)
 class Show:
     id: int
@@ -66,6 +67,24 @@ class Show:
 
     def __post_init__(self) -> None:
         self.duration = (dt.datetime.min + (self.till - self.since)).time()
+
+    def type(self) -> str:
+        if self.since.time() >= dt.time(6, 0, 0) and self.since.time() < dt.time(
+            10, 0, 0
+        ):
+            return "MORNING"
+        elif self.since.time() >= dt.time(10, 0, 0) and self.since.time() < dt.time(
+            12, 0, 0
+        ):
+            return "NOON"
+        else:
+            return "UNKNOWN"
+
+    def __lt__(self, that) -> bool:
+        """
+        Compare the shows by the *since* time so we can sort them.
+        """
+        return self.since.time() < that.since.time()
 
 
 @dataclass(frozen=True)

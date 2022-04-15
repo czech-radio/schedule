@@ -8,14 +8,16 @@ from __future__ import annotations
 
 import datetime as dt
 from calendar import monthrange
+from cmath import log
 from enum import Enum
 from typing import Optional, Union
 
+from charset_normalizer import logging
 from requests import Session, get
 
-from cro.schedule.__domain import Schedule  # package private
-from cro.schedule.__domain import Kind, Person, Show, Station
-from cro.schedule.__shared import convert_date
+from cro.schedule.sdk.__domain import Schedule  # package private
+from cro.schedule.sdk.__domain import Kind, Person, Show, Station
+from cro.schedule.sdk.__shared import convert_date
 
 __all__ = tuple(["Client"])
 
@@ -186,9 +188,14 @@ class Client:
 
         date = convert_date(date)
 
-        data = get(
-            f"{type(self).__url__}/schedule/day/{date.year:04d}/{date.month:02d}/{date.day:02d}/{self.station.id}.json"
-        ).json()["data"]
+        # Handle possible errors.
+        try:
+            data = get(
+                f"{type(self).__url__}/schedule/day/{date.year:04d}/{date.month:02d}/{date.day:02d}/{self.station.id}.json"
+            ).json()["data"]
+        except Exception as ex:
+            logging.error(ex)
+            return None, ex
 
         shows = []
 
