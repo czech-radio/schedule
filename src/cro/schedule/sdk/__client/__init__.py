@@ -15,9 +15,10 @@ from charset_normalizer import logging
 
 from requests import Session, get
 
-from cro.schedule.__domain import Schedule  # package private
-from cro.schedule.__domain import Kind, Person, Show, Station
-from cro.schedule.__shared import convert_date
+from cro.schedule.sdk.__domain import Schedule  # package private
+from cro.schedule.sdk.__domain import Kind, Person, Show, Station
+from cro.schedule.sdk.__shared import convert_date
+
 
 __all__ = tuple(["Client"])
 

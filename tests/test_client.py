@@ -7,11 +7,11 @@ They are in fact the integration tests because we call the external REST service
 They can fail with connection or timeout issue. Keep it in mind!
 """
 
-from datetime import date
+from datetime import date, time
 
 import pytest
 
-from cro.schedule import Client
+from cro.schedule.sdk import Client
 
 
 @pytest.fixture
@@ -69,3 +69,10 @@ def test_that_month_schedules_are_sorted(client):
     result = client.get_month_schedule(date=date(2022, 1, 1))
     for _ in result:
         assert result[0] <= result[-1]
+
+
+@pytest.mark.client
+def test_that_day_schedule_subset_is_retrieved(client):
+    result  = client.get_day_schedule(date = date(2022, 1, 1), time = [time(8, 0, 0), time(11, 0, 0)])
+    print(len(result))
+    assert len(result.shows) > 0

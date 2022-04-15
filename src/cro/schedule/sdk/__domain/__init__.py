@@ -14,7 +14,7 @@ from typing import NewType, Union
 
 import pandas as pd
 
-from cro.schedule.__shared import convert_time
+from cro.schedule.sdk.__shared import convert_time
 
 __all__ = tuple(["Schedule", "Show", "Station", "Person"])
 

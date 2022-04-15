@@ -4,7 +4,7 @@
 Test the project as a package e.g. check the version, style etc.
 """
 
-from cro.schedule import __version__
+from cro.schedule.sdk import __version__
 
 
 def test_version():
