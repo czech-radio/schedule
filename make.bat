@@ -8,13 +8,26 @@ set SOURCE=source
 
 if "%1" == "" goto help
 
-if "%1" == "build" (
+if "%1" == "test" (
+	pytest
+	exit /b 1
+)
+
+if "%1" == "lint" (
+	black .
+	isort .
+	exit /b 1
+)
+
+if "%1" == "check" (
     black .
     isort .
 	pytest
 	exit /b 1
 )
+
 goto end
+
 
 :help
 echo There will be hellp message.
