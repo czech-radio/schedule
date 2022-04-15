@@ -17,72 +17,50 @@ import logging
 import datetime as dt
 
 import flask
+from flask import Blueprint, request
 from flask_wtf.csrf import CSRFProtect
+
+from cro.schedule import Client
 
 
 __all__ = tuple(["main"])
 
 
-class Server:
+# ########################################################################
+#
+# ########################################################################
+
+class Application:
     """
-    The Flask based server application.
+    The Flask based application server.
     """
-    # todo
 
+    def __init__(self, configuaration, client):
+        self.configuration = configuaration
+        self.client = client
 
-def main():
+    @classmethod
+    def make(cls):
 
-    logging.basicConfig(level=logging.DEBUG)
+        app = flask.Flask(__name__, template_folder="./templates")
 
-    app = flask.Flask(__name__, template_folder="./templates")
+        app.register_blueprint(rest_bp)
+        app.register_blueprint(home_bp)
 
-    app.config.update(
-        SECRET_KEY="secret_sauce",
-        SESSION_COOKIE_SECURE=True,
-        SESSION_COOKIE_HTTPONLY=True,
-        SESSION_COOKIE_SAMESITE="Lax",
-        TEMPLATES_AUTO_RELOAD=True,
-    )
+        app.config.update(
+            SECRET_KEY="secret_sauce",
+            SESSION_COOKIE_SECURE=True,
+            SESSION_COOKIE_HTTPONLY=True,
+            SESSION_COOKIE_SAMESITE="Lax",
+            TEMPLATES_AUTO_RELOAD=True,
+        )
 
-    # csrf = CSRFProtect()
-    # csrf.init_app(app)
+        return app
 
-    from cro.schedule import Client
-
-    @app.route("/", methods = ["POST", "GET"])
-    def index():
-
-        client = Client()
-
-        match flask.request.method:
-
-            case "GET":
-                shows = []
-                for station in Client.get_stations():
-                    client.station = station.id
-                    schedule = client.get_day_schedule()
-                    app.logger.info(schedule)
-                    shows.append(sorted(schedule.shows))
-
-                return flask.render_template("index.html", date=dt.datetime.now(), shows=shows)
-
-            case "POST":
-                date = flask.request.form.get("date")
-
-                if date is None:
-                    date = dt.datetime.now.date().isoformat()
-
-                station = flask.request.form.get("station")
-
-                app.logger.info(f"{date}, {station}, '<<<<<<<<<<<<<<<'")
-
-                client.station = station
-                schedule = client.get_day_schedule(date = date)
-                shows = sorted(schedule.shows)
-
-                return flask.render_template("index.html", date = date, shows=shows)
-
-            case _:
-                raise Exception("HTTP method not known!")
-
-    app.run(debug=True, use_debugger=False, use_reloader=False)
+    @classmethod
+    def run(cls):
+        logging.basicConfig(level=logging.DEBUG)
+        # csrf = CSRFProtect()
+        # csrf.init_app(app)
+        app = cls.make_server()
+        app.run(debug=True, use_debugger=False, use_reloader=False)
