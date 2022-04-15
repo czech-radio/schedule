@@ -37,7 +37,8 @@ pip install git+https://github.com/czech-radio/cro-schedule-sdk.git
 
 Data are available many years to the past and circa 14 days to the future.
 
-- [x] Get the list of available stations [[recipe](https://github.com/czech-radio/cro-schedule-sdk/blob/main/docs/source/notebooks/Recipe_Get_Stations.ipynb)].
+- [x] Get the available stations [[recipe](https://github.com/czech-radio/cro-schedule-sdk/blob/main/docs/source/notebooks/Recipe_Get_Stations.ipynb)].
+- [ ] Get the schedule for all stations and given day [recipe].
 - [x] Get the schedule for the given station and day [[recipe](https://github.com/czech-radio/cro-schedule-sdk/blob/main/docs/source/notebooks/Recipe_Get_Schedule_Day.ipynb)].
 - [x] Get the schedule for the given station and week [[recipe](https://github.com/czech-radio/cro-schedule-sdk/blob/main/docs/source/notebooks/Recipe_Get_Schedule_Week.ipynb)].
 - [x] Get the schedule for the given station and month [[recipe](https://github.com/czech-radio/cro-schedule-sdk/blob/main/docs/source/notebooks/Recipe_Get_Schedule_Month.ipynb)].
@@ -45,8 +46,6 @@ Data are available many years to the past and circa 14 days to the future.
 - [x] Get the schedule for the given station, any period and time [[recipe](https://github.com/czech-radio/cro-schedule-sdk/blob/main/docs/source/notebooks/Recipe_Get_Schedule_Any.ipynb)].
 - [ ] Get the playlist for supported stations (only Radio Wave) [recipe].
 - [x] Convert schedule to `pandas.DataFrame` with `Schedule::to_table()` method.
-
-Both `date = '2022-01-31'` and `dt.date(2022, 1, 31)` are valid date formats.
 
 See more examples in `docs/notebooks` and data outputs in `data` directory.
 
