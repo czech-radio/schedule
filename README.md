@@ -52,16 +52,16 @@ See more examples in `docs/notebooks` and data outputs in `data` directory.
 ### Use as command line program
 
 ```
-cro.schedule ...
+cro.schedule [options] [flags]
 ```
 
 ## Documentation
 
 The complete documentation soon&hellip;
 
-## Contribute
+## Contribution
 
-See the documentn [here](/.github\CONTRIBUTING.md)
+See the document [here](/.github\CONTRIBUTING.md)
 
 ## References
 
