@@ -73,6 +73,8 @@ def test_that_month_schedules_are_sorted(client):
 
 @pytest.mark.client
 def test_that_day_schedule_subset_is_retrieved(client):
-    result  = client.get_day_schedule(date = date(2022, 1, 1), time = [time(8, 0, 0), time(11, 0, 0)])
+    result = client.get_day_schedule(
+        date=date(2022, 1, 1), time=[time(8, 0, 0), time(11, 0, 0)]
+    )
     print(len(result))
     assert len(result.shows) > 0

@@ -50,6 +50,7 @@ class Kind:
     code: Code
     name: Name
 
+
 @total_ordering
 @dataclass(frozen=False, unsafe_hash=True)
 class Show:
@@ -68,18 +69,23 @@ class Show:
         self.duration = (dt.datetime.min + (self.till - self.since)).time()
 
     def type(self) -> str:
-        if self.since.time() >= dt.time(6, 0, 0) and self.since.time() < dt.time(10, 0, 0):
-            return 'MORNING'
-        elif self.since.time() >= dt.time(10, 0, 0) and self.since.time() < dt.time(12, 0, 0):
-            return 'NOON'
+        if self.since.time() >= dt.time(6, 0, 0) and self.since.time() < dt.time(
+            10, 0, 0
+        ):
+            return "MORNING"
+        elif self.since.time() >= dt.time(10, 0, 0) and self.since.time() < dt.time(
+            12, 0, 0
+        ):
+            return "NOON"
         else:
-            return 'UNKNOWN'
+            return "UNKNOWN"
 
     def __lt__(self, that) -> bool:
         """
         Compare the shows by the *since* time so we can sort them.
         """
         return self.since.time() < that.since.time()
+
 
 @dataclass(frozen=True)
 @total_ordering
