@@ -26,6 +26,13 @@ if "%1" == "check" (
 	exit /b 1
 )
 
+REM Quick README update commit.
+if "%1" == "quick" (
+    git commit -am "Update README"
+)
+
+
+
 goto end
 
 
