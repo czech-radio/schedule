@@ -65,6 +65,10 @@ Fetched 28 schedules for stations ['Plus', 'Radiozurnal'] and dates ['2022-02-01
 Result saved to ./Schedule_M2022-02-01.xlsx
 ```
 
+The resulting Excel file looks like this.
+
+![excel](./docs/source/excel.png)
+
 ## Documentation
 
 The complete documentation soon&hellip;
