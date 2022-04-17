@@ -1,9 +1,11 @@
 # 𝖈𝖗𝖔-𝖘𝖈𝖍𝖊𝖉𝖚𝖑𝖊-𝖘𝖉𝖐
+[RELEASES](https://github.com/czech-radio/cro.schedule/releases/) | [WEBSITE](https://czech-radio.github.io/cro-schedule-sdk/)
 
-![language](https://img.shields.io/badge/language-Python-blue.svg)
+![language](https://img.shields.io/badge/language-Python_v3.10+-blue.svg)
 ![version](https://img.shields.io/badge/version-1.0.0_alpha-blue.svg)
 [![build](https://github.com/czech-radio/cro.schedule/actions/workflows/main.yml/badge.svg)](https://github.com/czech-radio/cro.schedule/actions/workflows/main.yml)
 [![reliability](https://sonarcloud.io/api/project_badges/measure?project=czech-radio_cro.schedule&metric=reliability_rating)](https://sonarcloud.io/dashboard?id=czech-radio_cro.schedule)
+
 
 **Python library to work with Czech radio schedule REST service.**
 
@@ -14,13 +16,6 @@ _The library contains a client and domain model to work with Czech Radio schedul
 
 :star: Star us on GitHub — it motivates us!
 
-
-
-- Status: developed (maintained)
-- Release: https://github.com/czech-radio/cro.schedule/releases/
-- Website: https://czech-radio.github.io/cro.schedule/.
-- Category: library, client, SDK
-- Suppport: Python 3.10+, Windows, macOS, Ubuntu
 
 ## Install
 
