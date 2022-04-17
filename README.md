@@ -1,18 +1,17 @@
 # 𝖈𝖗𝖔-𝖘𝖈𝖍𝖊𝖉𝖚𝖑𝖊-𝖘𝖉𝖐
 
+![language](https://img.shields.io/badge/language-Python-blue.svg)
+![version](https://img.shields.io/badge/version-1.0.0_alpha-blue.svg)
+[![build](https://github.com/czech-radio/cro.schedule/actions/workflows/main.yml/badge.svg)](https://github.com/czech-radio/cro.schedule/actions/workflows/main.yml)
+[![reliability](https://sonarcloud.io/api/project_badges/measure?project=czech-radio_cro.schedule&metric=reliability_rating)](https://sonarcloud.io/dashboard?id=czech-radio_cro.schedule)
+
 **Python library to work with Czech radio schedule REST service.**
 
 _The library contains a client and domain model to work with Czech Radio schedules. You will be able to download a schedule for the specified station(s) and period e.g day, week, month, etc. The schedule contains information about shows and you can  easily work with the domain model in your programs. At least you can export data to pandas data frame and play with that data._
 
 :star: Star us on GitHub — it motivates us!
 
-![Python](https://img.shields.io/badge/language-Python-blue.svg)
-![package-version](https://img.shields.io/badge/version-0.20.0-blue)
-[![build: tests](https://github.com/czech-radio/cro.schedule/actions/workflows/main.yml/badge.svg)](https://github.com/czech-radio/cro.schedule/actions/workflows/main.yml)
-[![style: black](https://img.shields.io/badge/style-black-000000.svg)](https://github.com/psf/black)
-[![quality: bugs](https://sonarcloud.io/api/project_badges/measure?project=czech-radio_cro.schedule&metric=bugs)](https://sonarcloud.io/dashboard?id=czech-radio_cro.schedule)
-[![quality: code smells](https://sonarcloud.io/api/project_badges/measure?project=czech-radio_cro.schedule&metric=code_smells)](https://sonarcloud.io/dashboard?id=czech-radio_cro.schedule)
-[![quality: reliability](https://sonarcloud.io/api/project_badges/measure?project=czech-radio_cro.schedule&metric=reliability_rating)](https://sonarcloud.io/dashboard?id=czech-radio_cro.schedule)
+
 
 - Status: developed (maintained)
 - Release: https://github.com/czech-radio/cro.schedule/releases/
