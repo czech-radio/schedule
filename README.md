@@ -17,13 +17,13 @@ _The library contains a client and domain model to work with Czech Radio schedul
 - Release: https://github.com/czech-radio/cro.schedule/releases/
 - Website: https://czech-radio.github.io/cro.schedule/.
 - Category: library, client, SDK
-- Suppport: Python 3.9+, Windows, macOS, Ubuntu
+- Suppport: Python 3.10+, Windows, macOS, Ubuntu
 
 ## Install
 
 **Prerequisites**
 
-* We assume that you use at least Python 3.9.
+* We assume that you use at least Python 3.10.
 * We assume that you use the virtual environment.
 
 Install the package latest version from the GitHub repository.

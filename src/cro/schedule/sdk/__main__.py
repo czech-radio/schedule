@@ -5,6 +5,8 @@ The command line interface to download the schedules.
 """
 
 import argparse
+import sys
+from typing import Any
 
 import pandas as pd
 
@@ -13,7 +15,19 @@ from cro.schedule.sdk import Client
 __all__ = tuple(["main"])
 
 
+def _flatten(t) -> list[Any]:
+    """
+    The helper to flatten a list of lists.
+    """
+    return [item for sublist in t for item in sublist]
+
+
 def main() -> None:
+
+    # #########################################################################
+    # Define options and flags.
+    # #########################################################################
+
     parser = argparse.ArgumentParser("The `cro.schedule.sdk` command line interface.")
 
     parser.add_argument("-d", "--date", required=True, help="The date of period.")
@@ -27,22 +41,41 @@ def main() -> None:
         "-s", "--stations", required=True, help="The station for the schedule."
     )
     parser.add_argument("-o", "--output", required=False)
-    # parser.add_argument("--format")
+    parser.add_argument(
+        "-f", "--format", required=False, help="The export file format (xls, csv)"
+    )
 
+    # #########################################################################
+    # Parse arguments and check the values
+    # #########################################################################
     options = parser.parse_args()
 
     date: str = options.date
     period: str = options.period.upper()
     stations: list[str] = [s.strip() for s in options.stations.split(",")]
     output = options.output
+    format = options.format
 
+    # Choose default output format.
+    match format.lower():
+        case None:
+            format = "csv"
+        case "csv" | "xls":
+            format = format.lower()
+        case _:
+            print("The allowed format is ('csv', 'xls').")
+            sys.exit(1)
+
+    # #########################################################################
+    # The main procedures.
+    # #########################################################################
     client = Client()
 
     schedule_dfs: list[pd.DataFrame] = []
 
-    def flatten(t):
-        return [item for sublist in t for item in sublist]
-
+    # -------------------------------------------------------------------------
+    # Fetch the schedules.
+    # -------------------------------------------------------------------------
     for station in stations:
         client.station = station.lower()
 
@@ -61,9 +94,20 @@ def main() -> None:
     print(
         f"Fetched {len(schedules)} schedules for stations {[station.title() for station in stations]} and dates {[schedule.date.isoformat() for schedule in schedules]}."
     )
-    # Store the result on disk.
-    output_file_path = f"{output}/Schedule_{period}{date}.xlsx"
-    with pd.ExcelWriter(output_file_path) as writer:
-        pd.concat(flatten(schedule_dfs)).to_excel(writer)
+
+    # -------------------------------------------------------------------------
+    # Store the schedules.
+    # -------------------------------------------------------------------------
+    output_file_path = f"{output}/Schedule_{period}{date}"
+    match format:
+        case "csv":
+            output_file_path = f"{output_file_path}.csv"
+            pd.concat(_flatten(schedule_dfs)).to_csv(
+                output_file_path, sep="\t", encoding="utf-8", index=False
+            )
+        case "xls":
+            output_file_path = f"{output_file_path}.xlsx"
+            with pd.ExcelWriter(output_file_path) as writer:
+                pd.concat(_flatten(schedule_dfs)).to_excel(writer, index=False)
 
     print(f"Result saved to {output_file_path}")
