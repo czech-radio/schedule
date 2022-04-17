@@ -1,8 +1,8 @@
 # 𝖈𝖗𝖔-𝖘𝖈𝖍𝖊𝖉𝖚𝖑𝖊-𝖘𝖉𝖐
 
-**Python library to work with Rozhlas schedule REST service.**
+**Python library to work with Czech radio schedule REST service.**
 
-_Python library to work with Czech Radio schedules and playlists._
+_The library contains a client and domain model to work with Czech Radio schedules. You will be able to download a schedule for the specified station(s) and period e.g day, week, month, etc. The schedule contains information about shows and you can  easily work with the domain model in your programs. At least you can export data to pandas data frame and play with that data._
 
 :star: Star us on GitHub — it motivates us!
 
