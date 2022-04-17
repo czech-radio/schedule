@@ -62,7 +62,7 @@ def lhs_fake_show():
         since=dt.datetime(2022, 12, 1, 6, 0, 0),
         till=dt.datetime(2022, 12, 1, 7, 0, 0),
         repetition=False,
-        persons=tuple([]),
+        moderators=tuple([]),
     )
 
 
@@ -84,7 +84,7 @@ def rhs_fake_show():
         since=dt.datetime(2022, 12, 1, 7, 0, 0),
         till=dt.datetime(2022, 12, 1, 8, 0, 0),
         repetition=False,
-        persons=tuple([]),
+        moderators=tuple([]),
     )
 
 

@@ -8,8 +8,8 @@ from __future__ import annotations
 
 import datetime as dt
 import pathlib as pl
-from dataclasses import dataclass, field, replace
-from functools import total_ordering
+from dataclasses import dataclass, field
+from functools import cached_property, total_ordering
 from typing import NewType, Union
 
 import pandas as pd
@@ -38,21 +38,30 @@ class Station:
     services: dict[str, URL] = field(hash=False)
 
 
+# >> Show model
+
+
+@dataclass(frozen=True)
+class Kind:
+    # `Kind.name`: `name` může obsahovat tyto hodnoty:
+    # - zpr: Zprávy
+    # - pub: Publicistika
+    # - pdf: Publicistika - Dokument/Feature
+    # - pro: Literární pořady - Próza
+    # - mag: Magazín zpravodajství, publicistiky a hudby
+    id: int
+    code: Code
+    name: Name
+
+
 @dataclass(frozen=True)
 class Person:
     id: int
     name: Name
 
 
-@dataclass(frozen=True)
-class Kind:
-    id: int
-    code: Code
-    name: Name
-
-
 @total_ordering
-@dataclass(frozen=False, unsafe_hash=True)
+@dataclass(frozen=True)
 class Show:
     id: int
     kind: Kind
@@ -61,13 +70,10 @@ class Show:
     description: str
     since: dt.datetime
     till: dt.datetime
-    duration: dt.time = field(init=False)
-    persons: tuple[Person] = field(hash=False)
+    moderators: tuple[Person] = field(hash=False)
     repetition: bool
 
-    def __post_init__(self) -> None:
-        self.duration = (dt.datetime.min + (self.till - self.since)).time()
-
+    @cached_property
     def type(self) -> str:
         if self.since.time() >= dt.time(6, 0, 0) and self.since.time() < dt.time(
             10, 0, 0
@@ -80,11 +86,18 @@ class Show:
         else:
             return "UNKNOWN"
 
+    @cached_property
+    def duration(self) -> dt.time:
+        return (dt.datetime.min + (self.till - self.since)).time()
+
     def __lt__(self, that) -> bool:
         """
         Compare the shows by the *since* time so we can sort them.
         """
         return self.since.time() < that.since.time()
+
+
+# << Show model
 
 
 @dataclass(frozen=True)
@@ -195,12 +208,16 @@ class Schedule:
         """
         df = pd.DataFrame(data=self.shows)
 
-        # Use only one attribute from kind and station objects.
+        # Use only some attributes from `kind` and `station` objects.
         df["kind"] = df["kind"].apply(lambda x: x["code"].lower())
+
         df["station"] = df["station"].apply(lambda x: x["id"])
 
-        # Replace empty persosn by None/NaN?
-        df.persons = df.persons.apply(lambda xs: None if len(xs) == 0 else xs)
+        df.moderators = df.moderators.apply(
+            lambda xs: ";".join([x["name"] for x in xs])
+        )
+        # Replace empty moderators by None/NaN?
+        # df.moderators = df.moderators.apply(lambda xs: None if len(xs) == 0 else xs)
 
         # Remove timezones for Excel exports.
         if without_timezone:
@@ -212,7 +229,7 @@ class Schedule:
     @classmethod
     def from_table(cls, table: pd.DataFrame, columns: dict = None) -> Schedule:
         """
-        Factory method to create a schedule from the given dataset.
+        Factory method to create a schedule from the given data frame.
         """
         #
         # Preconditions:

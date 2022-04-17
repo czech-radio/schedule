@@ -224,7 +224,7 @@ class Client:
                     description=item["description"],
                     since=since,
                     till=till,
-                    persons=tuple(
+                    moderators=tuple(
                         (Person(p["id"], p["name"]) for p in item["persons"])
                     ),
                     repetition=item["repetition"],
