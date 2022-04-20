@@ -1,5 +1,5 @@
 # 𝖈𝖗𝖔-𝖘𝖈𝖍𝖊𝖉𝖚𝖑𝖊-𝖘𝖉𝖐
-[RELEASES](https://github.com/czech-radio/cro.schedule/releases/) | [WEBSITE](https://czech-radio.github.io/cro-schedule-sdk/)
+[RELEASES](https://github.com/czech-radio/cro-schedule-sdk/releases/) | [WEBSITE](https://czech-radio.github.io/cro-schedule-sdk/)
 
 ![language](https://img.shields.io/badge/language-Python_v3.10+-blue.svg)
 ![version](https://img.shields.io/badge/version-1.0.0_alpha-blue.svg)
