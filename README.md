@@ -30,7 +30,7 @@ Install the package latest version from the GitHub repository.
 pip install git+https://github.com/czech-radio/cro-schedule-sdk.git
 ```
 
-## Features
+## Features & Usage
 
 Data are available many years to the past and circa 14 days to the future.
 
@@ -66,13 +66,13 @@ The resulting Excel file looks like this.
 
 ![excel](./docs/source/excel.png)
 
-## Documentation
-
-The complete documentation soon&hellip;
-
 ## Contribution
 
 See the document [here](/.github\CONTRIBUTING.md)
+
+## Documentation
+
+The complete documentation soon&hellip;
 
 ## References
 
