@@ -9,7 +9,7 @@
 
 **Python library to work with Czech radio schedule REST service.**
 
-_The library contains a client and domain model to work with Czech Radio schedules. You will be able to download a schedule for the specified station(s) and period e.g day, week, month, etc. The schedule contains information about shows and you can  easily work with the domain model in your programs. At least you can export data to pandas data frame and play with that data._
+_The library contains a client and domain model to work with Czech Radio schedules. You will be able to download a schedule for the specified station(s) and period e.g day, week, month, etc. The schedule contains information about shows and you can easily work with the domain model in your programs. At least you can export data to pandas data frame and play with that data._
 
 > Of course our first reaction when consuming HTTP resources in Python is to reach for Requests. But for structured APIs, we often want more than ad-hoc calls to Requests. We want a client-side API for our apps. </br>
 > -- Michael Kennedy (@mkennedy)
@@ -24,7 +24,7 @@ _The library contains a client and domain model to work with Czech Radio schedul
 * We assume that you use at least Python 3.10.
 * We assume that you use the virtual environment.
 
-Install the package latest version from the GitHub repository.
+Install the package's latest version from the GitHub repository (you need a [Git](https://git-scm.com/) installed).
 
 ```
 pip install git+https://github.com/czech-radio/cro-schedule-sdk.git
