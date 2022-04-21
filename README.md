@@ -2,7 +2,7 @@
 [RELEASES](https://github.com/czech-radio/cro-schedule-sdk/releases/) | [WEBSITE](https://czech-radio.github.io/cro-schedule-sdk/)
 
 ![language](https://img.shields.io/badge/language-Python_v3.10+-blue.svg)
-![version](https://img.shields.io/badge/version-1.0.0_alpha-blue.svg)
+![version](https://img.shields.io/badge/version-1.0.1_alpha-blue.svg)
 [![build](https://github.com/czech-radio/cro.schedule/actions/workflows/main.yml/badge.svg)](https://github.com/czech-radio/cro.schedule/actions/workflows/main.yml)
 [![reliability](https://sonarcloud.io/api/project_badges/measure?project=czech-radio_cro.schedule&metric=reliability_rating)](https://sonarcloud.io/dashboard?id=czech-radio_cro.schedule)
 
