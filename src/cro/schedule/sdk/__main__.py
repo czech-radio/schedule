@@ -57,7 +57,7 @@ def main() -> None:
     format = options.format
 
     # Choose default output format.
-    match format.lower():
+    match format:
         case None:
             format = "csv"
         case "csv" | "xls":
