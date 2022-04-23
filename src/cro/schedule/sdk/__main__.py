@@ -15,11 +15,11 @@ from cro.schedule.sdk import Client
 __all__ = tuple(["main"])
 
 
-def _flatten(t) -> list[Any]:
+def _flatten(lst: list[Any]) -> list[Any]:
     """
     The helper to flatten a list of lists.
     """
-    return [item for sublist in t for item in sublist]
+    return [item for sublst in lst for item in sublst]
 
 
 def main() -> None:
