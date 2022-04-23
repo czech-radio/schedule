@@ -52,7 +52,7 @@ See more examples in `docs/notebooks` and data outputs in `data` directory.
 #### Get the day schedule
 
 ```
-cro.schedule.sdk -p D -d 2022-02-01 -s plus -o .
+cro.schedule -p D -d 2022-02-01 -s plus -o .
 ```
 ```
 Fetched 1 schedules for stations ['Plus', 'Radiozurnal'] and dates ['2022-02-01'].
@@ -61,7 +61,7 @@ Result saved to ./Schedule_D2022-02-01.xlsx
 
 #### Get the week schedule
 ```
-cro.schedule.sdk --period W --date 2022-02-01 --stations plus,radiozurnal --output .
+cro.schedule --period W --date 2022-02-01 --stations plus,radiozurnal --output .
 ```
 ```
 Fetched 7 schedules for stations ['Plus', 'Radiozurnal'] and dates ['2022-01-31', '2022-02-01', '2022-02-02', '2022-02-03', '2022-02-04', '2022-02-05', '2022-02-06'].
@@ -70,7 +70,7 @@ Result saved to ./Schedule_W2022-02-01.xlsx
 
 #### Get the month schedule
 ```
-cro.schedule.sdk --period M --date 2022-02-01 --stations plus,radiozurnal --output .
+cro.schedule --period M --date 2022-02-01 --stations plus,radiozurnal --output .
 ```
 ```
 Fetched 28 schedules for stations ['Plus', 'Radiozurnal'] and dates ['2022-02-01', '2022-02-02', '2022-02-03', '2022-02-04', '2022-02-05', '2022-02-06', '2022-02-07', '2022-02-08', '2022-02-09', '2022-02-10', '2022-02-11', '2022-02-12', '2022-02-13', '2022-02-14', '2022-02-15', '2022-02-16', '2022-02-17', '2022-02-18', '2022-02-19', '2022-02-20', '2022-02-21', '2022-02-22', '2022-02-23', '2022-02-24', '2022-02-25', '2022-02-26', '2022-02-27', '2022-02-28'].
