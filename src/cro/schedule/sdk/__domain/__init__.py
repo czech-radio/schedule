@@ -8,8 +8,8 @@ from __future__ import annotations
 
 import datetime as dt
 import pathlib as pl
-from enum import Enum
 from dataclasses import dataclass, field
+from enum import Enum
 from functools import cached_property, total_ordering
 from typing import NewType, Union
 
@@ -38,21 +38,23 @@ class Station:
     description: str
     services: dict[str, URL] = field(hash=False)
 
+
 # >> Show model
 
+
 class KindName(Enum):
-    ZPR: str #< Zprávy
-    PUB: str #< Publicistika
-    PDF: str #< Publicistika - Dokument/Feature
-    PRO: str #< Literární pořady - Próza
-    MAG: str #< Magazín zpravodajství, publicistiky a hudby
+    ZPR: str  # < Zprávy
+    PUB: str  # < Publicistika
+    PDF: str  # < Publicistika - Dokument/Feature
+    PRO: str  # < Literární pořady - Próza
+    MAG: str  # < Magazín zpravodajství, publicistiky a hudby
 
 
 @dataclass(frozen=True)
 class Kind:
     id: int
     code: Code
-    name: Name # todo: use `KindName`
+    name: Name  # todo: use `KindName`
 
 
 @dataclass(frozen=True)
@@ -97,7 +99,9 @@ class Show:
         """
         return self.since.time() < that.since.time()
 
+
 # << Show model
+
 
 @dataclass(frozen=True)
 @total_ordering
