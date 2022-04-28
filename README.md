@@ -1,4 +1,5 @@
 # 𝖈𝖗𝖔-𝖘𝖈𝖍𝖊𝖉𝖚𝖑𝖊-𝖘𝖉𝖐
+
 [RELEASES](https://github.com/czech-radio/cro-schedule-sdk/releases/) | [WEBSITE](https://czech-radio.github.io/cro-schedule-sdk/)
 
 ![language](https://img.shields.io/badge/language-Python_v3.10+-blue.svg)
@@ -6,8 +7,7 @@
 [![build](https://github.com/czech-radio/cro.schedule/actions/workflows/main.yml/badge.svg)](https://github.com/czech-radio/cro.schedule/actions/workflows/main.yml)
 [![reliability](https://sonarcloud.io/api/project_badges/measure?project=czech-radio_cro.schedule&metric=reliability_rating)](https://sonarcloud.io/dashboard?id=czech-radio_cro.schedule)
 
-
-**Python library to work with Czech radio schedule REST service.**
+**Python library and simple command line program to work with Czech Radio schedule REST service.**
 
 _The library contains a client and domain model to work with Czech Radio schedules. You will be able to download a schedule for the specified station(s) and period e.g day, week, month, etc. The schedule contains information about shows and you can easily work with the domain model in your programs. At least you can export data to pandas data frame and play with that data._
 
@@ -15,7 +15,6 @@ _The library contains a client and domain model to work with Czech Radio schedul
 > -- Michael Kennedy (@mkennedy)
 
 :star: Star us on GitHub — it motivates us!
-
 
 ## Install
 
@@ -77,7 +76,7 @@ Fetched 28 schedules for stations ['Plus', 'Radiozurnal'] and dates ['2022-02-01
 Result saved to ./Schedule_M2022-02-01.xlsx
 ```
 
-The resulting Excel file looks like this.
+The resulting Excel/CSV table file looks like this:
 
 ![excel](./docs/source/excel.png)
 
@@ -91,5 +90,6 @@ The complete documentation soon&hellip;
 
 ## References
 
-- https://data.irozhlas.cz/opendata/
-- https://cs.wikipedia.org/wiki/%C4%8Cesk%C3%BD_rozhlas
+- [Czech Radio portal](https://portal.rozhlas.cz/)
+- [Czech Radio open data](https://data.irozhlas.cz/opendata/)
+- [Czech Radio on Wikipedia](https://cs.wikipedia.org/wiki/%C4%8Cesk%C3%BD_rozhlas)
