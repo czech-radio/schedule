@@ -59,8 +59,9 @@ def lhs_fake_show():
             services=(),
         ),
         description="d1",
-        since=dt.datetime(2022, 12, 1, 6, 0, 0),
-        till=dt.datetime(2022, 12, 1, 7, 0, 0),
+        date=dt.datetime(2022, 12, 1, 6, 0, 0).date(),
+        since=dt.datetime(2022, 12, 1, 6, 0, 0).time(),
+        till=dt.datetime(2022, 12, 1, 7, 0, 0).time(),
         repetition=False,
         moderators=tuple([]),
     )
@@ -81,8 +82,9 @@ def rhs_fake_show():
             services=(),
         ),
         description="d2",
-        since=dt.datetime(2022, 12, 1, 7, 0, 0),
-        till=dt.datetime(2022, 12, 1, 8, 0, 0),
+        date=dt.datetime(2022, 12, 1, 7, 0, 0).date(),
+        since=dt.datetime(2022, 12, 1, 7, 0, 0).time(),
+        till=dt.datetime(2022, 12, 1, 8, 0, 0).time(),
         repetition=False,
         moderators=tuple([]),
     )

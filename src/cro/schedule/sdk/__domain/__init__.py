@@ -71,33 +71,35 @@ class Show:
     title: Title
     station: Station
     description: str
-    since: dt.datetime
-    till: dt.datetime
+    date: dt.date
+    since: dt.time
+    till: dt.time
     moderators: tuple[Person] = field(hash=False)
     repetition: bool
 
     @cached_property
     def type(self) -> str:
-        if self.since.time() >= dt.time(6, 0, 0) and self.since.time() < dt.time(
-            10, 0, 0
-        ):
+        if self.since >= dt.time(6, 0, 0) and self.since < dt.time(10, 0, 0):
             return "MORNING"
-        elif self.since.time() >= dt.time(10, 0, 0) and self.since.time() < dt.time(
-            12, 0, 0
-        ):
+        elif self.since >= dt.time(10, 0, 0) and self.since < dt.time(12, 0, 0):
             return "NOON"
         else:
             return "UNKNOWN"
 
     @cached_property
-    def duration(self) -> dt.time:
-        return (dt.datetime.min + (self.till - self.since)).time()
+    def duration(self) -> float:
+        # TODO Write unit tests! Return dt.time?
+        return dt.timedelta(
+            hours=self.till.hour - self.since.hour,
+            minutes=self.till.minute - self.since.minute,
+            seconds=self.till.second - self.since.second,
+        ).total_seconds()
 
     def __lt__(self, that) -> bool:
         """
         Compare the shows by the *since* time so we can sort them.
         """
-        return self.since.time() < that.since.time()
+        return self.since < that.since
 
 
 # << Show model
@@ -170,8 +172,7 @@ class Schedule:
 
         return tuple(
             filter(
-                lambda show: (show.since.time() >= since)
-                and (show.till.time() <= till),
+                lambda show: (show.since >= since) and (show.till <= till),
                 self.shows,
             )
         )
@@ -190,13 +191,6 @@ class Schedule:
                 self.shows,
             )
         )
-
-    def to_excel(self, schedule: Schedule, path: pl.Path) -> object:
-        """
-        Return the given schedule as Excel workbook.
-        """
-        assert schedule, path is not None
-        return NotImplemented
 
     def to_chart(self, shedule: Schedule) -> dict:
         """
@@ -219,15 +213,32 @@ class Schedule:
         df.moderators = df.moderators.apply(
             lambda xs: ";".join([x["name"] for x in xs])
         )
-        # Replace empty moderators by None/NaN?
-        # df.moderators = df.moderators.apply(lambda xs: None if len(xs) == 0 else xs)
 
         # Remove timezones for Excel exports.
         if without_timezone:
             df["till"] = df["till"].apply(lambda x: x.replace(tzinfo=None))
             df["since"] = df["since"].apply(lambda x: x.replace(tzinfo=None))
 
-        return df
+        since = df.since.apply(lambda x: dt.datetime.combine(self.shows[0].date, x))
+        till = df.till.apply(lambda x: dt.datetime.combine(self.shows[0].date, x))
+
+        df["duration"] = till - since
+        df.duration = df.duration.apply(lambda x: x.total_seconds())
+
+        return df[
+            [
+                "id",
+                "station",
+                "date",
+                "since",
+                "till",
+                "duration",
+                "title",
+                "description",
+                "moderators",
+                "repetition",
+            ]
+        ]
 
     @classmethod
     def from_table(cls, table: pd.DataFrame, columns: dict = None) -> Schedule:

@@ -222,8 +222,9 @@ class Client:
                         name=item["type"]["name"],
                     ),
                     description=item["description"],
-                    since=since,
-                    till=till,
+                    date=since.date(),
+                    since=since.time(),
+                    till=till.time(),
                     moderators=tuple(
                         (Person(p["id"], p["name"]) for p in item["persons"])
                     ),
