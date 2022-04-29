@@ -51,7 +51,7 @@ See more examples in `docs/notebooks` and data outputs in `data` directory.
 #### Get the day schedule
 
 ```
-cro.schedule -p D -d 2022-02-01 -s plus -o .
+cro.schedule -p D -d 2022-02-01 -s plus,radiozurnal -o .
 ```
 ```
 Fetched 1 schedules for stations ['Plus', 'Radiozurnal'] and dates ['2022-02-01'].

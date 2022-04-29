@@ -223,7 +223,7 @@ class Schedule:
         till = df.till.apply(lambda x: dt.datetime.combine(self.shows[0].date, x))
 
         df["duration"] = till - since
-        df.duration = df.duration.apply(lambda x: x.total_seconds())
+        df.duration = df.duration.apply(lambda x: "{:0>8}".format(str(dt.timedelta(seconds=x.total_seconds()))))
 
         return df[
             [
@@ -233,10 +233,10 @@ class Schedule:
                 "since",
                 "till",
                 "duration",
-                "title",
-                "description",
-                "moderators",
                 "repetition",
+                "title",
+                "moderators",
+                "description",
             ]
         ]
 
