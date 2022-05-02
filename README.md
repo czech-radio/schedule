@@ -7,7 +7,7 @@
 [![build](https://github.com/czech-radio/cro.schedule/actions/workflows/main.yml/badge.svg)](https://github.com/czech-radio/cro.schedule/actions/workflows/main.yml)
 [![reliability](https://sonarcloud.io/api/project_badges/measure?project=czech-radio_cro.schedule&metric=reliability_rating)](https://sonarcloud.io/dashboard?id=czech-radio_cro.schedule)
 
-**Python library and simple command line program to work with Czech Radio schedule REST service.**
+**Python library and command line program to work with Czech Radio schedule REST service.**
 
 _The library contains a client and domain model to work with Czech Radio schedules. You will be able to download a schedule for the specified station(s) and period e.g day, week, month, etc. The schedule contains information about shows and you can easily work with the domain model in your programs. At least you can export data as `pandas.Dataframe` and play with that._
 
