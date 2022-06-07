@@ -83,7 +83,7 @@ The resulting Excel/CSV table file looks like this:
 
 ## Contribution
 
-See the document [here](/.github\CONTRIBUTING.md).
+See the document [here](/.github/CONTRIBUTING.md).
 
 ## Documentation
 
