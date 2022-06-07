@@ -8,4 +8,4 @@ from cro.schedule.sdk.__domain import Station as Station
 
 __all__ = tuple(["Client", "Station", "Show", "Schedule"])
 
-__version__ = "1.0.1-alpha"
+__version__ = "1.0.1"
