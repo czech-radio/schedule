@@ -5,7 +5,7 @@
 ![language](https://img.shields.io/badge/language-Python_v3.10+-blue.svg)
 ![version](https://img.shields.io/badge/version-1.0.1_alpha-blue.svg)
 [![build](https://github.com/czech-radio/cro.schedule/actions/workflows/main.yml/badge.svg)](https://github.com/czech-radio/cro.schedule/actions/workflows/main.yml)
-[![reliability](https://sonarcloud.io/api/project_badges/measure?project=czech-radio_cro.schedule&metric=reliability_rating)](https://sonarcloud.io/dashboard?id=czech-radio_cro.schedule)
+[![reliability](https://sonarcloud.io/api/project_badges/measure?project=czech-radio_cro-schedule-sdk&metric=reliability_rating)](https://sonarcloud.io/dashboard?id=czech-radio_cro-schedule-sdk)
 
 **Python library and command line program to work with Czech Radio schedule REST service.**
 
