@@ -12,7 +12,6 @@ from enum import Enum
 from functools import cached_property, total_ordering
 from typing import NewType, Union
 
-
 from cro.schedule.sdk._shared import convert_time
 
 __all__ = tuple(["Schedule", "Show", "Station", "Person"])

@@ -2,11 +2,10 @@
 
 
 from cro.schedule.sdk._client import Client as Client
-
+from cro.schedule.sdk._domain import Schedule as Schedule
+from cro.schedule.sdk._domain import Show as Show
+from cro.schedule.sdk._domain import Station as Station
 from cro.schedule.sdk._domain import (
-    Schedule as Schedule,
-    Show as Show,
-    Station as Station,
     schedule_from_frame,
     schedule_to_chart,
     schedule_to_frame,

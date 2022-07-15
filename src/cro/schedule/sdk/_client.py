@@ -8,15 +8,12 @@ from __future__ import annotations
 
 import datetime as dt
 from calendar import monthrange
-from cmath import log
-from enum import Enum
 from typing import Optional, Union
 
 from charset_normalizer import logging
 from requests import Session, get
 
-from cro.schedule.sdk._domain import Schedule  # package private
-from cro.schedule.sdk._domain import Kind, Person, Show, Station
+from cro.schedule.sdk._domain import Kind, Person, Schedule, Show, Station
 from cro.schedule.sdk._shared import convert_date
 
 __all__ = tuple(["Client"])
@@ -46,7 +43,7 @@ class Client:
     """
 
     #: The service REST API V2 base URL.
-    __url__: str = f"https://api.rozhlas.cz/data/v2"
+    __url__: str = "https://api.rozhlas.cz/data/v2"
 
     #: The date format as data string input.
     __date_format__: str = "%Y-%m-%d"
@@ -294,5 +291,4 @@ class Client:
         """
         Fetch the playlist for Radio Wave station.
         """
-        assert date is not None
-        return NotImplemented
+        return NotImplementedError
