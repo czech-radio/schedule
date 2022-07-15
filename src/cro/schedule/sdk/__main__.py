@@ -10,7 +10,7 @@ from typing import Any
 
 import pandas as pd
 
-from cro.schedule.sdk import Client
+from cro.schedule.sdk import Client, schedule_to_frame
 
 __all__ = tuple(["main"])
 
@@ -89,7 +89,7 @@ def main() -> None:
             case _:
                 print(f"Unknown period {period}!")
 
-        schedule_dfs.append([schedule.to_table() for schedule in schedules])
+        schedule_dfs.append([schedule_to_frame(schedule) for schedule in schedules])
 
     print(
         f"Fetched {len(schedules)} schedules for stations {[station.title() for station in stations]} and dates {[schedule.date.isoformat() for schedule in schedules]}."

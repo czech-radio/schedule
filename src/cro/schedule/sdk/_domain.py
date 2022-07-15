@@ -1,21 +1,19 @@
 # -*- coding: utf-8 -*-
 
 """
-This module contains domain model.
+This module contains schedule domain model.
 """
 
 from __future__ import annotations
 
 import datetime as dt
-import pathlib as pl
 from dataclasses import dataclass, field
 from enum import Enum
 from functools import cached_property, total_ordering
 from typing import NewType, Union
 
-import pandas as pd
 
-from cro.schedule.sdk.__shared import convert_time
+from cro.schedule.sdk._shared import convert_time
 
 __all__ = tuple(["Schedule", "Show", "Station", "Person"])
 
@@ -192,67 +190,74 @@ class Schedule:
             )
         )
 
-    def to_chart(self, shedule: Schedule) -> dict:
-        """
-        Return the multiple schedules as a vega chart.
-        """
-        assert shedule is not None  # unused
-        return NotImplemented
 
-    def to_table(self, without_timezone: bool = True) -> pd.DataFrame:
-        """
-        Return the schedule data as table.
-        """
-        df = pd.DataFrame(data=self.shows)
+# ######################################################################################
+# Convertors/Factories
+# ######################################################################################
 
-        # Use only some attributes from `kind` and `station` objects.
-        df["kind"] = df["kind"].apply(lambda x: x["code"].lower())
+import pandas as pd
 
-        df["station"] = df["station"].apply(lambda x: x["id"])
 
-        df.moderators = df.moderators.apply(
-            lambda xs: ";".join([x["name"] for x in xs])
-        )
+def schedule_to_chart(shedule: Schedule) -> dict:
+    """
+    Return the multiple schedules as a vega chart.
+    """
+    assert shedule is not None  # unused
+    return NotImplemented
 
-        # Remove timezones for Excel exports.
-        if without_timezone:
-            df["till"] = df["till"].apply(lambda x: x.replace(tzinfo=None))
-            df["since"] = df["since"].apply(lambda x: x.replace(tzinfo=None))
 
-        since = df.since.apply(lambda x: dt.datetime.combine(self.shows[0].date, x))
-        till = df.till.apply(lambda x: dt.datetime.combine(self.shows[0].date, x))
+def schedule_to_frame(schedule, without_timezone: bool = True) -> pd.DataFrame:
+    """
+    Return the schedule data as table.
+    """
+    df = pd.DataFrame(data=schedule.shows)
 
-        df["duration"] = till - since
-        df.duration = df.duration.apply(
-            lambda x: "{:0>8}".format(str(dt.timedelta(seconds=x.total_seconds())))
-        )
+    # Use only some attributes from `kind` and `station` objects.
+    df["kind"] = df["kind"].apply(lambda x: x["code"].lower())
 
-        return df[
-            [
-                "id",
-                "station",
-                "date",
-                "since",
-                "till",
-                "duration",
-                "repetition",
-                "title",
-                "moderators",
-                "description",
-            ]
+    df["station"] = df["station"].apply(lambda x: x["id"])
+
+    df.moderators = df.moderators.apply(lambda xs: ";".join([x["name"] for x in xs]))
+
+    # Remove timezones for Excel exports.
+    if without_timezone:
+        df["till"] = df["till"].apply(lambda x: x.replace(tzinfo=None))
+        df["since"] = df["since"].apply(lambda x: x.replace(tzinfo=None))
+
+    since = df.since.apply(lambda x: dt.datetime.combine(schedule.shows[0].date, x))
+    till = df.till.apply(lambda x: dt.datetime.combine(schedule.shows[0].date, x))
+
+    df["duration"] = till - since
+    df.duration = df.duration.apply(
+        lambda x: "{:0>8}".format(str(dt.timedelta(seconds=x.total_seconds())))
+    )
+
+    return df[
+        [
+            "id",
+            "station",
+            "date",
+            "since",
+            "till",
+            "duration",
+            "repetition",
+            "title",
+            "moderators",
+            "description",
         ]
+    ]
 
-    @classmethod
-    def from_table(cls, table: pd.DataFrame, columns: dict = None) -> Schedule:
-        """
-        Factory method to create a schedule from the given data frame.
-        """
-        #
-        # Preconditions:
-        # - Dataset contain only data for one station and one date.
-        #
-        # Parse date from since or till columns.
-        # Parse time from min(since) and max(till) columns.
-        # Fetch station with the given station id.
-        assert table, columns is not None
-        return NotImplemented
+
+def schedule_from_frame(table: pd.DataFrame, columns: dict = None) -> Schedule:
+    """
+    Factory method to create a schedule from the given data frame.
+    """
+    #
+    # Preconditions:
+    # - Dataset contain only data for one station and one date.
+    #
+    # Parse date from since or till columns.
+    # Parse time from min(since) and max(till) columns.
+    # Fetch station with the given station id.
+    assert table, columns is not None
+    return NotImplemented

@@ -7,7 +7,7 @@ Test the project as a package e.g. check the version, style etc.
 from cro.schedule.sdk import __version__
 
 
-EXPECTED_PACKAGE_VERSION = "1.0.1"
+EXPECTED_PACKAGE_VERSION = "1.1.0"
 
 
 def test_version():
@@ -15,7 +15,7 @@ def test_version():
 
 
 def test_readme_version():
-    with open("./README.md") as file:
+    with open("./README.md", encoding="utf8") as file:
         lines = file.readlines()
         version_line = lines[5].strip()[-15:-10]
         assert version_line.strip() == EXPECTED_PACKAGE_VERSION
