@@ -15,7 +15,7 @@ from cro.schedule._domain import Schedule, Kind, Person, Show, Station
 from cro.schedule._shared import convert_date
 
 
-__all__ = tuple(["Client"])
+__all__ = ("Client",)
 
 
 def is_time_between(begin_time, end_time, check_time=None):
