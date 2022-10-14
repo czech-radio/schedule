@@ -49,6 +49,7 @@ class Client:
         :param station_id: e.g. `radiozurnal`.
         """
         self._station = None
+        self._session = None
 
         # Fetch the station and pick the right one.
         if sid is not None:
