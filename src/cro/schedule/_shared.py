@@ -5,9 +5,7 @@ from typing import Optional, Union, Any
 __all__ = tuple(["convert_date", "convert_time", "flatten"])
 
 
-def convert_date(
-    date: Union[dt.date, str], date_format="%Y-%m-%d"
-) -> dt.date:
+def convert_date(date: Union[dt.date, str], date_format="%Y-%m-%d") -> dt.date:
     """
     Convert date from text with the given format to date object.
 
@@ -20,9 +18,7 @@ def convert_date(
     return date
 
 
-def convert_time(
-    time: Union[dt.time, str], time_format="%H:%M:%S"
-) -> dt.time:
+def convert_time(time: Union[dt.time, str], time_format="%H:%M:%S") -> dt.time:
     """
     Convert time from text with the given format to date object.
 
@@ -31,7 +27,7 @@ def convert_time(
     :raises: ValuError: when given format is wrong.
     """
     if isinstance(time, str):
-        return  dt.datetime.strptime(time, time_format).time()
+        return dt.datetime.strptime(time, time_format).time()
     return time
 
 

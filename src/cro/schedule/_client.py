@@ -18,19 +18,16 @@ from cro.schedule._shared import convert_date
 __all__ = tuple(["Client"])
 
 
-def is_time_between(begin_time, end_time, check_time=None):
+def is_time_between(begin_time: dt.time, end_time: dt.time, current_time: dt.time):
     """
-    Determine if current time is within a specified range.
+    Determine if the current time is within a specified range.
 
-    @author https://stackoverflow.com/users/48837/joe-holloway
-    @see https://stackoverflow.com/a/10048290
+    .. see: https://stackoverflow.com/a/10048290
     """
-    # If check time is not given, default to current UTC time.
-    check_time = check_time or dt.datetime.utcnow().time()
     if begin_time < end_time:
-        return check_time >= begin_time and check_time <= end_time
+        return begin_time <= current_time <= end_time
     else:  # crosses midnight
-        return check_time >= begin_time or check_time <= end_time
+        return (current_time >= begin_time) or (current_time <= end_time)
 
 
 StationID = str
@@ -93,13 +90,6 @@ class Client:
         except IndexError:
             raise ValueError(f"The station with id `{sid}` does not exist.")
 
-    def _check_station(self) -> None:
-        """
-        Check that station property is set.
-        """
-        if self.station is None:
-            raise ValueError("Set the station property!")
-
     @classmethod
     def make(cls) -> Client:
         """
@@ -108,7 +98,7 @@ class Client:
         return NotImplemented
 
     @classmethod
-    def get_stations(cls) -> tuple[Station]:
+    def get_stations(cls) -> tuple[Station, ...]:
         """
         Fetch the available stations.
 
@@ -150,11 +140,12 @@ class Client:
         since: dt.date | str,
         till: dt.date | str = dt.datetime.now(),
         time: tuple[dt.time, dt.time] = (dt.time.min, dt.time.max),
-    ) -> tuple[Schedule]:
+    ) -> tuple[Schedule, ...]:
         """
         Fetch the avalaible schedules for the given date range.
         """
-        self._check_station()
+        if self.station is None:
+            raise ValueError("Set the station property!")
 
         since, till = convert_date(since), convert_date(till)
 
@@ -179,18 +170,19 @@ class Client:
             >>> import datetime as dt
             >>> get_day_schedule(date = dt.datetime.now())
         """
-        self._check_station()
+
+        if self.station is None:
+            raise ValueError("Set the station property!")
 
         date = convert_date(date)
 
-        # Handle possible errors.
         try:
             data = get(
                 f"{type(self).__url__}/schedule/day/{date.year:04d}/{date.month:02d}/{date.day:02d}/{self.station.id}.json"
             ).json()["data"]
         except Exception as ex:
             logging.error(ex)
-            return None, ex
+            raise ex
 
         shows = []
 
@@ -235,7 +227,7 @@ class Client:
         self,
         date: dt.date | str = dt.datetime.now(),
         time: tuple[dt.time, dt.time] = (dt.time.min, dt.time.max),
-    ) -> tuple[Schedule]:
+    ) -> tuple[Schedule, ...]:
         """
         Fetch the availaible schedules for the given week.
 
@@ -247,7 +239,8 @@ class Client:
             >>> import datetime as dt
             >>> get_week_schedule(date = dt.datetime.now())
         """
-        self._check_station()
+        if self.station is None:
+            raise ValueError("Set the station property!")
 
         date = convert_date(date)
 
@@ -263,7 +256,7 @@ class Client:
         self,
         date: dt.date | str = dt.datetime.now(),
         time: tuple[dt.time, dt.time] = (dt.time.min, dt.time.max),
-    ) -> tuple[Schedule]:
+    ) -> tuple[Schedule, ...]:
         """
         Fetch the availaible schedules for the given month.
 
@@ -275,7 +268,8 @@ class Client:
             >>> import datetime as dt
             >>> get_month_schedule(date = dt.datetime.now())
         """
-        self._check_station()
+        if self.station is None:
+            raise ValueError("Set the station property!")
 
         date = convert_date(date)
 
