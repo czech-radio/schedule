@@ -1,6 +1,3 @@
-# -*- coding: utf-8 -*-
-
-
 import datetime as dt
 from typing import Optional, Union, Any
 

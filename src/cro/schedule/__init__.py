@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-
 """
 The client and domain model to work with schedule, stations and shows.
 """

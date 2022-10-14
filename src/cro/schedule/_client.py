@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-
 """
 Module contains HTTP REST API client.
 """
@@ -49,7 +47,7 @@ class Client:
     #: The date format as data string input.
     __date_format__: str = "%Y-%m-%d"
 
-    def __init__(self, sid: Optional[StationID] = None) -> None:
+    def __init__(self, sid: StationID | None = None) -> None:
         """
         :param station_id: e.g. `radiozurnal`.
         """
@@ -79,7 +77,7 @@ class Client:
         self._session.close()
 
     @property
-    def station(self) -> Optional[Station]:
+    def station(self) -> Station | None:
         """
         Get the current station.
         """
@@ -135,7 +133,7 @@ class Client:
         )
 
     @classmethod
-    def get_station(cls, sid: str) -> Optional[Station]:
+    def get_station(cls, sid: str) -> Station | None:
         """
         Fetch the available station with the given station id (`sid`).
 
@@ -150,8 +148,8 @@ class Client:
 
     def get_any_schedule(
         self,
-        since: Union[dt.date, str],
-        till: Union[dt.date, str] = dt.datetime.now(),
+        since: dt.date | str,
+        till: dt.date | str = dt.datetime.now(),
         time: tuple[dt.time, dt.time] = (dt.time.min, dt.time.max),
     ) -> tuple[Schedule]:
         """
@@ -164,11 +162,11 @@ class Client:
         # Get all days between since and till.
         dates = [since + dt.timedelta(days=i) for i in range((till - since).days + 1)]
 
-        return tuple(sorted((self.get_day_schedule(date, time) for date in dates)))
+        return tuple(sorted(self.get_day_schedule(date, time) for date in dates))
 
     def get_day_schedule(
         self,
-        date: Union[dt.date, str] = dt.datetime.now(),
+        date: dt.date | str = dt.datetime.now(),
         time: tuple[dt.time, dt.time] = (dt.time.min, dt.time.max),
     ) -> Schedule:
         """
@@ -224,7 +222,7 @@ class Client:
                     since=since.time(),
                     till=till.time(),
                     moderators=tuple(
-                        (Person(p["id"], p["name"]) for p in item["persons"])
+                        Person(p["id"], p["name"]) for p in item["persons"]
                     ),
                     repetition=item["repetition"],
                 )
@@ -236,7 +234,7 @@ class Client:
 
     def get_week_schedule(
         self,
-        date: Union[dt.date, str] = dt.datetime.now(),
+        date: dt.date | str = dt.datetime.now(),
         time: tuple[dt.time, dt.time] = (dt.time.min, dt.time.max),
     ) -> tuple[Schedule]:
         """
@@ -260,11 +258,11 @@ class Client:
             for i in range(0 - date.weekday(), 7 - date.weekday())
         )
 
-        return tuple(sorted((self.get_day_schedule(date, time) for date in dates)))
+        return tuple(sorted(self.get_day_schedule(date, time) for date in dates))
 
     def get_month_schedule(
         self,
-        date: Union[dt.date, str] = dt.datetime.now(),
+        date: dt.date | str = dt.datetime.now(),
         time: tuple[dt.time, dt.time] = (dt.time.min, dt.time.max),
     ) -> tuple[Schedule]:
         """
@@ -286,9 +284,9 @@ class Client:
         nb_days = monthrange(date.year, date.month)[1]
         dates = (dt.date(date.year, date.month, day) for day in range(1, nb_days + 1))
 
-        return tuple(sorted((self.get_day_schedule(date, time) for date in dates)))
+        return tuple(sorted(self.get_day_schedule(date, time) for date in dates))
 
-    def get_playlist(self, date: Union[dt.date, str] = dt.datetime.now()) -> object:
+    def get_playlist(self, date: dt.date | str = dt.datetime.now()) -> object:
         """
         Fetch the playlist for Radio Wave station.
         """
