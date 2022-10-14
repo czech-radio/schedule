@@ -31,7 +31,8 @@ class Station:
     """
     The Czech Radio station.
     """
-    id: str # pylint: disable=C0103
+
+    id: str  # pylint: disable=C0103
     name: Name
     domain: str
     slogan: str
@@ -43,6 +44,7 @@ class KindName(Enum):
     """
     The show kind name as defined by internal systems.
     """
+
     ZPR: str  # Zprávy
     PUB: str  # Publicistika
     PDF: str  # Publicistika - Dokument/Feature
@@ -55,7 +57,8 @@ class Kind:
     """
     The kind of show as defined by internal systems.
     """
-    id: int # pylint: disable=C0103
+
+    id: int  # pylint: disable=C0103
     code: Code
     name: Name  # Better to use :code:`KindName` enumaration?
 
@@ -65,7 +68,8 @@ class Person:
     """
     The person associated with show e.g. moderator or respondent.
     """
-    id: int # pylint: disable=C0103
+
+    id: int  # pylint: disable=C0103
     name: Name
 
 
@@ -75,7 +79,8 @@ class Show:
     """
     The Czech Radio show.
     """
-    id: int # pylint: disable=C0103
+
+    id: int  # pylint: disable=C0103
     kind: Kind
     title: Title
     station: Station
