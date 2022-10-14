@@ -49,7 +49,7 @@ class Client:
         :param station_id: e.g. `radiozurnal`.
         """
         self._station = None
-        self._session = None
+        self._session: Optional[Session] = None
 
         # Fetch the station and pick the right one.
         if sid is not None:
@@ -72,7 +72,8 @@ class Client:
         # This is a remainder how to implement manager
         # see https://peps.python.org/pep-0343/.
         # exc_type, exc_value, traceback = *args
-        self._session.close()
+        if self._session is not None:
+            self._session.close()
 
     @property
     def station(self) -> Station | None:
