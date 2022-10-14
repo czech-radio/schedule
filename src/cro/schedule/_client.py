@@ -18,7 +18,7 @@ from cro.schedule._shared import convert_date
 __all__ = ("Client",)
 
 
-def is_time_between(begin_time: dt.time, end_time: dt.time, current_time: dt.time):
+def is_time_between(begin_time: dt.time, end_time: dt.time, current_time: dt.time) -> bool:
     """
     Determine if the current time is within a specified range.
 
