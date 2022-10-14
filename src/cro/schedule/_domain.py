@@ -14,7 +14,7 @@ import pandas as pd
 
 from cro.schedule._shared import convert_time
 
-__all__ = tuple(["Schedule", "Show", "Station", "Person"])
+__all__ = ("Schedule", "Show", "Station", "Person")
 
 
 URL = NewType("URL", str)
