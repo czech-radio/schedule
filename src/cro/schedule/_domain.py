@@ -22,8 +22,8 @@ Title = str
 Code = str
 Name = str
 
-SinceTime = Union[dt.time, str]
-TillTime = Union[dt.time, str]
+SinceTime = dt.time
+TillTime = dt.time
 
 
 @dataclass(frozen=True)
@@ -88,7 +88,7 @@ class Show:
     date: dt.date
     since: dt.time
     till: dt.time
-    moderators: tuple[Person] = field(hash=False)
+    moderators: tuple[Person, ...] = field(hash=False)
     repetition: bool
 
     @cached_property
@@ -139,14 +139,15 @@ class Schedule:
 
     date: dt.date
     station: Station
-    shows: tuple[Show]
+    shows: tuple[Show, ...]
     time: tuple[SinceTime, TillTime] = dt.time.min, dt.time.max  # since, till
 
     #: The time format as data string input.
     __time_format__: str = "%H:%M:%S"
 
     def __post_init__(self) -> None:
-        # Check that all shows has same date as schedule
+        # Check that time since < till.
+        # Check that shows has same dates as schedule.
         ...
 
     def __str__(self) -> str:
@@ -169,21 +170,13 @@ class Schedule:
         """
         return self.time[0] > dt.time.min or self.time[1] < dt.time.max
 
-    def as_subset(self, since: SinceTime, till: TillTime) -> Schedule:
+    def as_subset(self, since: SinceTime, till) -> Schedule:
         """
         Return the subset of this schedule.
         """
-        since = (
-            dt.datetime.strptime(since, type(self).__time_format__).time()
-            if isinstance(since, str)
-            else since
-        )
+        if since > till:
+            raise ValueError("The time since > till!")
 
-        till = (
-            dt.datetime.strptime(till, type(self).__time_format__).time()
-            if isinstance(till, str)
-            else till
-        )
         return type(self)(
             date=self.date,
             time=(since, till),
@@ -191,7 +184,7 @@ class Schedule:
             shows=self.shows_by_time(since, till),
         )
 
-    def shows_by_time(self, since: SinceTime, till: TillTime) -> tuple[Show]:
+    def shows_by_time(self, since: SinceTime, till: TillTime) -> tuple[Show, ...]:
         """
         Return the subset of shows filtered by time (till exclusive).
         """
@@ -210,7 +203,7 @@ class Schedule:
     def shows_by_title(
         self,
         title: str,
-    ) -> tuple[Show]:
+    ) -> tuple[Show, ...]:
         """
         Return the subset of shows filtered by title.
         """
@@ -272,19 +265,3 @@ class Schedule:
                 "description",
             ]
         ]
-
-    @classmethod
-    def from_table(cls, table: pd.DataFrame, columns: dict = None) -> Schedule:
-        """
-        Factory method to create a schedule from the given data frame.
-        """
-        #
-        # Preconditions:
-        # - Dataset contain only data for one station and one date.
-        #
-        # Parse date from since or till columns.
-        # Parse time from min(since) and max(till) columns.
-        # Fetch station with the given station id.
-        if not table:
-            raise AssertionError(columns is not None)
-        return NotImplemented

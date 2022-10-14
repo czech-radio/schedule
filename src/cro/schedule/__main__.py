@@ -81,9 +81,7 @@ def main() -> None:
             case _:
                 raise ValueError(f"Unknown period {period}!")
 
-        schedule_dfs.append([
-            schedule.to_table() for schedule in schedules
-        ])
+        schedule_dfs.append([schedule.to_table() for schedule in schedules])
 
     print(
         f"Fetched {len(schedules)} schedules for stations {[station.title() for station in stations]} and dates {[schedule.date.isoformat() for schedule in schedules]}."
