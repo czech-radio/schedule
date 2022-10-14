@@ -42,7 +42,7 @@ class Client:
     """
 
     #: The service REST API V2 base URL.
-    __url__: str = f"https://api.rozhlas.cz/data/v2"
+    __url__: str = "https://api.rozhlas.cz/data/v2"
 
     #: The date format as data string input.
     __date_format__: str = "%Y-%m-%d"
