@@ -13,4 +13,4 @@ from cro.schedule._domain import (
 __all__ = tuple(["Client", "Station", "Show", "Schedule"])
 
 
-__version__ = "1.0.1"
+__version__ = "1.2.0"
