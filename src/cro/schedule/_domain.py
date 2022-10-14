@@ -195,14 +195,14 @@ class Schedule:
         """
         Return the subset of shows filtered by time (till exclusive).
         """
-        since = convert_time(since)
-        till = convert_time(till)
+        till_conv = convert_time(till)
+        since_conv = convert_time(since)
 
         # Fix error if `show.till` is midnight 00.00.00
 
         return tuple(
             filter(
-                lambda show: (show.since >= since) and (show.till <= till),
+                lambda show: (show.since >= since_conv) and (show.till <= till_conv),
                 self.shows,
             )
         )

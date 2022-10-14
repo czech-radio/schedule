@@ -7,34 +7,32 @@ __all__ = tuple(["convert_date", "convert_time", "flatten"])
 
 def convert_date(
     date: Union[dt.date, str], date_format="%Y-%m-%d"
-) -> Optional[dt.date]:
+) -> dt.date:
     """
-    Convert date from string to date object if needed.
+    Convert date from text with the given format to date object.
 
     :param: The date object or string to convert.
     :return: The formated date.
+    :raises: ValuError: when given format is wrong.
     """
-    return (
-        dt.datetime.strptime(date, date_format).date()
-        if isinstance(date, str)
-        else date
-    )
+    if isinstance(date, str):
+        return dt.datetime.strptime(date, date_format).date()
+    return date
 
 
 def convert_time(
     time: Union[dt.time, str], time_format="%H:%M:%S"
-) -> Optional[dt.time]:
+) -> dt.time:
     """
-    Convert date from string to date object if needed.
+    Convert time from text with the given format to date object.
 
     :param time: The time object or string to convert.
     :return: The formated time.
+    :raises: ValuError: when given format is wrong.
     """
-    return (
-        dt.datetime.strptime(time, time_format).time()
-        if isinstance(time, str)
-        else time
-    )
+    if isinstance(time, str):
+        return  dt.datetime.strptime(time, time_format).time()
+    return time
 
 
 def flatten(lst: list[Any]) -> list[Any]:
