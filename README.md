@@ -4,7 +4,7 @@
 
 [![build](https://github.com/czech-radio/cro.schedule/actions/workflows/main.yml/badge.svg)](https://github.com/czech-radio/cro.schedule/actions/workflows/main.yml)
 ![version](https://img.shields.io/badge/version-1.2.0-blue.svg)
-![language](https://img.shields.io/badge/language-Python_v3.10+-blue.svg)
+![language](https://img.shields.io/badge/language-Python-blue.svg)
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/b68c6f5c2e204ac2b56581625dd336d1)](https://www.codacy.com/gh/czech-radio/cro-schedule-sdk/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=czech-radio/cro-schedule-sdk&amp;utm_campaign=Badge_Grade)
 
 **The library and program to work with Czech Radio schedules.**
