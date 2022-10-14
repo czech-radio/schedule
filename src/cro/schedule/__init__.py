@@ -2,11 +2,11 @@
 The client and domain model to work with schedule, stations and shows.
 """
 
-from cro.schedule._client import Client as Client
+from cro.schedule._client import Client
 from cro.schedule._domain import (
-    Schedule as Schedule,
-    Show as Show,
-    Station as Station,
+    Schedule,
+    Show,
+    Station,
 )
 
 
