@@ -290,5 +290,6 @@ class Client:
         """
         Fetch the playlist for Radio Wave station.
         """
-        assert date is not None
+        if date is None:
+            raise AssertionError
         return NotImplemented
