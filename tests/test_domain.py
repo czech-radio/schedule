@@ -8,6 +8,7 @@ import datetime as dt
 
 import pytest
 
+from cro.schedule._shared import convert_time
 from cro.schedule import Schedule, Show, Station
 
 
@@ -99,7 +100,7 @@ def test_that_schedule_show_time_filtering_works(lhs_fake_show, rhs_fake_show):
             id=1, name="Fake", domain="_", slogan="_", description="_", services=()
         ),
     )
-    shows = schedule.shows_by_time("06:00:00", "07:45:00")
+    shows = schedule.shows_by_time(convert_time("06:00:00"), convert_time("07:45:00"))
 
     assert len(shows) == 1  # filtered
     assert len(schedule.shows) == 2  # original
@@ -130,7 +131,7 @@ def test_that_schedule_is_subset(lhs_fake_show, rhs_fake_show):
         ),
     )
 
-    schedule_subset = schedule.as_subset(since="06:00:00", till="07:30:00")
+    schedule_subset = schedule.as_subset(since=convert_time("06:00:00"), till=convert_time("07:30:00"))
 
     assert schedule_subset.is_subset()
     assert len(schedule.shows) == 2
