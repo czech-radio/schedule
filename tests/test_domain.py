@@ -106,7 +106,7 @@ def test_that_schedule_show_time_filtering_works(lhs_fake_show, rhs_fake_show):
 
 
 @pytest.mark.domain
-def test_that_schedule_show_time_filtering_works(lhs_fake_show, rhs_fake_show):
+def test_that_schedule_show_title_filtering_works(lhs_fake_show, rhs_fake_show):
     schedule = Schedule(
         date=dt.date(2022, 12, 1),
         shows=[lhs_fake_show, rhs_fake_show],
