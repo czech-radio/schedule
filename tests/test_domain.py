@@ -131,7 +131,9 @@ def test_that_schedule_is_subset(lhs_fake_show, rhs_fake_show):
         ),
     )
 
-    schedule_subset = schedule.as_subset(since=convert_time("06:00:00"), till=convert_time("07:30:00"))
+    schedule_subset = schedule.as_subset(
+        since=convert_time("06:00:00"), till=convert_time("07:30:00")
+    )
 
     assert schedule_subset.is_subset()
     assert len(schedule.shows) == 2
