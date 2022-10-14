@@ -6,20 +6,14 @@ The command line interface to download the schedules.
 
 import argparse
 import sys
-from typing import Any
 
 import pandas as pd
 
-from cro.schedule.sdk import Client
+from cro.schedule import Client
+from cro.schedule._shared import flatten as _flatten
+
 
 __all__ = tuple(["main"])
-
-
-def _flatten(lst: list[Any]) -> list[Any]:
-    """
-    The helper to flatten a list of lists.
-    """
-    return [item for sublst in lst for item in sublst]
 
 
 def main() -> None:
@@ -46,7 +40,7 @@ def main() -> None:
     )
 
     # #########################################################################
-    # Parse arguments and check the values
+    # Parse arguments and check the values.
     # #########################################################################
     options = parser.parse_args()
 

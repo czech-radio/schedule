@@ -8,16 +8,14 @@ from __future__ import annotations
 
 import datetime as dt
 from calendar import monthrange
-from cmath import log
-from enum import Enum
 from typing import Optional, Union
 
 from charset_normalizer import logging
 from requests import Session, get
 
-from cro.schedule.sdk.__domain import Schedule  # package private
-from cro.schedule.sdk.__domain import Kind, Person, Show, Station
-from cro.schedule.sdk.__shared import convert_date
+from cro.schedule._domain import Schedule, Kind, Person, Show, Station
+from cro.schedule._shared import convert_date
+
 
 __all__ = tuple(["Client"])
 

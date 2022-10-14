@@ -1,14 +1,13 @@
-# 𝖈𝖗𝖔-𝖘𝖈𝖍𝖊𝖉𝖚𝖑𝖊-𝖘𝖉𝖐
+# 𝖈𝖗𝖔-𝖘𝖈𝖍𝖊𝖉𝖚𝖑𝖊
 
-[RELEASES](https://github.com/czech-radio/cro-schedule-sdk/releases/) | [WEBSITE](https://czech-radio.github.io/cro-schedule-sdk/)
+[RELEASES](https://github.com/czech-radio/cro-schedule/releases/) | [WEBSITE](https://czech-radio.github.io/cro-schedule/)
 
 ![language](https://img.shields.io/badge/language-Python_v3.10+-blue.svg)
 ![version](https://img.shields.io/badge/version-1.0.1-blue.svg)
 [![build](https://github.com/czech-radio/cro.schedule/actions/workflows/main.yml/badge.svg)](https://github.com/czech-radio/cro.schedule/actions/workflows/main.yml)
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/b68c6f5c2e204ac2b56581625dd336d1)](https://www.codacy.com/gh/czech-radio/cro-schedule-sdk/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=czech-radio/cro-schedule-sdk&amp;utm_campaign=Badge_Grade)
 
-
-**Python library and command line program to work with Czech Radio schedule REST service.**
+**The library and program to work with Czech Radio schedules.**
 
 _The library contains a client and domain model to work with Czech Radio schedules. You will be able to download a schedule for the specified station(s) and period e.g day, week, month, etc. The schedule contains information about shows and you can easily work with the domain model in your programs. At least you can export data as `pandas.Dataframe` and play with that._
 
@@ -27,27 +26,26 @@ _The library contains a client and domain model to work with Czech Radio schedul
 Install the package's latest version from the GitHub repository (you need a [Git](https://git-scm.com/) installed).
 
 ```
-pip install git+https://github.com/czech-radio/cro-schedule-sdk.git
+pip install git+https://github.com/czech-radio/cro-schedule.git
 ```
 
 ## Features & Usage
 
 Data are available many years to the past and circa 14 days to the future.
 
-- [x] Get the available stations [[recipe](https://github.com/czech-radio/cro-schedule-sdk/blob/main/docs/source/notebooks/Recipe_Get_Stations.ipynb)].
+- [x] Get the available stations [[recipe](https://github.com/czech-radio/cro-schedule/blob/main/docs/source/notebooks/Recipe_Get_Stations.ipynb)].
 - [ ] Get the schedule for all stations and given day [recipe].
-- [x] Get the schedule for the given station and day [[recipe](https://github.com/czech-radio/cro-schedule-sdk/blob/main/docs/source/notebooks/Recipe_Get_Schedule_Day.ipynb)].
-- [x] Get the schedule for the given station and week [[recipe](https://github.com/czech-radio/cro-schedule-sdk/blob/main/docs/source/notebooks/Recipe_Get_Schedule_Week.ipynb)].
-- [x] Get the schedule for the given station and month [[recipe](https://github.com/czech-radio/cro-schedule-sdk/blob/main/docs/source/notebooks/Recipe_Get_Schedule_Month.ipynb)].
-- [x] Get the schedule for the given station and year [[recipe](https://github.com/czech-radio/cro-schedule-sdk/blob/main/docs/source/notebooks/Recipe_Get_Schedule_Year.ipynb)].
-- [x] Get the schedule for the given station, any period and time [[recipe](https://github.com/czech-radio/cro-schedule-sdk/blob/main/docs/source/notebooks/Recipe_Get_Schedule_Any.ipynb)].
+- [x] Get the schedule for the given station and day [[recipe](https://github.com/czech-radio/cro-schedule/blob/main/docs/source/notebooks/Recipe_Get_Schedule_Day.ipynb)].
+- [x] Get the schedule for the given station and week [[recipe](https://github.com/czech-radio/cro-schedule/blob/main/docs/source/notebooks/Recipe_Get_Schedule_Week.ipynb)].
+- [x] Get the schedule for the given station and month [[recipe](https://github.com/czech-radio/cro-schedule/blob/main/docs/source/notebooks/Recipe_Get_Schedule_Month.ipynb)].
+- [x] Get the schedule for the given station and year [[recipe](https://github.com/czech-radio/cro-schedule/blob/main/docs/source/notebooks/Recipe_Get_Schedule_Year.ipynb)].
+- [x] Get the schedule for the given station, any period and time [[recipe](https://github.com/czech-radio/cro-schedule/blob/main/docs/source/notebooks/Recipe_Get_Schedule_Any.ipynb)].
 - [ ] Get the playlist for supported stations (only Radio Wave) [recipe].
 - [x] Convert schedule to `pandas.DataFrame` with `Schedule::to_table()` method.
 
 See more examples in `docs/notebooks` and data outputs in `data` directory.
 
 ### Use as command line program
-
 
 #### Get the day schedule
 

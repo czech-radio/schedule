@@ -8,7 +8,7 @@ import datetime as dt
 
 import pytest
 
-from cro.schedule.sdk import Schedule, Show, Station
+from cro.schedule import Schedule, Show, Station
 
 
 @pytest.mark.domain

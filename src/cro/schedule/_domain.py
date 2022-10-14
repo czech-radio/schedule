@@ -7,7 +7,6 @@ This module contains domain model.
 from __future__ import annotations
 
 import datetime as dt
-import pathlib as pl
 from dataclasses import dataclass, field
 from enum import Enum
 from functools import cached_property, total_ordering
@@ -15,7 +14,7 @@ from typing import NewType, Union
 
 import pandas as pd
 
-from cro.schedule.sdk.__shared import convert_time
+from cro.schedule._shared import convert_time
 
 __all__ = tuple(["Schedule", "Show", "Station", "Person"])
 
@@ -31,7 +30,10 @@ TillTime = Union[dt.time, str]
 
 @dataclass(frozen=True)
 class Station:
-    id: str
+    """
+    The Czech Radio station.
+    """
+    id: str # pylint: disable=C0103
     name: Name
     domain: str
     slogan: str
@@ -39,34 +41,43 @@ class Station:
     services: dict[str, URL] = field(hash=False)
 
 
-# >> Show model
-
-
 class KindName(Enum):
-    ZPR: str  # < Zprávy
-    PUB: str  # < Publicistika
-    PDF: str  # < Publicistika - Dokument/Feature
-    PRO: str  # < Literární pořady - Próza
-    MAG: str  # < Magazín zpravodajství, publicistiky a hudby
+    """
+    The show kind name as defined by internal systems.
+    """
+    ZPR: str  # Zprávy
+    PUB: str  # Publicistika
+    PDF: str  # Publicistika - Dokument/Feature
+    PRO: str  # Literární pořady - Próza
+    MAG: str  # Magazín zpravodajství, publicistiky a hudby
 
 
 @dataclass(frozen=True)
 class Kind:
-    id: int
+    """
+    The kind of show as defined by internal systems.
+    """
+    id: int # pylint: disable=C0103
     code: Code
-    name: Name  # todo: use `KindName`
+    name: Name  # Better to use :code:`KindName` enumaration?
 
 
 @dataclass(frozen=True)
 class Person:
-    id: int
+    """
+    The person associated with show e.g. moderator or respondent.
+    """
+    id: int # pylint: disable=C0103
     name: Name
 
 
 @total_ordering
 @dataclass(frozen=True)
 class Show:
-    id: int
+    """
+    The Czech Radio show.
+    """
+    id: int # pylint: disable=C0103
     kind: Kind
     title: Title
     station: Station
@@ -79,16 +90,30 @@ class Show:
 
     @cached_property
     def type(self) -> str:
+        """
+        The show type recognized by the broadcast time.
+        We recognize morning, noon, afternoon, evening and night.
+
+        :return: The show type as text (change to enumeration?).
+        """
         if self.since >= dt.time(6, 0, 0) and self.since < dt.time(10, 0, 0):
             return "MORNING"
         elif self.since >= dt.time(10, 0, 0) and self.since < dt.time(12, 0, 0):
             return "NOON"
-        else:
-            return "UNKNOWN"
+        elif self.since >= dt.time(12, 0, 0) and self.since < dt.time(18, 0, 0):
+            return "AFTERNOON"
+        elif self.since >= dt.time(18, 0, 0) and self.since < dt.time(22, 0, 0):
+            return "EVENING"
+        return "NIGHT"
 
     @cached_property
     def duration(self) -> float:
-        # TODO Write unit tests! Return dt.time?
+        """
+        Get the show duration in seconds.
+
+        Should we return :code:`dt.time`?
+        :return: The duration in seconds.
+        """
         return dt.timedelta(
             hours=self.till.hour - self.since.hour,
             minutes=self.till.minute - self.since.minute,
@@ -100,9 +125,6 @@ class Show:
         Compare the shows by the *since* time so we can sort them.
         """
         return self.since < that.since
-
-
-# << Show model
 
 
 @dataclass(frozen=True)
@@ -125,7 +147,12 @@ class Schedule:
         ...
 
     def __str__(self) -> str:
-        return f"{type(self).__name__}(station={self.station.name}, date={self.date}, shows={len(self.shows)})"
+        return (
+            f"{type(self).__name__}("
+            f"station={self.station.name}, "
+            f"date={self.date}, "
+            f"shows={len(self.shows)})"
+        )
 
     def __lt__(self, that: Schedule) -> bool:
         return self.date < that.date

@@ -11,7 +11,7 @@ from datetime import date, time
 
 import pytest
 
-from cro.schedule.sdk import Client
+from cro.schedule import Client
 
 
 @pytest.fixture

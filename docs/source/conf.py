@@ -18,7 +18,7 @@
 # -- Project information -----------------------------------------------------
 
 project = "cro.schedule"
-copyright = "2022, David Landa"
+copyright = "2022, Czech Radio"
 author = "David Landa"
 
 
