@@ -90,7 +90,6 @@ class Client:
         """
         try:  # Fetch the station and pick the right one.
             self._station = type(self).get_station(sid.lower())
-            # logger.info(self._station)
         except IndexError:
             raise ValueError(f"The station with id `{sid}` does not exist.")
 
@@ -290,5 +289,6 @@ class Client:
         """
         Fetch the playlist for Radio Wave station.
         """
-        assert date is not None
+        if date is None:
+            raise AssertionError
         return NotImplemented

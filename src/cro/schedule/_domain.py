@@ -221,7 +221,8 @@ class Schedule:
         """
         Return the multiple schedules as a vega chart.
         """
-        assert shedule is not None  # unused
+        if shedule is None:
+            raise AssertionError
         return NotImplemented
 
     def to_table(self, without_timezone: bool = True) -> pd.DataFrame:
@@ -279,5 +280,6 @@ class Schedule:
         # Parse date from since or till columns.
         # Parse time from min(since) and max(till) columns.
         # Fetch station with the given station id.
-        assert table, columns is not None
+        if not table:
+            raise AssertionError(columns is not None)
         return NotImplemented
