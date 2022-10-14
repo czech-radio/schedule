@@ -11,7 +11,7 @@ from cro.schedule import Client
 from cro.schedule._shared import flatten as _flatten
 
 
-__all__ = tuple(["main"])
+__all__ = ("main",)
 
 
 def main() -> None:
@@ -73,7 +73,7 @@ def main() -> None:
 
         match period:
             case "D":
-                schedules = tuple([client.get_day_schedule(date=date)])
+                schedules = (client.get_day_schedule(date=date),)
             case "W":
                 schedules = client.get_week_schedule(date=date)
             case "M":

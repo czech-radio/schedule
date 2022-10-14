@@ -10,7 +10,7 @@ from cro.schedule._domain import (
 )
 
 
-__all__ = tuple(["Client", "Station", "Show", "Schedule"])
+__all__ = ("Client", "Station", "Show", "Schedule")
 
 
 __version__ = "1.2.0"

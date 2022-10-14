@@ -2,7 +2,7 @@ import datetime as dt
 from typing import Optional, Union, Any
 
 
-__all__ = tuple(["convert_date", "convert_time", "flatten"])
+__all__ = ("convert_date", "convert_time", "flatten")
 
 
 def convert_date(date: Union[dt.date, str], date_format="%Y-%m-%d") -> dt.date:

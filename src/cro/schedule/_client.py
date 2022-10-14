@@ -15,7 +15,7 @@ from cro.schedule._domain import Schedule, Kind, Person, Show, Station
 from cro.schedule._shared import convert_date
 
 
-__all__ = tuple(["Client"])
+__all__ = ("Client",)
 
 
 def is_time_between(begin_time: dt.time, end_time: dt.time, current_time: dt.time):
@@ -39,7 +39,7 @@ class Client:
     """
 
     #: The service REST API V2 base URL.
-    __url__: str = f"https://api.rozhlas.cz/data/v2"
+    __url__: str = "https://api.rozhlas.cz/data/v2"
 
     #: The date format as data string input.
     __date_format__: str = "%Y-%m-%d"
