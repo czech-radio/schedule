@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-
 """
 Contains tests for REST client.
 
@@ -21,10 +19,16 @@ def client():
     return _client
 
 
+# Retrieve station(s)
+
+
 @pytest.mark.client
 def test_that_stations_are_retrieved(client):
     result = client.get_stations()
     assert len(result) > 0
+
+
+# Retrieve schedule(s)
 
 
 @pytest.mark.client
@@ -41,34 +45,37 @@ def test_that_day_schedule_works_with_date_isoformat(client):
 
 @pytest.mark.client
 def test_that_week_schedule_are_retrieved(client):
-    result = client.get_week_schedule(date=date(2022, 1, 1))
+    result = client.get_week_schedules(date=date(2022, 1, 1))
     assert len(result) == 7
 
 
 @pytest.mark.client
 def test_that_week_schedules_are_sorted(client):
-    result = client.get_week_schedule(date=date(2022, 1, 3))
+    result = client.get_week_schedules(date=date(2022, 1, 3))
     for _ in result:
         assert result[0] <= result[-1]
 
 
 @pytest.mark.client
 def test_that_any_schedule_are_retrieved(client):
-    result = client.get_any_schedule(since=date(2022, 1, 1), till=date(2022, 1, 15))
+    result = client.get_any_schedules(since=date(2022, 1, 1), till=date(2022, 1, 15))
     assert len(result) == 15
 
 
 @pytest.mark.client
 def test_that_month_schedules_are_retrieved(client):
-    result = client.get_month_schedule(date=date(2022, 1, 1))
+    result = client.get_month_schedules(date=date(2022, 1, 1))
     assert len(result) == 31
 
 
 @pytest.mark.client
 def test_that_month_schedules_are_sorted(client):
-    result = client.get_month_schedule(date=date(2022, 1, 1))
+    result = client.get_month_schedules(date=date(2022, 1, 1))
     for _ in result:
         assert result[0] <= result[-1]
+
+
+# Make subset
 
 
 @pytest.mark.client
