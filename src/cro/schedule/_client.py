@@ -12,22 +12,10 @@ from charset_normalizer import logging
 from requests import Session, get
 
 from cro.schedule._domain import Schedule, Kind, Person, Show, Station
-from cro.schedule._shared import convert_date
+from cro.schedule._shared import convert_date, is_time_between
 
 
 __all__ = ("Client",)
-
-
-def is_time_between(begin_time: dt.time, end_time: dt.time, current_time: dt.time):
-    """
-    Determine if the current time is within a specified range.
-
-    .. see: https://stackoverflow.com/a/10048290
-    """
-    if begin_time < end_time:
-        return begin_time <= current_time <= end_time
-    else:  # crosses midnight
-        return (current_time >= begin_time) or (current_time <= end_time)
 
 
 StationID = str
@@ -83,14 +71,11 @@ class Client:
         return self._station
 
     @station.setter
-    def station(self, sid: StationID) -> None:
+    def station(self, station: Station) -> None:
         """
         Set the current station.
         """
-        try:  # Fetch the station and pick the right one.
-            self._station = type(self).get_station(sid.lower())
-        except IndexError:
-            raise ValueError(f"The station with id `{sid}` does not exist.")
+        self._station = station
 
     @classmethod
     def make(cls) -> Client:
@@ -137,7 +122,7 @@ class Client:
         except IndexError:
             raise ValueError(f"The station with id `{id}` does not exist.")
 
-    def get_any_schedule(
+    def get_any_schedules(
         self,
         since: dt.date | str,
         till: dt.date | str = dt.datetime.now(),
@@ -225,7 +210,7 @@ class Client:
 
         return Schedule(date=date, time=time, station=self.station, shows=tuple(shows))
 
-    def get_week_schedule(
+    def get_week_schedules(
         self,
         date: dt.date | str = dt.datetime.now(),
         time: tuple[dt.time, dt.time] = (dt.time.min, dt.time.max),
@@ -254,7 +239,7 @@ class Client:
 
         return tuple(sorted(self.get_day_schedule(date, time) for date in dates))
 
-    def get_month_schedule(
+    def get_month_schedules(
         self,
         date: dt.date | str = dt.datetime.now(),
         time: tuple[dt.time, dt.time] = (dt.time.min, dt.time.max),
@@ -280,11 +265,3 @@ class Client:
         dates = (dt.date(date.year, date.month, day) for day in range(1, nb_days + 1))
 
         return tuple(sorted(self.get_day_schedule(date, time) for date in dates))
-
-    def get_playlist(self, date: dt.date | str = dt.datetime.now()) -> object:
-        """
-        Fetch the playlist for Radio Wave station.
-        """
-        if date is None:
-            raise AssertionError
-        return NotImplemented

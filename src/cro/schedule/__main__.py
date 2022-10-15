@@ -8,6 +8,7 @@ import sys
 import pandas as pd
 
 from cro.schedule import Client
+from cro.schedule import Schedule
 from cro.schedule._shared import flatten as _flatten
 
 
@@ -44,11 +45,11 @@ def main() -> None:
 
     date: str = options.date
     period: str = options.period.upper()
-    stations: list[str] = [s.strip() for s in options.stations.split(",")]
+    station_ids: list[str] = [s.strip() for s in options.stations.split(",")]
     output = options.output
     format = options.format
 
-    # Choose default output format.
+    # Pick the output format.
     match format:
         case None:
             format = "csv"
@@ -62,29 +63,38 @@ def main() -> None:
     # The main procedures.
     # #########################################################################
     client = Client()
-
-    schedule_dfs: list[pd.DataFrame] = []
+    schedule_dfs: list[list[pd.DataFrame]] = []
 
     # -------------------------------------------------------------------------
     # Fetch the schedules.
     # -------------------------------------------------------------------------
-    for station in stations:
-        client.station = station.lower()
-
+    for station_id in station_ids:
+        # Pick the station.
+        try:
+            client.station = client.get_station(station_id.lower())
+        except:
+            raise ValueError(
+                f"The station with id `{station_id}` could not be fetched."
+            )
+        # Pick the period.
         match period:
             case "D":
-                schedules = (client.get_day_schedule(date=date),)
+                schedules = list((client.get_day_schedule(date=date),))
             case "W":
-                schedules = client.get_week_schedule(date=date)
+                schedules = list(client.get_week_schedules(date=date))
             case "M":
-                schedules = client.get_month_schedule(date=date)
+                schedules = list(client.get_month_schedules(date=date))
             case _:
                 raise ValueError(f"Unknown period {period}!")
 
         schedule_dfs.append([schedule.to_table() for schedule in schedules])
 
     print(
-        f"Fetched {len(schedules)} schedules for stations {[station.title() for station in stations]} and dates {[schedule.date.isoformat() for schedule in schedules]}."
+        (
+            f"Fetched {len(schedules)} schedules for stations "
+            f"{[station.title() for station in station_ids]} and "
+            f"dates {[schedule.date.isoformat() for schedule in schedules]}."
+        )
     )
 
     # -------------------------------------------------------------------------

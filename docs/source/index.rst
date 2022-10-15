@@ -7,10 +7,10 @@ Welcome to cro.schedule's documentation!
 ========================================
 
 .. toctree::
-   :maxdepth: 2
-   :caption: Contents:
+  :maxdepth: 2
+  :caption: Contents:
 
-   includeme
+  .. include:: ../../README.md
 
 Indices and tables
 ==================
