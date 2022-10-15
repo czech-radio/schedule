@@ -39,3 +39,15 @@ def flatten(lst: list[Any]) -> list[Any]:
     :return: The flat list.
     """
     return [item for sublst in lst for item in sublst]
+
+
+def is_time_between(begin_time: dt.time, end_time: dt.time, current_time: dt.time):
+    """
+    Determine if the current time is within a specified range.
+
+    .. see: https://stackoverflow.com/a/10048290
+    """
+    if begin_time < end_time:
+        return begin_time <= current_time <= end_time
+    else:  # crosses midnight
+        return (current_time >= begin_time) or (current_time <= end_time)

@@ -12,22 +12,10 @@ from charset_normalizer import logging
 from requests import Session, get
 
 from cro.schedule._domain import Schedule, Kind, Person, Show, Station
-from cro.schedule._shared import convert_date
+from cro.schedule._shared import convert_date, is_time_between
 
 
 __all__ = ("Client",)
-
-
-def is_time_between(begin_time: dt.time, end_time: dt.time, current_time: dt.time) -> bool:
-    """
-    Determine if the current time is within a specified range.
-
-    .. see: https://stackoverflow.com/a/10048290
-    """
-    if begin_time < end_time:
-        return begin_time <= current_time <= end_time
-    else:  # crosses midnight
-        return (current_time >= begin_time) or (current_time <= end_time)
 
 
 StationID = str
@@ -280,11 +268,3 @@ class Client:
         dates = (dt.date(date.year, date.month, day) for day in range(1, nb_days + 1))
 
         return tuple(sorted(self.get_day_schedule(date, time) for date in dates))
-
-    def get_playlist(self, date: dt.date | str = dt.datetime.now()) -> object:
-        """
-        Fetch the playlist for Radio Wave station.
-        """
-        if date is None:
-            raise AssertionError
-        return NotImplemented

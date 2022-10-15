@@ -215,14 +215,6 @@ class Schedule:
             )
         )
 
-    def to_chart(self, shedule: Schedule) -> dict:
-        """
-        Return the multiple schedules as a vega chart.
-        """
-        if shedule is None:
-            raise AssertionError
-        return NotImplemented
-
     def to_table(self, without_timezone: bool = True) -> pd.DataFrame:
         """
         Return the schedule data as table.
