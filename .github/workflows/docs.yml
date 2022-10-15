@@ -1,12 +1,15 @@
 name: docs
 
-on: push
+on:  [push]
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
+    - name: Install dependencies
+      run: |
+        pip install myst-parser sphinx_rtd_theme
     - name: Build HTML
       uses: ammaraskar/sphinx-action@master
     - name: Upload artifacts
