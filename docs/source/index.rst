@@ -7,11 +7,30 @@ Welcome to cro.schedule's documentation!
 ========================================
 
 .. toctree::
-  :maxdepth: 2
-  :caption: Contents:
+    :maxdepth: 2
+    :caption: Features:
 
-  usage
-  contributing
+    usage
+
+
+.. toctree::
+    :maxdepth:
+    :hidden:
+    :caption: Examples:
+
+    /notebooks/Recipe_Get_Schedule_Any
+    /notebooks/Recipe_Get_Schedule_Day
+    /notebooks/Recipe_Get_Schedule_Month
+    /notebooks/Recipe_Get_Schedule_Week
+    /notebooks/Recipe_Get_Schedule_Year
+    /notebooks/Recipe_Get_Show_Filtering
+    /notebooks/Recipe_Get_Stations
+
+
+.. toctree::
+    :maxdepth: 2
+    :caption: Development
+
 
 Indices and tables
 ==================
