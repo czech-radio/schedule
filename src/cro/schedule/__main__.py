@@ -8,7 +8,6 @@ import sys
 import pandas as pd
 
 from cro.schedule import Client
-from cro.schedule import Schedule
 from cro.schedule._shared import flatten as _flatten
 
 
