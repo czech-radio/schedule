@@ -3,11 +3,11 @@ name: docs
 # Execute this workflow automatically when we push to main branch.
 on:
   push:
-    branches: [ main ]
+    branches: [main]
 
 jobs:
 
-  build_docs_job:
+  build-documentation:
     runs-on: ubuntu-latest
     env:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
