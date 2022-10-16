@@ -1,4 +1,4 @@
-# 𝖈𝖗𝖔-𝖘𝖈𝖍𝖊𝖉𝖚𝖑𝖊
+# 𝖘𝖈𝖍𝖊𝖉𝖚𝖑𝖊
 
 [RELEASES](https://github.com/czech-radio/cro-schedule/releases/) | [WEBSITE](https://czech-radio.github.io/cro-schedule/)
 
