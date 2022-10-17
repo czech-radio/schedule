@@ -24,7 +24,7 @@ jobs:
       - name: Install Sphinx dependencies
         run: |
           python -m pip install -r docs/requirements.txt
-          apt-get install pandoc
+          sudo apt-get install pandoc
       - name: Build the documentation.
         run: |
           make -C docs clean
