@@ -33,6 +33,8 @@ pip install git+https://github.com/czech-radio/cro-schedule.git
 
 Data are available many years to the past and circa 14 days to the future.
 
+### Use as a library
+
 - [x] Get the available stations [[recipe](https://github.com/czech-radio/cro-schedule/blob/main/docs/source/notebooks/Recipe_Get_Stations.ipynb)].
 - [ ] Get the schedule for all stations and given day [recipe].
 - [x] Get the schedule for the given station and day [[recipe](https://github.com/czech-radio/cro-schedule/blob/main/docs/source/notebooks/Recipe_Get_Schedule_Day.ipynb)].
@@ -44,7 +46,7 @@ Data are available many years to the past and circa 14 days to the future.
 
 See more examples in `docs/notebooks` and data outputs in `data` directory.
 
-### Use as command line program
+### Use as a program
 
 #### Get the day schedule
 
