@@ -23,8 +23,8 @@ play with that.*
 
 Star us on GitHub — it motivates us!
 
-Install
--------
+Installation
+------------
 
 **Prerequisites**
 
