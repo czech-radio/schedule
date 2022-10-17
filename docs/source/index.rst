@@ -3,20 +3,18 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-Welcome to cro.schedule's documentation!
-========================================
 
 .. toctree::
-    :maxdepth: 2
-    :caption: Features:
-
-    usage
-
-
-.. toctree::
-    :maxdepth:
     :hidden:
-    :caption: Examples:
+    :maxdepth: 2
+    :caption: Overview
+
+    Overview
+
+.. toctree::
+    :hidden:
+    :maxdepth: 2
+    :caption: Examples
 
     /notebooks/Recipe_Get_Schedule_Any
     /notebooks/Recipe_Get_Schedule_Day
@@ -28,8 +26,12 @@ Welcome to cro.schedule's documentation!
 
 
 .. toctree::
+    :hidden:
     :maxdepth: 2
     :caption: Development
+
+    Contributing.md
+    autoapi/index
 
 
 Indices and tables

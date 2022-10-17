@@ -30,6 +30,13 @@ TillTime = dt.time
 class Station:
     """
     The Czech Radio station.
+
+    :param id: The station id (short name).
+    :param name: The station (long) name.
+    :param domain: The station domain.
+    :param slogan: The station slogan.
+    :param description: The station description.
+    :param services: The station services.
     """
 
     id: str  # pylint: disable=C0103
