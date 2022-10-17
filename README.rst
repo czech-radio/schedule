@@ -1,10 +1,11 @@
+======
 𝖘𝖈𝖍𝖊𝖉𝖚𝖑𝖊
-========
+======
 
 `RELEASES <https://github.com/czech-radio/cro-schedule/releases/>`__ \|
 `WEBSITE <https://czech-radio.github.io/cro-schedule/>`__
 
-|build| |version| |language| |Codacy Badge|
+|build| |version| |language| |Codacy Badge| |DeepSource|
 
 **The library and program to work with Czech Radio schedules.**
 
@@ -20,7 +21,7 @@ play with that.*
    than ad-hoc calls to Requests. We want a client-side API for our
    apps. – Michael Kennedy (@mkennedy)
 
-:star: Star us on GitHub — it motivates us!
+Star us on GitHub — it motivates us!
 
 Install
 -------
@@ -43,20 +44,20 @@ Features & Usage
 Data are available many years to the past and circa 14 days to the
 future.
 
--  ☒ Get the available stations
+-  Get the available stations
    [`recipe <https://github.com/czech-radio/cro-schedule/blob/main/docs/source/notebooks/Recipe_Get_Stations.ipynb>`__].
--  ☐ Get the schedule for all stations and given day [recipe].
--  ☒ Get the schedule for the given station and day
+-  Get the schedule for all stations and given day [recipe].
+-  Get the schedule for the given station and day
    [`recipe <https://github.com/czech-radio/cro-schedule/blob/main/docs/source/notebooks/Recipe_Get_Schedule_Day.ipynb>`__].
--  ☒ Get the schedule for the given station and week
+-  Get the schedule for the given station and week
    [`recipe <https://github.com/czech-radio/cro-schedule/blob/main/docs/source/notebooks/Recipe_Get_Schedule_Week.ipynb>`__].
--  ☒ Get the schedule for the given station and month
+-  Get the schedule for the given station and month
    [`recipe <https://github.com/czech-radio/cro-schedule/blob/main/docs/source/notebooks/Recipe_Get_Schedule_Month.ipynb>`__].
--  ☒ Get the schedule for the given station and year
+-  Get the schedule for the given station and year
    [`recipe <https://github.com/czech-radio/cro-schedule/blob/main/docs/source/notebooks/Recipe_Get_Schedule_Year.ipynb>`__].
--  ☒ Get the schedule for the given station, any period and time
+-  Get the schedule for the given station, any period and time
    [`recipe <https://github.com/czech-radio/cro-schedule/blob/main/docs/source/notebooks/Recipe_Get_Schedule_Any.ipynb>`__].
--  ☒ Convert schedule to ``pandas.DataFrame`` with
+-  Convert schedule to ``pandas.DataFrame`` with
    ``Schedule::to_table()`` method.
 
 See more examples in ``docs/notebooks`` and data outputs in ``data``
@@ -132,3 +133,5 @@ References
 .. |language| image:: https://img.shields.io/badge/language-Python-blue.svg
 .. |Codacy Badge| image:: https://app.codacy.com/project/badge/Grade/b68c6f5c2e204ac2b56581625dd336d1
    :target: https://www.codacy.com/gh/czech-radio/cro-schedule-sdk/dashboard?utm_source=github.com&utm_medium=referral&utm_content=czech-radio/cro-schedule-sdk&utm_campaign=Badge_Grade
+.. |DeepSource| image:: https://deepsource.io/gh/groundf/schedule.svg/?label=active+issues&show_trend=true&token=_guN3-nr8w21gI-yCWjF-Bfy
+   :target: https://deepsource.io/gh/groundf/schedule/?ref=repository-badge

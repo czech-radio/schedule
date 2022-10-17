@@ -1,5 +1,9 @@
 sphinx
-nbsphinx
 myst-parser
 sphinx-autoapi
 sphinx-rtd-theme
+# nbsphinx
+nbsphinx
+pandoc
+IPython
+ipykernel
