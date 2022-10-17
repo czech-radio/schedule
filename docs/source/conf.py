@@ -12,7 +12,8 @@
 #
 import os
 import sys
-sys.path.insert(0, os.path.abspath('..'))
+
+sys.path.insert(0, os.path.abspath(".."))
 
 
 # -- Project information -----------------------------------------------------
@@ -29,13 +30,13 @@ author = "David Landa"
 # ones.
 extensions = [
     "nbsphinx",
-    'myst_parser',
+    "myst_parser",
     "sphinx_rtd_theme",
     "sphinx.ext.viewcode",
     "autoapi.extension",
 ]
 
-autoapi_dirs = ['../../src']
+autoapi_dirs = ["../../src"]
 
 # source_suffix = ['.rst', '.md']
 
