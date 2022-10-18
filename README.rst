@@ -1,5 +1,5 @@
 ========
-schedule
+Schedule
 ========
 
 `RELEASES <https://github.com/czech-radio/cro-schedule/releases/>`__ \|
