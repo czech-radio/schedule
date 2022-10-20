@@ -2,8 +2,8 @@
 Schedule
 ========
 
-`RELEASES <https://github.com/czech-radio/cro-schedule/releases/>`__ \|
-`WEBSITE <https://czech-radio.github.io/cro-schedule/>`__
+`RELEASES <https://github.com/czech-radio/schedule/releases/>`__ \|
+`WEBSITE <https://czech-radio.github.io/schedule/>`__
 
 |build| |version| |language| |Codacy Badge| |DeepSource|
 
