@@ -16,8 +16,6 @@ information about shows and you can easily work with the domain model in
 your programs. At least you can export data as ``pandas.Dataframe`` and
 play with that.*
 
-Star us on GitHub — it motivates us!
-
 Installation
 ------------
 
