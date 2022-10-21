@@ -16,11 +16,6 @@ information about shows and you can easily work with the domain model in
 your programs. At least you can export data as ``pandas.Dataframe`` and
 play with that.*
 
-   Of course our first reaction when consuming HTTP resources in Python
-   is to reach for Requests. But for structured APIs, we often want more
-   than ad-hoc calls to Requests. We want a client-side API for our
-   apps. – Michael Kennedy (@mkennedy)
-
 Star us on GitHub — it motivates us!
 
 Installation
