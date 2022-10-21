@@ -21,11 +21,11 @@ Installation
 
 **Prerequisites**
 
--  We assume that you use at least Python 3.10.
--  We assume that you use the virtual environment.
+-  We assume that you have `Git <https://git-scm.com/>`__ installed. 
+-  We assume that you use at least `Python <https://www.python.org/downloads/>`__ 3.10.
+-  We assume that you use the `virtual environment <https://docs.python.org/3/library/venv.html>`__.
 
-Install the package’s latest version from the GitHub repository (you
-need a `Git <https://git-scm.com/>`__ installed).
+Install the package’s latest version from the GitHub repository 
 
 ::
 
