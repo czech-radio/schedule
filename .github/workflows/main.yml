@@ -5,10 +5,8 @@ on:
         branches: [main]
     pull_request:
         branches: [main]
-    workflow_dispatch:
-
 jobs:
-    build:
+    build-and-test-code:
         runs-on: ${{ matrix.os }}
         strategy:
             matrix:

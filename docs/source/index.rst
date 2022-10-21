@@ -3,14 +3,36 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-Welcome to cro.schedule's documentation!
-========================================
 
 .. toctree::
-  :maxdepth: 2
-  :caption: Contents:
+    :hidden:
+    :maxdepth: 2
+    :caption: Overview
 
-  .. include:: ../../README.md
+    Overview
+
+.. toctree::
+    :hidden:
+    :maxdepth: 2
+    :caption: Examples
+
+    /notebooks/Recipe_Get_Schedule_Any
+    /notebooks/Recipe_Get_Schedule_Day
+    /notebooks/Recipe_Get_Schedule_Month
+    /notebooks/Recipe_Get_Schedule_Week
+    /notebooks/Recipe_Get_Schedule_Year
+    /notebooks/Recipe_Get_Show_Filtering
+    /notebooks/Recipe_Get_Stations
+
+
+.. toctree::
+    :hidden:
+    :maxdepth: 2
+    :caption: Development
+
+    Contributing.md
+    autoapi/index
+
 
 Indices and tables
 ==================

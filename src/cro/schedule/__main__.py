@@ -78,7 +78,9 @@ def main() -> None:
         # Pick the period.
         match period:
             case "D":
-                schedules = list((client.get_day_schedule(date=date),))
+                schedules = [
+                    client.get_day_schedule(date=date),
+                ]
             case "W":
                 schedules = list(client.get_week_schedules(date=date))
             case "M":
