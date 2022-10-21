@@ -25,7 +25,7 @@ Installation
 -  We assume that you use at least `Python <https://www.python.org/downloads/>`__ 3.10.
 -  We assume that you use the `virtual environment <https://docs.python.org/3/library/venv.html>`__.
 
-Install the package’s latest version from the GitHub repository 
+Install the package's latest version from the GitHub repository 
 
 ::
 
