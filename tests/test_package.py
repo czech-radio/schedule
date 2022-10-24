@@ -2,8 +2,6 @@
 Test the project as a package e.g. check the version, style etc.
 """
 
-from asttokens import line_numbers
-
 from cro.schedule import __version__
 
 EXPECTED_PACKAGE_VERSION = "1.2.0"
