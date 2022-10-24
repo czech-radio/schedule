@@ -21,21 +21,20 @@ Installation
 
 **Prerequisites**
 
--  We assume that you have `Git <https://git-scm.com/>`__ installed. 
+-  We assume that you have `Git <https://git-scm.com/>`__ installed.
 -  We assume that you use at least `Python <https://www.python.org/downloads/>`__ 3.10.
 -  We assume that you use the `virtual environment <https://docs.python.org/3/library/venv.html>`__.
 
-Install the package's latest version from the GitHub repository 
+Install the package's latest version from the GitHub repository main branch.
 
-::
+.. code:: powershell
 
-   pip install git+https://github.com/czech-radio/cro-schedule.git
+   pip install git+https://github.com/czech-radio/schedule.git
 
 Features & Usage
 ----------------
 
-Data are available many years to the past and circa 14 days to the
-future.
+.. note:: Data are available many years to the past and circa 14 days to the future.
 
 Use as a library
 ~~~~~~~~~~~~~~~~
@@ -56,8 +55,7 @@ Use as a library
 -  Convert schedule to ``pandas.DataFrame`` with
    ``Schedule::to_table()`` method.
 
-See more examples in ``docs/notebooks`` and data outputs in ``data``
-directory.
+See more examples in ``docs/source/notebooks`` directory or in `online documentation <https://czech-radio.github.io/schedule/>`__
 
 Use as a program
 ~~~~~~~~~~~~~~~~
@@ -65,11 +63,11 @@ Use as a program
 Get the day schedule
 ^^^^^^^^^^^^^^^^^^^^
 
-::
+.. code:: powershell
 
    cro.schedule -p D -d 2022-02-01 -s plus,radiozurnal -o .
 
-::
+.. code:: powershell
 
    Fetched 1 schedules for stations ['Plus', 'Radiozurnal'] and dates ['2022-02-01'].
    Result saved to ./Schedule_D2022-02-01.xlsx
@@ -77,11 +75,11 @@ Get the day schedule
 Get the week schedule
 ^^^^^^^^^^^^^^^^^^^^^
 
-::
+.. code:: powershell
 
    cro.schedule --period W --date 2022-02-01 --stations plus,radiozurnal --output .
 
-::
+.. code:: powershell
 
    Fetched 7 schedules for stations ['Plus', 'Radiozurnal'] and dates ['2022-01-31', '2022-02-01', '2022-02-02', '2022-02-03', '2022-02-04', '2022-02-05', '2022-02-06'].
    Result saved to ./Schedule_W2022-02-01.xlsx
@@ -89,11 +87,11 @@ Get the week schedule
 Get the month schedule
 ^^^^^^^^^^^^^^^^^^^^^^
 
-::
+.. code:: powershell
 
    cro.schedule --period M --date 2022-02-01 --stations plus,radiozurnal --output .
 
-::
+.. code:: powershell
 
    Fetched 28 schedules for stations ['Plus', 'Radiozurnal'] and dates ['2022-02-01', '2022-02-02', '2022-02-03', '2022-02-04', '2022-02-05', '2022-02-06', '2022-02-07', '2022-02-08', '2022-02-09', '2022-02-10', '2022-02-11', '2022-02-12', '2022-02-13', '2022-02-14', '2022-02-15', '2022-02-16', '2022-02-17', '2022-02-18', '2022-02-19', '2022-02-20', '2022-02-21', '2022-02-22', '2022-02-23', '2022-02-24', '2022-02-25', '2022-02-26', '2022-02-27', '2022-02-28'].
    Result saved to ./Schedule_M2022-02-01.xlsx
