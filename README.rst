@@ -115,12 +115,12 @@ The resulting Excel/CSV table file looks like this:
 Contribution
 ------------
 
-See the document `here </.github\CONTRIBUTING.md>`__.
+See the document `here </.github/CONTRIBUTING.md>`__.
 
 Documentation
 -------------
 
-The complete documentation soon…
+The complete documentation `here <https://czech-radio.github.io/schedule/>`__
 
 References
 ----------
