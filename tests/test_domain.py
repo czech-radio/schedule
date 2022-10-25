@@ -6,8 +6,8 @@ import datetime as dt
 
 import pytest
 
-from cro.schedule._shared import convert_time
 from cro.schedule import Schedule, Show, Station
+from cro.schedule._shared import convert_time
 
 
 @pytest.mark.domain

@@ -1,6 +1,5 @@
 import datetime as dt
-from typing import Optional, Union, Any
-
+from typing import Any, Optional, Union
 
 __all__ = ("convert_date", "convert_time", "flatten")
 
