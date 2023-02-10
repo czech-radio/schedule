@@ -127,5 +127,4 @@ References
 
 -  `Czech Radio portal <https://portal.rozhlas.cz/>`__
 -  `Czech Radio open data <https://data.irozhlas.cz/opendata/>`__
--  `Czech Radio on
-   Wikipedia <https://cs.wikipedia.org/wiki/%C4%8Cesk%C3%BD_rozhlas>`__
+-  `Czech Radio on Wikipedia <https://cs.wikipedia.org/wiki/%C4%8Cesk%C3%BD_rozhlas>`__
