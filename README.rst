@@ -16,7 +16,7 @@ Schedule
 .. |DeepSource| image:: https://deepsource.io/gh/groundf/schedule.svg/?label=active+issues&show_trend=true&token=_guN3-nr8w21gI-yCWjF-Bfy
    :target: https://deepsource.io/gh/groundf/schedule/?ref=repository-badge
 
-**The library and program to work with Czech Radio schedules.**
+**The library and console application to work with Czech Radio schedules.**
 
 *The library contains a client and domain model to work with Czech Radio
 schedules. You will be able to download a schedule for the specified
