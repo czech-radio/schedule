@@ -15,13 +15,14 @@ if "%1" == "test" (
 
 if "%1" == "lint" (
 	black .
-	isort .
+	isort . --profile black
 	exit /b 1
 )
 
 if "%1" == "check" (
-    black .
-    isort .
+    black . --check  --exclude "(docs/|build/|dist/|\.git/|\.mypy_cache/|\.tox/|\.venv/\.asv/|env|\.eggs)"
+    isort . --check --profile black
+	flake8 src/cro --count --select=E9,F63,F7,F82 --show-source --statistics
 	pytest
 	exit /b 1
 )

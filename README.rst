@@ -122,6 +122,10 @@ Documentation
 
 The complete documentation `here <https://czech-radio.github.io/schedule/>`__
 
+Libraries with the mising type hints so `mypy`` will complain:
+- pandas
+- requests 
+
 References
 ----------
 
