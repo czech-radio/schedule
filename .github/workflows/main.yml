@@ -38,7 +38,7 @@ jobs:
 
             - name: Check import order with 'isort'
               run: |
-                  isort . --check
+                  isort . --check --profile black
 
             - name: Lint the code
               run: |
