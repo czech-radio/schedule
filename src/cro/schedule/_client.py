@@ -14,7 +14,6 @@ from requests import Session, get
 from cro.schedule._domain import Kind, Person, Schedule, Show, Station
 from cro.schedule._shared import convert_date, is_time_between
 
-
 StationID = str
 
 
