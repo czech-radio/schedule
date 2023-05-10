@@ -5,7 +5,7 @@ Schedule
 `RELEASES <https://github.com/czech-radio/schedule/releases/>`__ \|
 `WEBSITE <https://czech-radio.github.io/schedule/>`__
 
-|build| |version| |language| |Codacy| |DeepSource|
+|build| |version| |language| |Codacy| |spelling|
 
 .. |build| image:: https://github.com/czech-radio/cro.schedule/actions/workflows/main.yml/badge.svg
    :target: https://github.com/czech-radio/cro.schedule/actions/workflows/main.yml
@@ -13,8 +13,8 @@ Schedule
 .. |language| image:: https://img.shields.io/badge/language-Python-blue.svg
 .. |Codacy| image:: https://app.codacy.com/project/badge/Grade/b68c6f5c2e204ac2b56581625dd336d1
    :target: https://www.codacy.com/gh/czech-radio/cro-schedule-sdk/dashboard?utm_source=github.com&utm_medium=referral&utm_content=czech-radio/cro-schedule-sdk&utm_campaign=Badge_Grade
-.. |DeepSource| image:: https://deepsource.io/gh/groundf/schedule.svg/?label=active+issues&show_trend=true&token=_guN3-nr8w21gI-yCWjF-Bfy
-   :target: https://deepsource.io/gh/groundf/schedule/?ref=repository-badge
+.. |spelling| image:: https://github.com/czech-radio/cro.schedule/actions/workflows/spell-check.yml/badge.svg
+   :target: https://github.com/czech-radio/cro.schedule/actions/workflows/spell-check.yml
 
 **The library and console application to work with Czech Radio schedules.**
 
