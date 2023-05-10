@@ -1,0 +1,137 @@
+:py:mod:`schedule._client`
+==========================
+
+.. py:module:: schedule._client
+
+.. autoapi-nested-parse::
+
+   Module contains HTTP REST API client.
+
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   schedule._client.Client
+
+
+
+
+Attributes
+~~~~~~~~~~
+
+.. autoapisummary::
+
+   schedule._client.StationID
+
+
+.. py:data:: StationID
+
+   
+
+.. py:class:: Client(sid: StationID | None = None)
+
+   The Czech Radio client to fetch schedules and stations metadata.
+
+   .. py:property:: station
+      :type: Station | None
+
+      Get the current station.
+
+
+   .. py:attribute:: __url__
+      :type: str
+      :value: 'https://api.rozhlas.cz/data/v2'
+
+      
+
+   .. py:attribute:: __date_format__
+      :type: str
+      :value: '%Y-%m-%d'
+
+      
+
+   .. py:method:: __enter__() -> Client
+
+      Enter the context.
+
+
+   .. py:method:: __exit__(*args) -> None
+
+      Exit the context.
+
+
+   .. py:method:: make() -> Client
+      :classmethod:
+
+      Make the client instance (factory method).
+
+
+   .. py:method:: get_stations() -> tuple[cro.schedule._domain.Station, Ellipsis]
+      :classmethod:
+
+      Fetch the available stations.
+
+      Examples:
+          >>> Client.get_stations()
+
+
+   .. py:method:: get_station(sid: str) -> Station | None
+      :classmethod:
+
+      Fetch the available station with the given station id (`sid`).
+
+      :param sid: The station id.
+      :return: The sequence of stations.
+
+
+   .. py:method:: get_any_schedules(since: dt.date | str, till: dt.date | str = dt.datetime.now(), time: tuple[datetime.time, datetime.time] = (dt.time.min, dt.time.max)) -> tuple[cro.schedule._domain.Schedule, Ellipsis]
+
+      Fetch the avalaible schedules for the given date range.
+
+
+   .. py:method:: get_day_schedule(date: dt.date | str = dt.datetime.now(), time: tuple[datetime.time, datetime.time] = (dt.time.min, dt.time.max)) -> cro.schedule._domain.Schedule
+
+      Fetch the availaible schedule for the given date.
+
+      :param date: The schedule date.
+      :param time: The schedule time range (since, till).
+      :return: The schedule for the given day.
+
+      Examples:
+          >>> import datetime as dt
+          >>> get_day_schedule(date = dt.datetime.now())
+
+
+   .. py:method:: get_week_schedules(date: dt.date | str = dt.datetime.now(), time: tuple[datetime.time, datetime.time] = (dt.time.min, dt.time.max)) -> tuple[cro.schedule._domain.Schedule, Ellipsis]
+
+      Fetch the availaible schedules for the given week.
+
+      :param date: The schedule week date (any).
+      :param time: The schedule time range (since, till).
+      :return The sequence of schedules for the given week sorted by date.
+
+      Examples:
+          >>> import datetime as dt
+          >>> get_week_schedule(date = dt.datetime.now())
+
+
+   .. py:method:: get_month_schedules(date: dt.date | str = dt.datetime.now(), time: tuple[datetime.time, datetime.time] = (dt.time.min, dt.time.max)) -> tuple[cro.schedule._domain.Schedule, Ellipsis]
+
+      Fetch the availaible schedules for the given month.
+
+      :param date: The schedule month date (any).
+      :param time: The schedule time range (since, till).
+      :return The sequence of schedules for the given week sorted by date.
+
+      Examples:
+          >>> import datetime as dt
+          >>> get_month_schedule(date = dt.datetime.now())
+
+
+

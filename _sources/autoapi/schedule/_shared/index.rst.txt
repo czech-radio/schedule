@@ -1,0 +1,47 @@
+:py:mod:`schedule._shared`
+==========================
+
+.. py:module:: schedule._shared
+
+
+Module Contents
+---------------
+
+
+Functions
+~~~~~~~~~
+
+.. autoapisummary::
+
+   schedule._shared.convert_date
+   schedule._shared.convert_time
+   schedule._shared.flatten
+
+
+
+.. py:function:: convert_date(date: Union[datetime.date, str], date_format='%Y-%m-%d') -> datetime.date
+
+   Convert date from text with the given format to date object.
+
+   :param: The date object or string to convert.
+   :return: The formated date.
+   :raises: ValuError: when given format is wrong.
+
+
+.. py:function:: convert_time(time: Union[datetime.time, str], time_format='%H:%M:%S') -> datetime.time
+
+   Convert time from text with the given format to date object.
+
+   :param time: The time object or string to convert.
+   :return: The formated time.
+   :raises: ValuError: when given format is wrong.
+
+
+.. py:function:: flatten(lst: list[Any]) -> list[Any]
+
+   The helper to flatten a list of lists.
+
+   :param lst: The list to flatten.
+   :return: The flat list.
+
+

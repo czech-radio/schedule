@@ -1,0 +1,27 @@
+:py:mod:`schedule.__main__`
+===========================
+
+.. py:module:: schedule.__main__
+
+.. autoapi-nested-parse::
+
+   The command line interface to download the schedules.
+
+
+
+Module Contents
+---------------
+
+
+Functions
+~~~~~~~~~
+
+.. autoapisummary::
+
+   schedule.__main__.main
+
+
+
+.. py:function:: main() -> None
+
+

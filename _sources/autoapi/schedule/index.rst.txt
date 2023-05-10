@@ -1,0 +1,23 @@
+:py:mod:`schedule`
+==================
+
+.. py:module:: schedule
+
+.. autoapi-nested-parse::
+
+   The client and domain model to work with schedule, stations and shows.
+
+
+
+Submodules
+----------
+.. toctree::
+   :titlesonly:
+   :maxdepth: 1
+
+   __main__/index.rst
+   _client/index.rst
+   _domain/index.rst
+   _shared/index.rst
+
+

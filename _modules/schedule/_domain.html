@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>schedule._domain &mdash; cro.schedule  documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/graphviz.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/sphinx_highlight.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            cro.schedule
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Overview</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../Overview.html">Schedule</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Examples</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../notebooks/Recipe_Get_Schedule_Any.html">Recipe: Get schedules for a given period and given station</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../notebooks/Recipe_Get_Schedule_Day.html">Recipe: Get the schedule for current day and given station</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../notebooks/Recipe_Get_Schedule_Month.html">Recipe: Get schedules for a given month and given station</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../notebooks/Recipe_Get_Schedule_Week.html">Recipe: Get schedules for a given week and given station</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../notebooks/Recipe_Get_Schedule_Year.html">Recipe: Get schedules for a whole year</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../notebooks/Recipe_Get_Show_Filtering.html">Recipe: Get Shows with specified attribute</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../notebooks/Recipe_Get_Stations.html">Recipe: Get the available stations</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Development</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../autoapi/index.html">API Reference</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">cro.schedule</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">schedule._domain</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for schedule._domain</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">This module contains domain model.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">annotations</span>
+
+<span class="kn">import</span> <span class="nn">datetime</span> <span class="k">as</span> <span class="nn">dt</span>
+<span class="kn">from</span> <span class="nn">dataclasses</span> <span class="kn">import</span> <span class="n">dataclass</span><span class="p">,</span> <span class="n">field</span>
+<span class="kn">from</span> <span class="nn">enum</span> <span class="kn">import</span> <span class="n">Enum</span>
+<span class="kn">from</span> <span class="nn">functools</span> <span class="kn">import</span> <span class="n">cached_property</span><span class="p">,</span> <span class="n">total_ordering</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">NewType</span><span class="p">,</span> <span class="n">Union</span>
+
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+
+<span class="kn">from</span> <span class="nn">cro.schedule._shared</span> <span class="kn">import</span> <span class="n">convert_time</span>
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;Schedule&quot;</span><span class="p">,</span> <span class="s2">&quot;Show&quot;</span><span class="p">,</span> <span class="s2">&quot;Station&quot;</span><span class="p">,</span> <span class="s2">&quot;Person&quot;</span><span class="p">)</span>
+
+
+<span class="n">URL</span> <span class="o">=</span> <span class="n">NewType</span><span class="p">(</span><span class="s2">&quot;URL&quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span>
+<span class="n">Title</span> <span class="o">=</span> <span class="nb">str</span>
+<span class="n">Code</span> <span class="o">=</span> <span class="nb">str</span>
+<span class="n">Name</span> <span class="o">=</span> <span class="nb">str</span>
+
+<span class="n">SinceTime</span> <span class="o">=</span> <span class="n">dt</span><span class="o">.</span><span class="n">time</span>
+<span class="n">TillTime</span> <span class="o">=</span> <span class="n">dt</span><span class="o">.</span><span class="n">time</span>
+
+
+<span class="nd">@dataclass</span><span class="p">(</span><span class="n">frozen</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<div class="viewcode-block" id="Station"><a class="viewcode-back" href="../../autoapi/schedule/_domain/index.html#schedule._domain.Station">[docs]</a><span class="k">class</span> <span class="nc">Station</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    The Czech Radio station.</span>
+
+<span class="sd">    :param id: The station id (short name).</span>
+<span class="sd">    :param name: The station (long) name.</span>
+<span class="sd">    :param domain: The station domain.</span>
+<span class="sd">    :param slogan: The station slogan.</span>
+<span class="sd">    :param description: The station description.</span>
+<span class="sd">    :param services: The station services.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="Station.id"><a class="viewcode-back" href="../../autoapi/schedule/_domain/index.html#schedule._domain.Station.id">[docs]</a>    <span class="nb">id</span><span class="p">:</span> <span class="nb">str</span>  <span class="c1"># pylint: disable=C0103</span></div>
+<div class="viewcode-block" id="Station.name"><a class="viewcode-back" href="../../autoapi/schedule/_domain/index.html#schedule._domain.Station.name">[docs]</a>    <span class="n">name</span><span class="p">:</span> <span class="n">Name</span></div>
+<div class="viewcode-block" id="Station.domain"><a class="viewcode-back" href="../../autoapi/schedule/_domain/index.html#schedule._domain.Station.domain">[docs]</a>    <span class="n">domain</span><span class="p">:</span> <span class="nb">str</span></div>
+<div class="viewcode-block" id="Station.slogan"><a class="viewcode-back" href="../../autoapi/schedule/_domain/index.html#schedule._domain.Station.slogan">[docs]</a>    <span class="n">slogan</span><span class="p">:</span> <span class="nb">str</span></div>
+<div class="viewcode-block" id="Station.description"><a class="viewcode-back" href="../../autoapi/schedule/_domain/index.html#schedule._domain.Station.description">[docs]</a>    <span class="n">description</span><span class="p">:</span> <span class="nb">str</span></div>
+<div class="viewcode-block" id="Station.services"><a class="viewcode-back" href="../../autoapi/schedule/_domain/index.html#schedule._domain.Station.services">[docs]</a>    <span class="n">services</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">URL</span><span class="p">]</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="nb">hash</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span></div></div>
+
+
+<span class="k">class</span> <span class="nc">KindName</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    The show kind name as defined by internal systems.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">ZPR</span><span class="p">:</span> <span class="nb">str</span>  <span class="c1"># Zprávy</span>
+    <span class="n">PUB</span><span class="p">:</span> <span class="nb">str</span>  <span class="c1"># Publicistika</span>
+    <span class="n">PDF</span><span class="p">:</span> <span class="nb">str</span>  <span class="c1"># Publicistika - Dokument/Feature</span>
+    <span class="n">PRO</span><span class="p">:</span> <span class="nb">str</span>  <span class="c1"># Literární pořady - Próza</span>
+    <span class="n">MAG</span><span class="p">:</span> <span class="nb">str</span>  <span class="c1"># Magazín zpravodajství, publicistiky a hudby</span>
+
+
+<span class="nd">@dataclass</span><span class="p">(</span><span class="n">frozen</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="k">class</span> <span class="nc">Kind</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    The kind of show as defined by internal systems.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="nb">id</span><span class="p">:</span> <span class="nb">int</span>  <span class="c1"># pylint: disable=C0103</span>
+    <span class="n">code</span><span class="p">:</span> <span class="n">Code</span>
+    <span class="n">name</span><span class="p">:</span> <span class="n">Name</span>  <span class="c1"># Better to use :code:`KindName` enumaration?</span>
+
+
+<span class="nd">@dataclass</span><span class="p">(</span><span class="n">frozen</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<div class="viewcode-block" id="Person"><a class="viewcode-back" href="../../autoapi/schedule/_domain/index.html#schedule._domain.Person">[docs]</a><span class="k">class</span> <span class="nc">Person</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    The person associated with show e.g. moderator or respondent.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="Person.id"><a class="viewcode-back" href="../../autoapi/schedule/_domain/index.html#schedule._domain.Person.id">[docs]</a>    <span class="nb">id</span><span class="p">:</span> <span class="nb">int</span>  <span class="c1"># pylint: disable=C0103</span></div>
+<div class="viewcode-block" id="Person.name"><a class="viewcode-back" href="../../autoapi/schedule/_domain/index.html#schedule._domain.Person.name">[docs]</a>    <span class="n">name</span><span class="p">:</span> <span class="n">Name</span></div></div>
+
+
+<span class="nd">@total_ordering</span>
+<span class="nd">@dataclass</span><span class="p">(</span><span class="n">frozen</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<div class="viewcode-block" id="Show"><a class="viewcode-back" href="../../autoapi/schedule/_domain/index.html#schedule._domain.Show">[docs]</a><span class="k">class</span> <span class="nc">Show</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    The Czech Radio show.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="Show.id"><a class="viewcode-back" href="../../autoapi/schedule/_domain/index.html#schedule._domain.Show.id">[docs]</a>    <span class="nb">id</span><span class="p">:</span> <span class="nb">int</span>  <span class="c1"># pylint: disable=C0103</span></div>
+<div class="viewcode-block" id="Show.kind"><a class="viewcode-back" href="../../autoapi/schedule/_domain/index.html#schedule._domain.Show.kind">[docs]</a>    <span class="n">kind</span><span class="p">:</span> <span class="n">Kind</span></div>
+<div class="viewcode-block" id="Show.title"><a class="viewcode-back" href="../../autoapi/schedule/_domain/index.html#schedule._domain.Show.title">[docs]</a>    <span class="n">title</span><span class="p">:</span> <span class="n">Title</span></div>
+<div class="viewcode-block" id="Show.station"><a class="viewcode-back" href="../../autoapi/schedule/_domain/index.html#schedule._domain.Show.station">[docs]</a>    <span class="n">station</span><span class="p">:</span> <span class="n">Station</span></div>
+<div class="viewcode-block" id="Show.description"><a class="viewcode-back" href="../../autoapi/schedule/_domain/index.html#schedule._domain.Show.description">[docs]</a>    <span class="n">description</span><span class="p">:</span> <span class="nb">str</span></div>
+<div class="viewcode-block" id="Show.date"><a class="viewcode-back" href="../../autoapi/schedule/_domain/index.html#schedule._domain.Show.date">[docs]</a>    <span class="n">date</span><span class="p">:</span> <span class="n">dt</span><span class="o">.</span><span class="n">date</span></div>
+<div class="viewcode-block" id="Show.since"><a class="viewcode-back" href="../../autoapi/schedule/_domain/index.html#schedule._domain.Show.since">[docs]</a>    <span class="n">since</span><span class="p">:</span> <span class="n">dt</span><span class="o">.</span><span class="n">time</span></div>
+<div class="viewcode-block" id="Show.till"><a class="viewcode-back" href="../../autoapi/schedule/_domain/index.html#schedule._domain.Show.till">[docs]</a>    <span class="n">till</span><span class="p">:</span> <span class="n">dt</span><span class="o">.</span><span class="n">time</span></div>
+<div class="viewcode-block" id="Show.moderators"><a class="viewcode-back" href="../../autoapi/schedule/_domain/index.html#schedule._domain.Show.moderators">[docs]</a>    <span class="n">moderators</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">Person</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="nb">hash</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span></div>
+<div class="viewcode-block" id="Show.repetition"><a class="viewcode-back" href="../../autoapi/schedule/_domain/index.html#schedule._domain.Show.repetition">[docs]</a>    <span class="n">repetition</span><span class="p">:</span> <span class="nb">bool</span></div>
+
+    <span class="nd">@cached_property</span>
+<div class="viewcode-block" id="Show.type"><a class="viewcode-back" href="../../autoapi/schedule/_domain/index.html#schedule._domain.Show.type">[docs]</a>    <span class="k">def</span> <span class="nf">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        The show type recognized by the broadcast time.</span>
+<span class="sd">        We recognize morning, noon, afternoon, evening and night.</span>
+
+<span class="sd">        :return: The show type as text (change to enumeration?).</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">since</span> <span class="o">&gt;=</span> <span class="n">dt</span><span class="o">.</span><span class="n">time</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">since</span> <span class="o">&lt;</span> <span class="n">dt</span><span class="o">.</span><span class="n">time</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">):</span>
+            <span class="k">return</span> <span class="s2">&quot;MORNING&quot;</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">since</span> <span class="o">&gt;=</span> <span class="n">dt</span><span class="o">.</span><span class="n">time</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">since</span> <span class="o">&lt;</span> <span class="n">dt</span><span class="o">.</span><span class="n">time</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">):</span>
+            <span class="k">return</span> <span class="s2">&quot;NOON&quot;</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">since</span> <span class="o">&gt;=</span> <span class="n">dt</span><span class="o">.</span><span class="n">time</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">since</span> <span class="o">&lt;</span> <span class="n">dt</span><span class="o">.</span><span class="n">time</span><span class="p">(</span><span class="mi">18</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">):</span>
+            <span class="k">return</span> <span class="s2">&quot;AFTERNOON&quot;</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">since</span> <span class="o">&gt;=</span> <span class="n">dt</span><span class="o">.</span><span class="n">time</span><span class="p">(</span><span class="mi">18</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">since</span> <span class="o">&lt;</span> <span class="n">dt</span><span class="o">.</span><span class="n">time</span><span class="p">(</span><span class="mi">22</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">):</span>
+            <span class="k">return</span> <span class="s2">&quot;EVENING&quot;</span>
+        <span class="k">return</span> <span class="s2">&quot;NIGHT&quot;</span></div>
+
+    <span class="nd">@cached_property</span>
+<div class="viewcode-block" id="Show.duration"><a class="viewcode-back" href="../../autoapi/schedule/_domain/index.html#schedule._domain.Show.duration">[docs]</a>    <span class="k">def</span> <span class="nf">duration</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get the show duration in seconds.</span>
+
+<span class="sd">        Should we return :code:`dt.time`?</span>
+<span class="sd">        :return: The duration in seconds.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">dt</span><span class="o">.</span><span class="n">timedelta</span><span class="p">(</span>
+            <span class="n">hours</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">till</span><span class="o">.</span><span class="n">hour</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">since</span><span class="o">.</span><span class="n">hour</span><span class="p">,</span>
+            <span class="n">minutes</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">till</span><span class="o">.</span><span class="n">minute</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">since</span><span class="o">.</span><span class="n">minute</span><span class="p">,</span>
+            <span class="n">seconds</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">till</span><span class="o">.</span><span class="n">second</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">since</span><span class="o">.</span><span class="n">second</span><span class="p">,</span>
+        <span class="p">)</span><span class="o">.</span><span class="n">total_seconds</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="Show.__lt__"><a class="viewcode-back" href="../../autoapi/schedule/_domain/index.html#schedule._domain.Show.__lt__">[docs]</a>    <span class="k">def</span> <span class="fm">__lt__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">that</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Compare the shows by the *since* time so we can sort them.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">since</span> <span class="o">&lt;</span> <span class="n">that</span><span class="o">.</span><span class="n">since</span></div></div>
+
+
+<span class="nd">@dataclass</span><span class="p">(</span><span class="n">frozen</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="nd">@total_ordering</span>
+<div class="viewcode-block" id="Schedule"><a class="viewcode-back" href="../../autoapi/schedule/_domain/index.html#schedule._domain.Schedule">[docs]</a><span class="k">class</span> <span class="nc">Schedule</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    The day schedule domain entity (aggregate).</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="Schedule.date"><a class="viewcode-back" href="../../autoapi/schedule/_domain/index.html#schedule._domain.Schedule.date">[docs]</a>    <span class="n">date</span><span class="p">:</span> <span class="n">dt</span><span class="o">.</span><span class="n">date</span></div>
+<div class="viewcode-block" id="Schedule.station"><a class="viewcode-back" href="../../autoapi/schedule/_domain/index.html#schedule._domain.Schedule.station">[docs]</a>    <span class="n">station</span><span class="p">:</span> <span class="n">Station</span></div>
+<div class="viewcode-block" id="Schedule.shows"><a class="viewcode-back" href="../../autoapi/schedule/_domain/index.html#schedule._domain.Schedule.shows">[docs]</a>    <span class="n">shows</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">Show</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span></div>
+<div class="viewcode-block" id="Schedule.time"><a class="viewcode-back" href="../../autoapi/schedule/_domain/index.html#schedule._domain.Schedule.time">[docs]</a>    <span class="n">time</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">SinceTime</span><span class="p">,</span> <span class="n">TillTime</span><span class="p">]</span> <span class="o">=</span> <span class="n">dt</span><span class="o">.</span><span class="n">time</span><span class="o">.</span><span class="n">min</span><span class="p">,</span> <span class="n">dt</span><span class="o">.</span><span class="n">time</span><span class="o">.</span><span class="n">max</span>  <span class="c1"># since, till</span></div>
+
+    <span class="c1">#: The time format as data string input.</span>
+<div class="viewcode-block" id="Schedule.__time_format__"><a class="viewcode-back" href="../../autoapi/schedule/_domain/index.html#schedule._domain.Schedule.__time_format__">[docs]</a>    <span class="n">__time_format__</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;%H:%M:%S&quot;</span></div>
+
+<div class="viewcode-block" id="Schedule.__post_init__"><a class="viewcode-back" href="../../autoapi/schedule/_domain/index.html#schedule._domain.Schedule.__post_init__">[docs]</a>    <span class="k">def</span> <span class="nf">__post_init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="c1"># Check that time since &lt; till.</span>
+        <span class="c1"># Check that shows has same dates as schedule.</span>
+        <span class="o">...</span></div>
+
+<div class="viewcode-block" id="Schedule.__str__"><a class="viewcode-back" href="../../autoapi/schedule/_domain/index.html#schedule._domain.Schedule.__str__">[docs]</a>    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="k">return</span> <span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">(&quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;station=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">station</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">, &quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;date=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">date</span><span class="si">}</span><span class="s2">, &quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;shows=</span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">shows</span><span class="p">)</span><span class="si">}</span><span class="s2">)&quot;</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="Schedule.__lt__"><a class="viewcode-back" href="../../autoapi/schedule/_domain/index.html#schedule._domain.Schedule.__lt__">[docs]</a>    <span class="k">def</span> <span class="fm">__lt__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">that</span><span class="p">:</span> <span class="n">Schedule</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">date</span> <span class="o">&lt;</span> <span class="n">that</span><span class="o">.</span><span class="n">date</span></div>
+
+<div class="viewcode-block" id="Schedule.__len__"><a class="viewcode-back" href="../../autoapi/schedule/_domain/index.html#schedule._domain.Schedule.__len__">[docs]</a>    <span class="k">def</span> <span class="fm">__len__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+        <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">shows</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Schedule.is_subset"><a class="viewcode-back" href="../../autoapi/schedule/_domain/index.html#schedule._domain.Schedule.is_subset">[docs]</a>    <span class="k">def</span> <span class="nf">is_subset</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Does the schedule contain only a selected time range?</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">time</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">dt</span><span class="o">.</span><span class="n">time</span><span class="o">.</span><span class="n">min</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">time</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">dt</span><span class="o">.</span><span class="n">time</span><span class="o">.</span><span class="n">max</span></div>
+
+<div class="viewcode-block" id="Schedule.as_subset"><a class="viewcode-back" href="../../autoapi/schedule/_domain/index.html#schedule._domain.Schedule.as_subset">[docs]</a>    <span class="k">def</span> <span class="nf">as_subset</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">since</span><span class="p">:</span> <span class="n">SinceTime</span><span class="p">,</span> <span class="n">till</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Schedule</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return the subset of this schedule.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">since</span> <span class="o">&gt;</span> <span class="n">till</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;The time since &gt; till!&quot;</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)(</span>
+            <span class="n">date</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">date</span><span class="p">,</span>
+            <span class="n">time</span><span class="o">=</span><span class="p">(</span><span class="n">since</span><span class="p">,</span> <span class="n">till</span><span class="p">),</span>
+            <span class="n">station</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">station</span><span class="p">,</span>
+            <span class="n">shows</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">shows_by_time</span><span class="p">(</span><span class="n">since</span><span class="p">,</span> <span class="n">till</span><span class="p">),</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="Schedule.shows_by_time"><a class="viewcode-back" href="../../autoapi/schedule/_domain/index.html#schedule._domain.Schedule.shows_by_time">[docs]</a>    <span class="k">def</span> <span class="nf">shows_by_time</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">since</span><span class="p">:</span> <span class="n">SinceTime</span><span class="p">,</span> <span class="n">till</span><span class="p">:</span> <span class="n">TillTime</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">Show</span><span class="p">,</span> <span class="o">...</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return the subset of shows filtered by time (till exclusive).</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">till_conv</span> <span class="o">=</span> <span class="n">convert_time</span><span class="p">(</span><span class="n">till</span><span class="p">)</span>
+        <span class="n">since_conv</span> <span class="o">=</span> <span class="n">convert_time</span><span class="p">(</span><span class="n">since</span><span class="p">)</span>
+
+        <span class="c1"># Fix error if `show.till` is midnight 00.00.00</span>
+
+        <span class="k">return</span> <span class="nb">tuple</span><span class="p">(</span>
+            <span class="nb">filter</span><span class="p">(</span>
+                <span class="k">lambda</span> <span class="n">show</span><span class="p">:</span> <span class="p">(</span><span class="n">show</span><span class="o">.</span><span class="n">since</span> <span class="o">&gt;=</span> <span class="n">since_conv</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">show</span><span class="o">.</span><span class="n">till</span> <span class="o">&lt;=</span> <span class="n">till_conv</span><span class="p">),</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">shows</span><span class="p">,</span>
+            <span class="p">)</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="Schedule.shows_by_title"><a class="viewcode-back" href="../../autoapi/schedule/_domain/index.html#schedule._domain.Schedule.shows_by_title">[docs]</a>    <span class="k">def</span> <span class="nf">shows_by_title</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">title</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">Show</span><span class="p">,</span> <span class="o">...</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return the subset of shows filtered by title.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Use not `exact_match`?</span>
+        <span class="k">return</span> <span class="nb">tuple</span><span class="p">(</span>
+            <span class="nb">filter</span><span class="p">(</span>
+                <span class="k">lambda</span> <span class="n">show</span><span class="p">:</span> <span class="p">(</span><span class="n">show</span><span class="o">.</span><span class="n">title</span> <span class="o">==</span> <span class="n">title</span><span class="p">),</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">shows</span><span class="p">,</span>
+            <span class="p">)</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="Schedule.to_table"><a class="viewcode-back" href="../../autoapi/schedule/_domain/index.html#schedule._domain.Schedule.to_table">[docs]</a>    <span class="k">def</span> <span class="nf">to_table</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">without_timezone</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return the schedule data as table.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">shows</span><span class="p">)</span>
+
+        <span class="c1"># Use only some attributes from `kind` and `station` objects.</span>
+        <span class="n">df</span><span class="p">[</span><span class="s2">&quot;kind&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s2">&quot;kind&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">[</span><span class="s2">&quot;code&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">lower</span><span class="p">())</span>
+
+        <span class="n">df</span><span class="p">[</span><span class="s2">&quot;station&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s2">&quot;station&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">])</span>
+
+        <span class="n">df</span><span class="o">.</span><span class="n">moderators</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">moderators</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span>
+            <span class="k">lambda</span> <span class="n">xs</span><span class="p">:</span> <span class="s2">&quot;;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">x</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">]</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">xs</span><span class="p">])</span>
+        <span class="p">)</span>
+
+        <span class="c1"># Remove timezones for Excel exports.</span>
+        <span class="k">if</span> <span class="n">without_timezone</span><span class="p">:</span>
+            <span class="n">df</span><span class="p">[</span><span class="s2">&quot;till&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s2">&quot;till&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">tzinfo</span><span class="o">=</span><span class="kc">None</span><span class="p">))</span>
+            <span class="n">df</span><span class="p">[</span><span class="s2">&quot;since&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s2">&quot;since&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">tzinfo</span><span class="o">=</span><span class="kc">None</span><span class="p">))</span>
+
+        <span class="n">since</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">since</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">dt</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">combine</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">shows</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">date</span><span class="p">,</span> <span class="n">x</span><span class="p">))</span>
+        <span class="n">till</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">till</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">dt</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">combine</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">shows</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">date</span><span class="p">,</span> <span class="n">x</span><span class="p">))</span>
+
+        <span class="n">df</span><span class="p">[</span><span class="s2">&quot;duration&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">till</span> <span class="o">-</span> <span class="n">since</span>
+        <span class="n">df</span><span class="o">.</span><span class="n">duration</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">duration</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span>
+            <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="s2">&quot;</span><span class="si">{:0&gt;8}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">dt</span><span class="o">.</span><span class="n">timedelta</span><span class="p">(</span><span class="n">seconds</span><span class="o">=</span><span class="n">x</span><span class="o">.</span><span class="n">total_seconds</span><span class="p">())))</span>
+        <span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">df</span><span class="p">[</span>
+            <span class="p">[</span>
+                <span class="s2">&quot;id&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;station&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;date&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;since&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;till&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;duration&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;repetition&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;title&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;moderators&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;description&quot;</span><span class="p">,</span>
+            <span class="p">]</span>
+        <span class="p">]</span></div></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Czech Radio.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

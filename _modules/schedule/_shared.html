@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>schedule._shared &mdash; cro.schedule  documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/graphviz.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/sphinx_highlight.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            cro.schedule
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Overview</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../Overview.html">Schedule</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Examples</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../notebooks/Recipe_Get_Schedule_Any.html">Recipe: Get schedules for a given period and given station</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../notebooks/Recipe_Get_Schedule_Day.html">Recipe: Get the schedule for current day and given station</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../notebooks/Recipe_Get_Schedule_Month.html">Recipe: Get schedules for a given month and given station</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../notebooks/Recipe_Get_Schedule_Week.html">Recipe: Get schedules for a given week and given station</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../notebooks/Recipe_Get_Schedule_Year.html">Recipe: Get schedules for a whole year</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../notebooks/Recipe_Get_Show_Filtering.html">Recipe: Get Shows with specified attribute</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../notebooks/Recipe_Get_Stations.html">Recipe: Get the available stations</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Development</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../autoapi/index.html">API Reference</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">cro.schedule</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">schedule._shared</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for schedule._shared</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">datetime</span> <span class="k">as</span> <span class="nn">dt</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Union</span>
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;convert_date&quot;</span><span class="p">,</span> <span class="s2">&quot;convert_time&quot;</span><span class="p">,</span> <span class="s2">&quot;flatten&quot;</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="convert_date"><a class="viewcode-back" href="../../autoapi/schedule/_shared/index.html#schedule._shared.convert_date">[docs]</a><span class="k">def</span> <span class="nf">convert_date</span><span class="p">(</span><span class="n">date</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">dt</span><span class="o">.</span><span class="n">date</span><span class="p">,</span> <span class="nb">str</span><span class="p">],</span> <span class="n">date_format</span><span class="o">=</span><span class="s2">&quot;%Y-%m-</span><span class="si">%d</span><span class="s2">&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">dt</span><span class="o">.</span><span class="n">date</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Convert date from text with the given format to date object.</span>
+
+<span class="sd">    :param: The date object or string to convert.</span>
+<span class="sd">    :return: The formated date.</span>
+<span class="sd">    :raises: ValuError: when given format is wrong.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">date</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">dt</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">strptime</span><span class="p">(</span><span class="n">date</span><span class="p">,</span> <span class="n">date_format</span><span class="p">)</span><span class="o">.</span><span class="n">date</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">date</span></div>
+
+
+<div class="viewcode-block" id="convert_time"><a class="viewcode-back" href="../../autoapi/schedule/_shared/index.html#schedule._shared.convert_time">[docs]</a><span class="k">def</span> <span class="nf">convert_time</span><span class="p">(</span><span class="n">time</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">dt</span><span class="o">.</span><span class="n">time</span><span class="p">,</span> <span class="nb">str</span><span class="p">],</span> <span class="n">time_format</span><span class="o">=</span><span class="s2">&quot;%H:%M:%S&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">dt</span><span class="o">.</span><span class="n">time</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Convert time from text with the given format to date object.</span>
+
+<span class="sd">    :param time: The time object or string to convert.</span>
+<span class="sd">    :return: The formated time.</span>
+<span class="sd">    :raises: ValuError: when given format is wrong.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">time</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">dt</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">strptime</span><span class="p">(</span><span class="n">time</span><span class="p">,</span> <span class="n">time_format</span><span class="p">)</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">time</span></div>
+
+
+<div class="viewcode-block" id="flatten"><a class="viewcode-back" href="../../autoapi/schedule/_shared/index.html#schedule._shared.flatten">[docs]</a><span class="k">def</span> <span class="nf">flatten</span><span class="p">(</span><span class="n">lst</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">Any</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">Any</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    The helper to flatten a list of lists.</span>
+
+<span class="sd">    :param lst: The list to flatten.</span>
+<span class="sd">    :return: The flat list.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="p">[</span><span class="n">item</span> <span class="k">for</span> <span class="n">sublst</span> <span class="ow">in</span> <span class="n">lst</span> <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">sublst</span><span class="p">]</span></div>
+
+
+<span class="k">def</span> <span class="nf">is_time_between</span><span class="p">(</span><span class="n">begin_time</span><span class="p">:</span> <span class="n">dt</span><span class="o">.</span><span class="n">time</span><span class="p">,</span> <span class="n">end_time</span><span class="p">:</span> <span class="n">dt</span><span class="o">.</span><span class="n">time</span><span class="p">,</span> <span class="n">current_time</span><span class="p">:</span> <span class="n">dt</span><span class="o">.</span><span class="n">time</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Determine if the current time is within a specified range.</span>
+
+<span class="sd">    .. see: https://stackoverflow.com/a/10048290</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">begin_time</span> <span class="o">&lt;</span> <span class="n">end_time</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">begin_time</span> <span class="o">&lt;=</span> <span class="n">current_time</span> <span class="o">&lt;=</span> <span class="n">end_time</span>
+    <span class="k">else</span><span class="p">:</span>  <span class="c1"># crosses midnight</span>
+        <span class="k">return</span> <span class="p">(</span><span class="n">current_time</span> <span class="o">&gt;=</span> <span class="n">begin_time</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span><span class="n">current_time</span> <span class="o">&lt;=</span> <span class="n">end_time</span><span class="p">)</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Czech Radio.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>schedule._client &mdash; cro.schedule  documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/graphviz.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/sphinx_highlight.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            cro.schedule
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Overview</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../Overview.html">Schedule</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Examples</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../notebooks/Recipe_Get_Schedule_Any.html">Recipe: Get schedules for a given period and given station</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../notebooks/Recipe_Get_Schedule_Day.html">Recipe: Get the schedule for current day and given station</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../notebooks/Recipe_Get_Schedule_Month.html">Recipe: Get schedules for a given month and given station</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../notebooks/Recipe_Get_Schedule_Week.html">Recipe: Get schedules for a given week and given station</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../notebooks/Recipe_Get_Schedule_Year.html">Recipe: Get schedules for a whole year</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../notebooks/Recipe_Get_Show_Filtering.html">Recipe: Get Shows with specified attribute</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../notebooks/Recipe_Get_Stations.html">Recipe: Get the available stations</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Development</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../autoapi/index.html">API Reference</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">cro.schedule</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">schedule._client</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for schedule._client</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Module contains HTTP REST API client.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">annotations</span>
+
+<span class="kn">import</span> <span class="nn">datetime</span> <span class="k">as</span> <span class="nn">dt</span>
+<span class="kn">from</span> <span class="nn">calendar</span> <span class="kn">import</span> <span class="n">monthrange</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Union</span>
+
+<span class="kn">from</span> <span class="nn">charset_normalizer</span> <span class="kn">import</span> <span class="n">logging</span>
+<span class="kn">from</span> <span class="nn">requests</span> <span class="kn">import</span> <span class="n">Session</span><span class="p">,</span> <span class="n">get</span>
+
+<span class="kn">from</span> <span class="nn">cro.schedule._domain</span> <span class="kn">import</span> <span class="n">Kind</span><span class="p">,</span> <span class="n">Person</span><span class="p">,</span> <span class="n">Schedule</span><span class="p">,</span> <span class="n">Show</span><span class="p">,</span> <span class="n">Station</span>
+<span class="kn">from</span> <span class="nn">cro.schedule._shared</span> <span class="kn">import</span> <span class="n">convert_date</span><span class="p">,</span> <span class="n">is_time_between</span>
+
+<div class="viewcode-block" id="StationID"><a class="viewcode-back" href="../../autoapi/schedule/_client/index.html#schedule._client.StationID">[docs]</a><span class="n">StationID</span> <span class="o">=</span> <span class="nb">str</span></div>
+
+
+<div class="viewcode-block" id="Client"><a class="viewcode-back" href="../../autoapi/schedule/_client/index.html#schedule._client.Client">[docs]</a><span class="k">class</span> <span class="nc">Client</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    The Czech Radio client to fetch schedules and stations metadata.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1">#: The service REST API V2 base URL.</span>
+<div class="viewcode-block" id="Client.__url__"><a class="viewcode-back" href="../../autoapi/schedule/_client/index.html#schedule._client.Client.__url__">[docs]</a>    <span class="n">__url__</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;https://api.rozhlas.cz/data/v2&quot;</span></div>
+
+    <span class="c1">#: The date format as data string input.</span>
+<div class="viewcode-block" id="Client.__date_format__"><a class="viewcode-back" href="../../autoapi/schedule/_client/index.html#schedule._client.Client.__date_format__">[docs]</a>    <span class="n">__date_format__</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;%Y-%m-</span><span class="si">%d</span><span class="s2">&quot;</span></div>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sid</span><span class="p">:</span> <span class="n">StationID</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :param station_id: e.g. `radiozurnal`.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_station</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_session</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Session</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+
+        <span class="c1"># Fetch the station and pick the right one.</span>
+        <span class="k">if</span> <span class="n">sid</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_station</span> <span class="o">=</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">get_station</span><span class="p">(</span><span class="n">sid</span><span class="o">.</span><span class="n">lower</span><span class="p">())</span>
+            <span class="k">except</span> <span class="ne">IndexError</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The station with id `</span><span class="si">{</span><span class="n">sid</span><span class="si">}</span><span class="s2">` does not exist.&quot;</span><span class="p">)</span>
+
+<div class="viewcode-block" id="Client.__enter__"><a class="viewcode-back" href="../../autoapi/schedule/_client/index.html#schedule._client.Client.__enter__">[docs]</a>    <span class="k">def</span> <span class="fm">__enter__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Client</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Enter the context.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_session</span> <span class="o">=</span> <span class="n">Session</span><span class="p">()</span>
+        <span class="k">return</span> <span class="bp">self</span></div>
+
+<div class="viewcode-block" id="Client.__exit__"><a class="viewcode-back" href="../../autoapi/schedule/_client/index.html#schedule._client.Client.__exit__">[docs]</a>    <span class="k">def</span> <span class="fm">__exit__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>  <span class="c1"># ?type</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Exit the context.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># This is a remainder how to implement manager</span>
+        <span class="c1"># see https://peps.python.org/pep-0343/.</span>
+        <span class="c1"># exc_type, exc_value, traceback = *args</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_session</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_session</span><span class="o">.</span><span class="n">close</span><span class="p">()</span></div>
+
+    <span class="nd">@property</span>
+<div class="viewcode-block" id="Client.station"><a class="viewcode-back" href="../../autoapi/schedule/_client/index.html#schedule._client.Client.station">[docs]</a>    <span class="k">def</span> <span class="nf">station</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Station</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get the current station.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_station</span></div>
+
+    <span class="nd">@station</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">station</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">station</span><span class="p">:</span> <span class="n">Station</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Set the current station.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_station</span> <span class="o">=</span> <span class="n">station</span>
+
+    <span class="nd">@classmethod</span>
+<div class="viewcode-block" id="Client.make"><a class="viewcode-back" href="../../autoapi/schedule/_client/index.html#schedule._client.Client.make">[docs]</a>    <span class="k">def</span> <span class="nf">make</span><span class="p">(</span><span class="bp">cls</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Client</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Make the client instance (factory method).</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">NotImplemented</span></div>
+
+    <span class="nd">@classmethod</span>
+<div class="viewcode-block" id="Client.get_stations"><a class="viewcode-back" href="../../autoapi/schedule/_client/index.html#schedule._client.Client.get_stations">[docs]</a>    <span class="k">def</span> <span class="nf">get_stations</span><span class="p">(</span><span class="bp">cls</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">Station</span><span class="p">,</span> <span class="o">...</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Fetch the available stations.</span>
+
+<span class="sd">        Examples:</span>
+<span class="sd">            &gt;&gt;&gt; Client.get_stations()</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">get</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">cls</span><span class="o">.</span><span class="n">__url__</span><span class="si">}</span><span class="s2">/meta/stations.json&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">json</span><span class="p">()[</span><span class="s2">&quot;data&quot;</span><span class="p">]</span>
+
+        <span class="k">return</span> <span class="nb">tuple</span><span class="p">(</span>
+            <span class="p">[</span>
+                <span class="n">Station</span><span class="p">(</span>
+                    <span class="nb">id</span><span class="o">=</span><span class="n">item</span><span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">],</span>
+                    <span class="n">name</span><span class="o">=</span><span class="n">item</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">],</span>
+                    <span class="n">domain</span><span class="o">=</span><span class="n">item</span><span class="p">[</span><span class="s2">&quot;domain&quot;</span><span class="p">],</span>
+                    <span class="n">slogan</span><span class="o">=</span><span class="n">item</span><span class="p">[</span><span class="s2">&quot;longdescription&quot;</span><span class="p">][</span><span class="s2">&quot;slogan&quot;</span><span class="p">],</span>
+                    <span class="n">description</span><span class="o">=</span><span class="n">item</span><span class="p">[</span><span class="s2">&quot;description&quot;</span><span class="p">],</span>
+                    <span class="n">services</span><span class="o">=</span><span class="n">item</span><span class="p">[</span><span class="s2">&quot;services&quot;</span><span class="p">],</span>
+                <span class="p">)</span>
+                <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">data</span>
+            <span class="p">]</span>
+        <span class="p">)</span></div>
+
+    <span class="nd">@classmethod</span>
+<div class="viewcode-block" id="Client.get_station"><a class="viewcode-back" href="../../autoapi/schedule/_client/index.html#schedule._client.Client.get_station">[docs]</a>    <span class="k">def</span> <span class="nf">get_station</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">sid</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Station</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Fetch the available station with the given station id (`sid`).</span>
+
+<span class="sd">        :param sid: The station id.</span>
+<span class="sd">        :return: The sequence of stations.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Fetch the station and pick the right one.</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">return</span> <span class="nb">tuple</span><span class="p">(</span><span class="nb">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">id</span> <span class="o">==</span> <span class="n">sid</span><span class="p">,</span> <span class="bp">cls</span><span class="o">.</span><span class="n">get_stations</span><span class="p">()))[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">except</span> <span class="ne">IndexError</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The station with id `</span><span class="si">{</span><span class="nb">id</span><span class="si">}</span><span class="s2">` does not exist.&quot;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Client.get_any_schedules"><a class="viewcode-back" href="../../autoapi/schedule/_client/index.html#schedule._client.Client.get_any_schedules">[docs]</a>    <span class="k">def</span> <span class="nf">get_any_schedules</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">since</span><span class="p">:</span> <span class="n">dt</span><span class="o">.</span><span class="n">date</span> <span class="o">|</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">till</span><span class="p">:</span> <span class="n">dt</span><span class="o">.</span><span class="n">date</span> <span class="o">|</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">dt</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">(),</span>
+        <span class="n">time</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">dt</span><span class="o">.</span><span class="n">time</span><span class="p">,</span> <span class="n">dt</span><span class="o">.</span><span class="n">time</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">dt</span><span class="o">.</span><span class="n">time</span><span class="o">.</span><span class="n">min</span><span class="p">,</span> <span class="n">dt</span><span class="o">.</span><span class="n">time</span><span class="o">.</span><span class="n">max</span><span class="p">),</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">Schedule</span><span class="p">,</span> <span class="o">...</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Fetch the avalaible schedules for the given date range.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">station</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Set the station property!&quot;</span><span class="p">)</span>
+
+        <span class="n">since</span><span class="p">,</span> <span class="n">till</span> <span class="o">=</span> <span class="n">convert_date</span><span class="p">(</span><span class="n">since</span><span class="p">),</span> <span class="n">convert_date</span><span class="p">(</span><span class="n">till</span><span class="p">)</span>
+
+        <span class="c1"># Get all days between since and till.</span>
+        <span class="n">dates</span> <span class="o">=</span> <span class="p">[</span><span class="n">since</span> <span class="o">+</span> <span class="n">dt</span><span class="o">.</span><span class="n">timedelta</span><span class="p">(</span><span class="n">days</span><span class="o">=</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">((</span><span class="n">till</span> <span class="o">-</span> <span class="n">since</span><span class="p">)</span><span class="o">.</span><span class="n">days</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)]</span>
+
+        <span class="k">return</span> <span class="nb">tuple</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">get_day_schedule</span><span class="p">(</span><span class="n">date</span><span class="p">,</span> <span class="n">time</span><span class="p">)</span> <span class="k">for</span> <span class="n">date</span> <span class="ow">in</span> <span class="n">dates</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="Client.get_day_schedule"><a class="viewcode-back" href="../../autoapi/schedule/_client/index.html#schedule._client.Client.get_day_schedule">[docs]</a>    <span class="k">def</span> <span class="nf">get_day_schedule</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">date</span><span class="p">:</span> <span class="n">dt</span><span class="o">.</span><span class="n">date</span> <span class="o">|</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">dt</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">(),</span>
+        <span class="n">time</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">dt</span><span class="o">.</span><span class="n">time</span><span class="p">,</span> <span class="n">dt</span><span class="o">.</span><span class="n">time</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">dt</span><span class="o">.</span><span class="n">time</span><span class="o">.</span><span class="n">min</span><span class="p">,</span> <span class="n">dt</span><span class="o">.</span><span class="n">time</span><span class="o">.</span><span class="n">max</span><span class="p">),</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Schedule</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Fetch the availaible schedule for the given date.</span>
+
+<span class="sd">        :param date: The schedule date.</span>
+<span class="sd">        :param time: The schedule time range (since, till).</span>
+<span class="sd">        :return: The schedule for the given day.</span>
+
+<span class="sd">        Examples:</span>
+<span class="sd">            &gt;&gt;&gt; import datetime as dt</span>
+<span class="sd">            &gt;&gt;&gt; get_day_schedule(date = dt.datetime.now())</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">station</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Set the station property!&quot;</span><span class="p">)</span>
+
+        <span class="n">date</span> <span class="o">=</span> <span class="n">convert_date</span><span class="p">(</span><span class="n">date</span><span class="p">)</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="n">get</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__url__</span><span class="si">}</span><span class="s2">/schedule/day/</span><span class="si">{</span><span class="n">date</span><span class="o">.</span><span class="n">year</span><span class="si">:</span><span class="s2">04d</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">date</span><span class="o">.</span><span class="n">month</span><span class="si">:</span><span class="s2">02d</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">date</span><span class="o">.</span><span class="n">day</span><span class="si">:</span><span class="s2">02d</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">station</span><span class="o">.</span><span class="n">id</span><span class="si">}</span><span class="s2">.json&quot;</span>
+            <span class="p">)</span><span class="o">.</span><span class="n">json</span><span class="p">()[</span><span class="s2">&quot;data&quot;</span><span class="p">]</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">ex</span><span class="p">:</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="n">ex</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="n">ex</span>
+
+        <span class="n">shows</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="n">since</span><span class="p">,</span> <span class="n">till</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span>
+        <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">data</span><span class="p">:</span>
+            <span class="n">since</span><span class="p">,</span> <span class="n">till</span> <span class="o">=</span> <span class="p">(</span>
+                <span class="n">dt</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">fromisoformat</span><span class="p">(</span><span class="n">item</span><span class="p">[</span><span class="s2">&quot;since&quot;</span><span class="p">]),</span>
+                <span class="n">dt</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">fromisoformat</span><span class="p">(</span><span class="n">item</span><span class="p">[</span><span class="s2">&quot;till&quot;</span><span class="p">]),</span>
+            <span class="p">)</span>
+            <span class="c1"># Check if since is in time range.</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">is_time_between</span><span class="p">(</span>
+                <span class="n">time</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">time</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">dt</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">fromisoformat</span><span class="p">(</span><span class="n">item</span><span class="p">[</span><span class="s2">&quot;since&quot;</span><span class="p">])</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+            <span class="p">):</span>
+                <span class="k">continue</span>
+
+            <span class="n">shows</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+                <span class="n">Show</span><span class="p">(</span>
+                    <span class="nb">id</span><span class="o">=</span><span class="n">item</span><span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">],</span>
+                    <span class="n">title</span><span class="o">=</span><span class="n">item</span><span class="p">[</span><span class="s2">&quot;title&quot;</span><span class="p">],</span>
+                    <span class="n">station</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">station</span><span class="p">,</span>
+                    <span class="n">kind</span><span class="o">=</span><span class="n">Kind</span><span class="p">(</span>
+                        <span class="nb">id</span><span class="o">=</span><span class="n">item</span><span class="p">[</span><span class="s2">&quot;type&quot;</span><span class="p">][</span><span class="s2">&quot;id&quot;</span><span class="p">],</span>
+                        <span class="n">code</span><span class="o">=</span><span class="n">item</span><span class="p">[</span><span class="s2">&quot;type&quot;</span><span class="p">][</span><span class="s2">&quot;code&quot;</span><span class="p">],</span>
+                        <span class="n">name</span><span class="o">=</span><span class="n">item</span><span class="p">[</span><span class="s2">&quot;type&quot;</span><span class="p">][</span><span class="s2">&quot;name&quot;</span><span class="p">],</span>
+                    <span class="p">),</span>
+                    <span class="n">description</span><span class="o">=</span><span class="n">item</span><span class="p">[</span><span class="s2">&quot;description&quot;</span><span class="p">],</span>
+                    <span class="n">date</span><span class="o">=</span><span class="n">since</span><span class="o">.</span><span class="n">date</span><span class="p">(),</span>
+                    <span class="n">since</span><span class="o">=</span><span class="n">since</span><span class="o">.</span><span class="n">time</span><span class="p">(),</span>
+                    <span class="n">till</span><span class="o">=</span><span class="n">till</span><span class="o">.</span><span class="n">time</span><span class="p">(),</span>
+                    <span class="n">moderators</span><span class="o">=</span><span class="nb">tuple</span><span class="p">(</span>
+                        <span class="n">Person</span><span class="p">(</span><span class="n">p</span><span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">],</span> <span class="n">p</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">])</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">item</span><span class="p">[</span><span class="s2">&quot;persons&quot;</span><span class="p">]</span>
+                    <span class="p">),</span>
+                    <span class="n">repetition</span><span class="o">=</span><span class="n">item</span><span class="p">[</span><span class="s2">&quot;repetition&quot;</span><span class="p">],</span>
+                <span class="p">)</span>
+            <span class="p">)</span>
+
+        <span class="n">date</span> <span class="o">=</span> <span class="n">date</span><span class="o">.</span><span class="n">date</span><span class="p">()</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">date</span><span class="p">,</span> <span class="n">dt</span><span class="o">.</span><span class="n">datetime</span><span class="p">)</span> <span class="k">else</span> <span class="n">date</span>
+
+        <span class="k">return</span> <span class="n">Schedule</span><span class="p">(</span><span class="n">date</span><span class="o">=</span><span class="n">date</span><span class="p">,</span> <span class="n">time</span><span class="o">=</span><span class="n">time</span><span class="p">,</span> <span class="n">station</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">station</span><span class="p">,</span> <span class="n">shows</span><span class="o">=</span><span class="nb">tuple</span><span class="p">(</span><span class="n">shows</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="Client.get_week_schedules"><a class="viewcode-back" href="../../autoapi/schedule/_client/index.html#schedule._client.Client.get_week_schedules">[docs]</a>    <span class="k">def</span> <span class="nf">get_week_schedules</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">date</span><span class="p">:</span> <span class="n">dt</span><span class="o">.</span><span class="n">date</span> <span class="o">|</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">dt</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">(),</span>
+        <span class="n">time</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">dt</span><span class="o">.</span><span class="n">time</span><span class="p">,</span> <span class="n">dt</span><span class="o">.</span><span class="n">time</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">dt</span><span class="o">.</span><span class="n">time</span><span class="o">.</span><span class="n">min</span><span class="p">,</span> <span class="n">dt</span><span class="o">.</span><span class="n">time</span><span class="o">.</span><span class="n">max</span><span class="p">),</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">Schedule</span><span class="p">,</span> <span class="o">...</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Fetch the availaible schedules for the given week.</span>
+
+<span class="sd">        :param date: The schedule week date (any).</span>
+<span class="sd">        :param time: The schedule time range (since, till).</span>
+<span class="sd">        :return The sequence of schedules for the given week sorted by date.</span>
+
+<span class="sd">        Examples:</span>
+<span class="sd">            &gt;&gt;&gt; import datetime as dt</span>
+<span class="sd">            &gt;&gt;&gt; get_week_schedule(date = dt.datetime.now())</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">station</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Set the station property!&quot;</span><span class="p">)</span>
+
+        <span class="n">date</span> <span class="o">=</span> <span class="n">convert_date</span><span class="p">(</span><span class="n">date</span><span class="p">)</span>
+
+        <span class="c1"># Get all days of the week.</span>
+        <span class="n">dates</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="n">date</span> <span class="o">+</span> <span class="n">dt</span><span class="o">.</span><span class="n">timedelta</span><span class="p">(</span><span class="n">days</span><span class="o">=</span><span class="n">i</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span> <span class="o">-</span> <span class="n">date</span><span class="o">.</span><span class="n">weekday</span><span class="p">(),</span> <span class="mi">7</span> <span class="o">-</span> <span class="n">date</span><span class="o">.</span><span class="n">weekday</span><span class="p">())</span>
+        <span class="p">)</span>
+
+        <span class="k">return</span> <span class="nb">tuple</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">get_day_schedule</span><span class="p">(</span><span class="n">date</span><span class="p">,</span> <span class="n">time</span><span class="p">)</span> <span class="k">for</span> <span class="n">date</span> <span class="ow">in</span> <span class="n">dates</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="Client.get_month_schedules"><a class="viewcode-back" href="../../autoapi/schedule/_client/index.html#schedule._client.Client.get_month_schedules">[docs]</a>    <span class="k">def</span> <span class="nf">get_month_schedules</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">date</span><span class="p">:</span> <span class="n">dt</span><span class="o">.</span><span class="n">date</span> <span class="o">|</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">dt</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">(),</span>
+        <span class="n">time</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">dt</span><span class="o">.</span><span class="n">time</span><span class="p">,</span> <span class="n">dt</span><span class="o">.</span><span class="n">time</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">dt</span><span class="o">.</span><span class="n">time</span><span class="o">.</span><span class="n">min</span><span class="p">,</span> <span class="n">dt</span><span class="o">.</span><span class="n">time</span><span class="o">.</span><span class="n">max</span><span class="p">),</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">Schedule</span><span class="p">,</span> <span class="o">...</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Fetch the availaible schedules for the given month.</span>
+
+<span class="sd">        :param date: The schedule month date (any).</span>
+<span class="sd">        :param time: The schedule time range (since, till).</span>
+<span class="sd">        :return The sequence of schedules for the given week sorted by date.</span>
+
+<span class="sd">        Examples:</span>
+<span class="sd">            &gt;&gt;&gt; import datetime as dt</span>
+<span class="sd">            &gt;&gt;&gt; get_month_schedule(date = dt.datetime.now())</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">station</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Set the station property!&quot;</span><span class="p">)</span>
+
+        <span class="n">date</span> <span class="o">=</span> <span class="n">convert_date</span><span class="p">(</span><span class="n">date</span><span class="p">)</span>
+
+        <span class="c1"># Get all days of the month.</span>
+        <span class="n">nb_days</span> <span class="o">=</span> <span class="n">monthrange</span><span class="p">(</span><span class="n">date</span><span class="o">.</span><span class="n">year</span><span class="p">,</span> <span class="n">date</span><span class="o">.</span><span class="n">month</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">dates</span> <span class="o">=</span> <span class="p">(</span><span class="n">dt</span><span class="o">.</span><span class="n">date</span><span class="p">(</span><span class="n">date</span><span class="o">.</span><span class="n">year</span><span class="p">,</span> <span class="n">date</span><span class="o">.</span><span class="n">month</span><span class="p">,</span> <span class="n">day</span><span class="p">)</span> <span class="k">for</span> <span class="n">day</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">nb_days</span> <span class="o">+</span> <span class="mi">1</span><span class="p">))</span>
+
+        <span class="k">return</span> <span class="nb">tuple</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">get_day_schedule</span><span class="p">(</span><span class="n">date</span><span class="p">,</span> <span class="n">time</span><span class="p">)</span> <span class="k">for</span> <span class="n">date</span> <span class="ow">in</span> <span class="n">dates</span><span class="p">))</span></div></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Czech Radio.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,233 @@
+:py:mod:`schedule._domain`
+==========================
+
+.. py:module:: schedule._domain
+
+.. autoapi-nested-parse::
+
+   This module contains domain model.
+
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   schedule._domain.Station
+   schedule._domain.Person
+   schedule._domain.Show
+   schedule._domain.Schedule
+
+
+
+
+.. py:class:: Station
+
+   The Czech Radio station.
+
+   :param id: The station id (short name).
+   :param name: The station (long) name.
+   :param domain: The station domain.
+   :param slogan: The station slogan.
+   :param description: The station description.
+   :param services: The station services.
+
+   .. py:attribute:: id
+      :type: str
+
+      
+
+   .. py:attribute:: name
+      :type: Name
+
+      
+
+   .. py:attribute:: domain
+      :type: str
+
+      
+
+   .. py:attribute:: slogan
+      :type: str
+
+      
+
+   .. py:attribute:: description
+      :type: str
+
+      
+
+   .. py:attribute:: services
+      :type: dict[str, URL]
+
+      
+
+
+.. py:class:: Person
+
+   The person associated with show e.g. moderator or respondent.
+
+   .. py:attribute:: id
+      :type: int
+
+      
+
+   .. py:attribute:: name
+      :type: Name
+
+      
+
+
+.. py:class:: Show
+
+   The Czech Radio show.
+
+   .. py:attribute:: id
+      :type: int
+
+      
+
+   .. py:attribute:: kind
+      :type: Kind
+
+      
+
+   .. py:attribute:: title
+      :type: Title
+
+      
+
+   .. py:attribute:: station
+      :type: Station
+
+      
+
+   .. py:attribute:: description
+      :type: str
+
+      
+
+   .. py:attribute:: date
+      :type: datetime.date
+
+      
+
+   .. py:attribute:: since
+      :type: datetime.time
+
+      
+
+   .. py:attribute:: till
+      :type: datetime.time
+
+      
+
+   .. py:attribute:: moderators
+      :type: tuple[Person, Ellipsis]
+
+      
+
+   .. py:attribute:: repetition
+      :type: bool
+
+      
+
+   .. py:method:: type() -> str
+
+      The show type recognized by the broadcast time.
+      We recognize morning, noon, afternoon, evening and night.
+
+      :return: The show type as text (change to enumeration?).
+
+
+   .. py:method:: duration() -> float
+
+      Get the show duration in seconds.
+
+      Should we return :code:`dt.time`?
+      :return: The duration in seconds.
+
+
+   .. py:method:: __lt__(that) -> bool
+
+      Compare the shows by the *since* time so we can sort them.
+
+
+
+.. py:class:: Schedule
+
+   The day schedule domain entity (aggregate).
+
+   .. py:attribute:: date
+      :type: datetime.date
+
+      
+
+   .. py:attribute:: station
+      :type: Station
+
+      
+
+   .. py:attribute:: shows
+      :type: tuple[Show, Ellipsis]
+
+      
+
+   .. py:attribute:: time
+      :type: tuple[SinceTime, TillTime]
+      :value: ()
+
+      
+
+   .. py:attribute:: __time_format__
+      :type: str
+      :value: '%H:%M:%S'
+
+      
+
+   .. py:method:: __post_init__() -> None
+
+
+   .. py:method:: __str__() -> str
+
+      Return str(self).
+
+
+   .. py:method:: __lt__(that: Schedule) -> bool
+
+      Return self<value.
+
+
+   .. py:method:: __len__() -> int
+
+
+   .. py:method:: is_subset() -> bool
+
+      Does the schedule contain only a selected time range?
+
+
+   .. py:method:: as_subset(since: SinceTime, till) -> Schedule
+
+      Return the subset of this schedule.
+
+
+   .. py:method:: shows_by_time(since: SinceTime, till: TillTime) -> tuple[Show, Ellipsis]
+
+      Return the subset of shows filtered by time (till exclusive).
+
+
+   .. py:method:: shows_by_title(title: str) -> tuple[Show, Ellipsis]
+
+      Return the subset of shows filtered by title.
+
+
+   .. py:method:: to_table(without_timezone: bool = True) -> pandas.DataFrame
+
+      Return the schedule data as table.
+
+
+
